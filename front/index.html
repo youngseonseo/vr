@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+
+    <title>Basic Example — Networked-Aframe</title>
+    <meta name="description" content="Basic Example — Networked-Aframe" />
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <script>
+    function addPlayer(id, position) {
+      if (id === socket.id) return;
+      console.log(`adding ${id} on ${JSON.stringify(position)}`);
+      var scene = document.querySelector("a-scene");
+      var newPlayer = document.createElement("a-box");
+      newPlayer.setAttribute("id", id);
+      //newPlayer.setAttribute("player");
+      newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
+      scene.appendChild(newPlayer);
+    }
+    function removePlayer(id) {
+      var player = document.querySelector(`#${id}`);
+      player.parentNode.removeChild(player);
+    }
+
+    const url = "http://localhost:3000";
+    var socket = io(url);
+
+    socket.on("newPlayer", ({ id, position }) => {
+      console.log("newPlayer");
+      addPlayer(id, position);
+    });
+    socket.on("listOfPlayers", ({ players }) => {
+      console.log("listOfPlayers");
+      players.map((i) => addPlayer(i.id, i.position));
+
+      console.log(players);
+    });
+    socket.on("hi", () => {
+      console.log("hello");
+    });
+    socket.on("removePlayer", ({ id }) => {
+      console.log(`${id} has disconnected`);
+      removePlayer(id);
+    });
+    socket.on("movement", ({ id, position }) => {
+      console.log(position);
+      console.log(id);
+      var target = document.querySelector(`#${id}`);
+      console.log(target);
+      target.setAttribute("position", position);
+    });
+    AFRAME.registerComponent("me", {
+      schema: {
+        default: { x: 0, y: 0, z: 0 },
+      },
+      init: function () {
+        this.position = { x: 0, y: 0, z: 0 };
+        var camera = document.querySelector("a-camera");
+      },
+      tick: function () {
+        socket.emit("tick");
+        /*
+        console.log(
+          JSON.stringify(this.el.getAttribute("position")) !==
+            JSON.stringify(this.position)
+        );
+        //console.log(JSON.stringify(this.el.getAttribute("position")));
+        //console.log(JSON.stringify(this.position));*/
+        if (
+          JSON.stringify(this.el.getAttribute("position")) !==
+          JSON.stringify(this.position)
+        ) {
+          this.position = JSON.parse(
+            JSON.stringify(this.el.getAttribute("position"))
+          );
+          socket.emit("movement", { position: this.position });
+        }
+      },
+    });
+  </script>
+  <body>
+    <a-scene>
+      <a-box
+        static-body
+        id="ground"
+        scale="100 1 100"
+        position="0 -1 0"
+        color="#444444"
+        visible="true"
+      ></a-box>
+      <a-cylinder position="0 1 -2" color="red"></a-cylinder>
+      <a-camera me position="0 0.5 0"></a-camera
+    ></a-scene>
+  </body>
+</html>
