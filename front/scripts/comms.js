@@ -6,8 +6,17 @@ function addPlayer(id, position) {
   newPlayer.setAttribute("id", id);
   //newPlayer.setAttribute("player");
   newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
-  newPlayer.setAttribute("gltf-model", "/models/cowboy/scene.gltf");
-  newPlayer.setAttribute("scale", "0.3 0.3 0.3");
+  var model = document.createElement("a-entity");
+
+  model.setAttribute(
+    "gltf-model",
+    `/models/${Math.random() > 0.5 ? "cowboy" : "pony"}/scene.gltf`
+  );
+  model.setAttribute("rotation", "0 180 0");
+  model.setAttribute("scale", "0.3 0.3 0.3");
+  newPlayer.setAttribute("opacity", "0");
+  newPlayer.appendChild(model);
+
   newPlayer.setAttribute("position", "0 0 0");
 
   scene.appendChild(newPlayer);

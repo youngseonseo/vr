@@ -27,17 +27,17 @@
         visible="true"
       ></a-box>
       <a-cylinder position="0 1 -2" color="red"></a-cylinder>
-      <a-camera me position="0 0.5 0"></a-camera>
+      <a-camera me position="0 0.5 0"><a-box></a-box></a-camera>
       <a-assets>
         <a-asset-item
           id="cityModel"
           src="https://cdn.aframe.io/test-models/models/glTF-2.0/virtualcity/VC.gltf"
         ></a-asset-item>
-        <video id="cityVideo" src="https://cdn.aframe.io/360-video-boilerplate/video/city.mp4"></video>
       </a-assets>
-      <a-entity gltf-model = "/models/cowboy/scene.gltf" position="0 0 0"scale="0.3 0.3 0.3"></a-entity>
-       <a-videopshere src="#cityVideo"></a-videosphere>
-      <a-entity gltf-model="#cityModel" modify-materials></a-entity>
+      <a-entity
+        gltf-model="/models/cowboy/scene.gltf"
+        position="0 0 0"
+      ></a-entity>
     </a-scene>
   </body>
 </html>
