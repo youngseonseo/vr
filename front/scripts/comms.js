@@ -6,6 +6,10 @@ function addPlayer(id, position) {
   newPlayer.setAttribute("id", id);
   //newPlayer.setAttribute("player");
   newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
+  newPlayer.setAttribute("gltf-model", "/models/cowboy/scene.gltf");
+  newPlayer.setAttribute("scale", "0.3 0.3 0.3");
+  newPlayer.setAttribute("position", "0 0 0");
+
   scene.appendChild(newPlayer);
 }
 function removePlayer(id) {
