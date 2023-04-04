@@ -4,10 +4,12 @@ import express from "express";
 import { dirname } from "path";
 import cors from "cors";
 import { fileURLToPath } from "url";
+import { readdirSync } from "node:fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const models = readdirSync("./front/models");
 const app = express();
 app.use(cors());
 app.use(express.static("public"));
@@ -42,11 +44,16 @@ const io = new Server(webServer, {
 io.on("connection", async (socket) => {
   socket.position = { x: 0, y: 0, z: 0 };
   socket.rotation = { x: 0, y: 0, z: 0 };
+  var aaaa = Math.floor(Math.random() * 10) % models.length;
+  socket.model = models[aaaa];
+  console.log(aaaa);
+  console.log(socket.model);
   console.log(`${socket.id} connected`);
   socket.broadcast.emit("newPlayer", {
     id: socket.id,
     position: socket.position,
     rotation: socket.rotation,
+    model: socket.model,
   });
   socket.on("disconnect", (reason) => {
     console.log(`${socket.id} disconnected`);
@@ -70,7 +77,7 @@ io.on("connection", async (socket) => {
 async function getAllPlayers() {
   let players = await io.fetchSockets();
   players = players.map((i) => {
-    return { id: i.id, position: i.position };
+    return { id: i.id, position: i.position, model: i.model };
   });
   return players;
 }
