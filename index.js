@@ -21,6 +21,11 @@ app.get("/comms", function (req, res) {
 app.get("/components", function (req, res) {
   res.sendFile("front/scripts/components.js", { root: __dirname });
 });
+app.get("/models/:model/:file", function (req, res) {
+  res.sendFile(`front/models/${req.params.model}/${req.params.file}`, {
+    root: __dirname,
+  });
+});
 
 // Start Express http server
 const webServer = createServer(app);
