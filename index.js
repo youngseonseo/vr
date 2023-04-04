@@ -9,7 +9,7 @@ import { readdirSync } from "node:fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const models = readdirSync("./front/models");
+const models = readdirSync("./front/models"); //get all the model folders
 const app = express();
 app.use(cors());
 app.use(express.static("public"));
@@ -24,7 +24,14 @@ app.get("/components", function (req, res) {
   res.sendFile("front/scripts/components.js", { root: __dirname });
 });
 app.get("/models/:model/:file", function (req, res) {
+  console.log(req.params.file);
   res.sendFile(`front/models/${req.params.model}/${req.params.file}`, {
+    root: __dirname,
+  });
+});
+app.get("/models/:model/textures/:file", function (req, res) {
+  console.log(req.params.file);
+  res.sendFile(`front/models/${req.params.model}/textures/${req.params.file}`, {
     root: __dirname,
   });
 });
