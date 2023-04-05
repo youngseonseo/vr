@@ -53,8 +53,6 @@ io.on("connection", async (socket) => {
   socket.rotation = { x: 0, y: 0, z: 0 };
   var aaaa = Math.floor(Math.random() * 10) % models.length;
   socket.model = models[aaaa];
-  console.log(aaaa);
-  console.log(socket.model);
   console.log(`${socket.id} connected`);
   socket.broadcast.emit("newPlayer", {
     id: socket.id,
