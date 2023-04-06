@@ -18,7 +18,8 @@ function addPlayer(id, position, model) {
   scene.appendChild(newPlayer);
 }
 function removePlayer(id) {
-  var player = document.getElementById(`#${id}`);
+  var player = document.getElementById(`${id}`);
+  console.log(player);
   player.parentNode.removeChild(player);
 }
 const url = window.location.href;
