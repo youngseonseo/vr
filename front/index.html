@@ -14,10 +14,16 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="/comms"></script>
     <script src="/components"></script>
+    <script src="https://cdn.rawgit.com/mrturck/aframe-joystick/master/joystick.min.js"></script> <!-- This is for joystick -->
   </head>
 
   <body>
     <a-scene>
+      <a-entity 
+        id="joystick" 
+        joystick 
+        vr-mode-ui="enabled: false"
+      ></a-entity> <!-- showing joystick to user -->
       <a-box
         static-body
         id="ground"
@@ -27,7 +33,7 @@
         visible="true"
       ></a-box>
       <a-cylinder position="0 1 -2" color="red"></a-cylinder>
-      <a-camera me position="0 0.5 0"><a-box></a-box></a-camera>
+      <a-camera id="camera" me position="0 0.5 0"><a-box></a-box></a-camera> <!-- id is added to be used in joystick.js -->
       <a-assets>
         <a-asset-item
           id="cityModel"
@@ -45,5 +51,19 @@
       ></a-entity>
       <a-box position="5 5 0" dynamic-body></a-box>
     </a-scene>
+    <script>
+      window.addEventListener("DOMContentLoaded", function () {
+        console.log('loaded');
+        var isMobile = AFRAME.utils.device.isMobile();
+        var showJoystick = document.getElementById('joystick');
+        if (isMobile) {
+          console.log("Mobile");
+        }
+        else {
+          console.log("PC");
+          showJoystick.outerHTML = ""; // remove the joystick a-entity
+        }
+      });   
+    </script>
   </body>
 </html>
