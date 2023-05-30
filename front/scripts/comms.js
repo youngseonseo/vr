@@ -22,33 +22,45 @@ function removePlayer(id) {
   console.log(player);
   player.parentNode.removeChild(player);
 }
-const url = window.location.href;
+function movePlayer(id, position) {
+  var target = document.getElementById(id);
+  target.setAttribute("position", position);
+}
+function rotatePlayer(id, rotation) {
+  var target = document.getElementById(id);
+  target.setAttribute("rotation", rotation);
+}
+const url = window.location.host;
+console.log(url);
 var socket = io(url);
 
 socket.on("newPlayer", ({ id, position, model }) => {
+  if (id === socket.id) return;
   console.log("newPlayer");
   addPlayer(id, position, model);
 });
 socket.on("listOfPlayers", ({ players }) => {
   console.log("listOfPlayers");
-  players.map((i) => addPlayer(i.id, i.position, i.model));
-
+  players.map((i) => {
+    if (document.getElementById(i.id)) {
+      movePlayer(i.id, i.position);
+      rotatePlayer(i.id, i.rotation);
+    } else addPlayer(i.id, i.position, i.model);
+  });
   console.log(players);
 });
-socket.on("hi", () => {
-  console.log("hello");
-});
 socket.on("removePlayer", ({ id }) => {
+  if (id === socket.id) return;
   console.log(`${id} has disconnected`);
   removePlayer(id);
 });
 socket.on("movement", ({ id, position }) => {
-  var target = document.getElementById(id);
-  target.setAttribute("position", position);
+  if (id === socket.id) return;
+  movePlayer(id, position);
 });
 socket.on("rotation", ({ id, rotation }) => {
-  var target = document.getElementById(id);
-  target.setAttribute("rotation", rotation);
+  if (id === socket.id) return;
+  rotatePlayer(id, rotation);
 });
 
 /*

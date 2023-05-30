@@ -14,7 +14,6 @@
     <script src="https://cdn.rawgit.com/mrturck/aframe-joystick/master/joystick.min.js"></script>
     <!-- This is for joystick -->
     <script src="/socket.io/socket.io.js"></script>
-    <script src="scripts/config.js"></script>
     <script src="scripts/comms.js"></script>
     <script src="scripts/components.js"></script>
   </head>
@@ -32,20 +31,13 @@
         visible="true"
       ></a-box>
       <a-cylinder position="0 1 -2" color="red"></a-cylinder>
-      <a-camera id="camera" me position="0 0.5 0">
-        <a-entity id= "cursor" cursor="fuse: true; fuseTimeout: 500"
-        position="0 0 -0.1"
-        geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003"
-        material="color: black; shader: flat">
-        </a-entity>
-      </a-camera>
+      <a-camera id="camera" me position="0 0.5 0"><a-box></a-box></a-camera>
       <!-- id is added to be used in joystick.js -->
       <a-assets>
         <a-asset-item
           id="cityModel"
           src="https://cdn.aframe.io/test-models/models/glTF-2.0/virtualcity/VC.gltf"
         ></a-asset-item>
-        <img id="cityImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg">
       </a-assets>
       <a-entity
         gltf-model="/models/cowboy/scene.gltf"
@@ -61,7 +53,7 @@
         <img id="homeThumbnail" src="https://www.thisiscolossal.com/wp-content/uploads/2019/02/moon_crop.jpg">
       </a-assets>
     
-      <a-entity id="portal" position="1 1 1" scale="1 1 0.01" geometry="primitive: box" rotation="0 90 0" linkportal="href:/1.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+      <a-entity id="portal" title="portal" position="1 1 0" link="href: index.html; title: My Homepage; image: #homeThumbnail"></a-entity>
     
     </a-scene>
     

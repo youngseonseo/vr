@@ -17,20 +17,22 @@ app.use(express.static("public"));
 app.get("/", function (req, res) {
   res.sendFile("front/index.html", { root: __dirname });
 });
-app.get("/comms", function (req, res) {
-  res.sendFile("front/scripts/comms.js", { root: __dirname });
+
+app.get("/:file", function (req, res) {
+  res.sendFile(`front/${req.params.file}`, { root: __dirname });
 });
-app.get("/components", function (req, res) {
-  res.sendFile("front/scripts/components.js", { root: __dirname });
+
+app.get("/scripts/:file", function (req, res) {
+  res.sendFile(`front/scripts/${req.params.file}`, {
+    root: __dirname,
+  });
 });
 app.get("/models/:model/:file", function (req, res) {
-  console.log(req.params.file);
   res.sendFile(`front/models/${req.params.model}/${req.params.file}`, {
     root: __dirname,
   });
 });
 app.get("/models/:model/textures/:file", function (req, res) {
-  console.log(req.params.file);
   res.sendFile(`front/models/${req.params.model}/textures/${req.params.file}`, {
     root: __dirname,
   });
@@ -38,23 +40,22 @@ app.get("/models/:model/textures/:file", function (req, res) {
 
 // Start Express http server
 const webServer = createServer(app);
-app.get(() => {
-  console.log("connection");
-});
 const io = new Server(webServer, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
   },
 });
-
+const sockets = {};
 io.on("connection", async (socket) => {
+  socket.join(socket.handshake.headers.referer);
+  sockets[socket.id] = socket.handshake.headers.referer;
   socket.position = { x: 0, y: 0, z: 0 };
   socket.rotation = { x: 0, y: 0, z: 0 };
-  var aaaa = Math.floor(Math.random() * 10) % models.length;
-  socket.model = models[aaaa];
+  var modelIndex = Math.floor(Math.random() * 10) % models.length;
+  socket.model = models[modelIndex];
   console.log(`${socket.id} connected`);
-  socket.broadcast.emit("newPlayer", {
+  io.sockets.in(sockets[socket.id]).emit("newPlayer", {
     id: socket.id,
     position: socket.position,
     rotation: socket.rotation,
@@ -62,28 +63,34 @@ io.on("connection", async (socket) => {
   });
   socket.on("disconnect", (reason) => {
     console.log(`${socket.id} disconnected`);
-    socket.broadcast.emit("removePlayer", { id: socket.id });
+    delete sockets[socket.id];
+    socket.leave(sockets[socket.id]);
+    io.sockets.in(sockets[socket.id]).emit("removePlayer", { id: socket.id });
   });
-  let players = await getAllPlayers();
+  let players = await getAllPlayers(sockets[socket.id]);
   socket.emit("listOfPlayers", { players: players });
   socket.on("movement", ({ position }) => {
     socket.position = position;
-    socket.broadcast.emit("movement", { id: socket.id, position: position });
+    io.sockets
+      .in(sockets[socket.id])
+      .emit("movement", { id: socket.id, position: position });
   });
   socket.on("rotation", ({ rotation }) => {
     socket.rotation = rotation;
-    socket.broadcast.emit("rotation", {
+    io.sockets.in(sockets[socket.id]).emit("rotation", {
       id: socket.id,
       rotation: socket.rotation,
     });
   });
 });
 
-async function getAllPlayers() {
+async function getAllPlayers(room) {
   let players = await io.fetchSockets();
-  players = players.map((i) => {
-    return { id: i.id, position: i.position, model: i.model };
-  });
+  players = players
+    .map((i) => {
+      return { id: i.id, position: i.position, model: i.model };
+    })
+    .filter((i) => sockets[i.id] == room);
   return players;
 }
 webServer.listen(process.env.PORT || 3000, () => {
