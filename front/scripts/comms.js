@@ -9,11 +9,14 @@ function addPlayer(id, position, model) {
   var texture = document.createElement("a-entity");
 
   texture.setAttribute("gltf-model", `/models/${model}/scene.gltf`);
-
   texture.setAttribute("rotation", "0 180 0");
-  texture.setAttribute("position", "0 0 0");
+  texture.setAttribute("position", "0 -0.5 0");
   texture.setAttribute("scale", "0.3 0.3 0.3");
+  texture.setAttribute("animation-mixer", "clip:Rig|idle");
+  texture.setAttribute("id", `${id}-texture`);
+  texture.setAttribute("model", `${model}`);
   newPlayer.setAttribute("opacity", "0");
+  newPlayer.setAttribute("player", "");
   newPlayer.appendChild(texture);
   scene.appendChild(newPlayer);
 }
@@ -25,11 +28,13 @@ function removePlayer(id) {
 function movePlayer(id, position) {
   var target = document.getElementById(id);
   target.setAttribute("position", position);
+  target.components["player"].moveAnimation(id);
 }
 function rotatePlayer(id, rotation) {
   var target = document.getElementById(id);
-  target.setAttribute("rotation", rotation);
+  target.setAttribute("rotation", { ...rotation, x: 0 });
 }
+
 const url = window.location.host;
 console.log(url);
 var socket = io(url);

@@ -76,3 +76,23 @@ AFRAME.registerComponent("linkportal", {
     });
   },
 });
+
+AFRAME.registerComponent("player", {
+  schema: {
+    timer: { type: "string" },
+  },
+  init: function () {},
+  animate: function (id, animation) {
+    var target = document.getElementById(`${id}-texture`);
+    var model = target.getAttribute("model");
+    target.setAttribute(
+      "animation-mixer",
+      `clip: ${animations[model][animation]}`
+    );
+  },
+  moveAnimation: function (id) {
+    window.clearTimeout(this.timer);
+    this.animate(id, "walk");
+    this.timer = window.setTimeout(this.animate, 100, id, "idle");
+  },
+});

@@ -6,12 +6,13 @@
       content="upgrade-insecure-requests"
     />
 
-    <title>Basic Example — Networked-Aframe</title>
-    <meta name="description" content="Basic Example — Networked-Aframe" />
+    <title>VR arcade</title>
+    <meta name="description" content="VR arcade"/>
     <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
     <script src="https://cdn.rawgit.com/mrturck/aframe-joystick/master/joystick.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <!-- This is for joystick -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="scripts/config.js"></script>
@@ -45,12 +46,18 @@
           id="cityModel"
           src="https://cdn.aframe.io/test-models/models/glTF-2.0/virtualcity/VC.gltf"
         ></a-asset-item>
+        <a-asset-item
+        id = "playerModel"
+        src="/models/player/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+        id = "businessmanModel"
+        src="/models/businessman/scene.gltf"
+        ></a-asset-item>
         <img id="cityImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg">
       </a-assets>
-      <a-entity
-        gltf-model="/models/cowboy/scene.gltf"
-        position="0 0 0"
-      ></a-entity>
+      <a-entity gltf-model="#playerModel" position="0 0 1" scale = "0.17 0.17 0.17" animation-mixer="clip:Walk"></a-box></a-entity>
+      <a-entity gltf-model="#businessmanModel" position="0 0 0.5" scale = "0.4 0.4 0.4" animation-mixer="clip:Rig|walk"> </a-box></a-entity>
       <a-entity
         static-body
         gltf-model="#cityModel"
