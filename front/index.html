@@ -24,15 +24,7 @@
     <a-scene>
       <a-entity id="joystick" joystick vr-mode-ui="enabled: false"></a-entity>
       <!-- showing joystick to user -->
-      <a-box
-        static-body
-        id="ground"
-        scale="100 1 100"
-        position="0 -1 0"
-        color="#444444"
-        visible="true"
-      ></a-box>
-      <a-cylinder position="0 1 -2" color="red"></a-cylinder>
+
       <a-camera id="camera" me position="0 0.5 0">
         <a-entity id= "cursor" cursor="fuse: true; fuseTimeout: 500"
         position="0 0 -0.1"
@@ -41,38 +33,171 @@
         </a-entity>
       </a-camera>
       <!-- id is added to be used in joystick.js -->
+      
       <a-assets>
         <a-asset-item
           id="cityModel"
           src="https://cdn.aframe.io/test-models/models/glTF-2.0/virtualcity/VC.gltf"
         ></a-asset-item>
         <a-asset-item
-        id = "playerModel"
-        src="/models/player/scene.gltf"
+          id = "playerModel"
+          src="/models/player/scene.gltf"
         ></a-asset-item>
         <a-asset-item
-        id = "businessmanModel"
-        src="/models/businessman/scene.gltf"
+          id = "businessmanModel"
+          src="/models/businessman/scene.gltf"
         ></a-asset-item>
         <img id="cityImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg">
+        <a-asset-item
+          id = "cristalball"
+          src="/models/cristalball/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id = "earth"
+          src="/models/earth/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id = "moon"
+          src="/models/moon/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+        id = "jupiter"
+        src="/models/jupiter/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "saturn"
+        src="/models/saturn/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "mars"
+        src="/models/mars/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "venus"
+        src="/models/venus/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "sun"
+        src="/models/sun/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "urano"
+        src="/models/urano/scene.gltf"
+      ></a-asset-item>
+      
+      <a-asset-item
+        id = "stage1"
+        src="/models/stage_1/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "stage2"
+        src="/models/stage_2/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "stage3"
+        src="/models/stage_3/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "stage4"
+        src="/models/stage_4/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "stage5"
+        src="/models/stage_5/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "stage_light1"
+        src="/models/stage_light1/scene.gltf"
+      ></a-asset-item>
       </a-assets>
-      <a-entity gltf-model="#playerModel" position="0 0 1" scale = "0.17 0.17 0.17" animation-mixer="clip:Walk"></a-box></a-entity>
-      <a-entity gltf-model="#businessmanModel" position="0 0 0.5" scale = "0.4 0.4 0.4" animation-mixer="clip:Rig|walk"> </a-box></a-entity>
-      <a-entity
-        static-body
-        gltf-model="#cityModel"
-        position="0 0 0 "
-      ></a-entity>
-      <a-box position="5 5 0" dynamic-body></a-box>
+      
+      
       <a-assets>
         <img id="homeThumbnail" src="https://www.thisiscolossal.com/wp-content/uploads/2019/02/moon_crop.jpg">
       </a-assets>
     
-      <a-entity id="portal" position="1 1 1" scale="1 1 0.01" geometry="primitive: box" rotation="0 90 0" linkportal="href:/1.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
-    
+      <!-- ground -->
+      <a-box
+        static-body
+        id="ground"
+        scale="100 1 100"
+        position="0 -0.5 0"
+        color="#444444"
+        visible="true"
+      ></a-box>
+
+      <!-- spawn point -->
+      <a-entity gltf-model="#playerModel" position="0.5 0 -2" scale = "0.17 0.17 0.17" animation-mixer="clip:Walk"></a-box></a-entity>
+      <a-entity gltf-model="#businessmanModel" position="-0.5 0 -2" scale = "0.4 0.4 0.4" animation-mixer="clip:Rig|walk"> </a-box></a-entity>
+      <a-sphere color="gray" opacity="1.0" scale="3 3 3" position="0 -3.2 0"></a-sphere>
+      
+
+      <!-- solar system with animation -->
+      <a-entity position="5 20 -15" shadow="cast:true">
+        <a-entity gltf-model="#sun" position="0 0 0" scale="2 2 2"
+                  animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing:linear"
+        ></a-entity>
+        
+        <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing:linear">
+          <a-entity gltf-model="#venus" position="-7 0 0" scale="0.005 0.005 0.005"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing:linear"
+          ></a-entity>
+        </a-entity>   
+       
+        <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 16734; easing:linear">
+          <a-entity gltf-model="#earth" position="-12 0 0" scale="1 1 1" rotation="0 0 23.5"
+                  animation="property: rotation; to: 0 360 23.5; loop: true; dur: 200000; easing:linear">     
+            <a-entity gltf-model="#moon" scale="0.2 0.2 0.2" position="-3 0 0"
+                      animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing:linear"
+            ></a-entity>
+          </a-entity>
+        </a-entity>
+      
+        <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 18298; easing:linear">
+          <a-entity gltf-model="#mars" position="-18 0 0" scale="0.5 0.5 0.5"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 200000; easing:linear"
+          ></a-entity>
+        </a-entity>   
+        
+        <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 35267; easing:linear">
+          <a-entity gltf-model="#jupiter" position="-25 -0 -1" scale="1 1 1" rotation="0 0 4.5"
+          ></a-entity>
+        </a-entity>      
+       
+        <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 40833; easing:linear">
+          <a-entity gltf-model="#saturn" position="-32 0 0" rotation="0 0 26.73"
+                    animation="property: rotation; to: 0 360 26.73; loop: true; dur: 10263; easing:linear"
+          ></a-entity>
+        </a-entity>
+        
+        <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 59260; easing:linear">
+          <a-entity gltf-model="#urano" position="-40 0 0" scale="0.004 0.004 0.004" rotation="0 0 82.23" 
+                    animation="property: rotation; to: 0 360 82.23; loop: true; dur: 37220; easing:linear"
+          ></a-entity>
+        </a-entity>  
+      ></a-entity>
+      
+     
+      <!-- portals with stages -->
+      <a-entity position="-5 0 -8" rotation="0 30 0">
+        <a-entity gltf-model="#stage1" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
+        <a-entity position="0.01 0.52 -0.32" scale="0.55 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/1.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+      </a-entity>
+
+      <a-entity position="5 -0.15 -8" rotation="0 -30 0">
+        <a-entity gltf-model="#stage2" position="0 0 0" scale="0.13 0.13 0.13"></a-entity>
+        <a-entity position="0 0.7 -1.35" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/1.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+      </a-entity>
+
+      <a-entity position="0 0 -8" rotation="0 0 0">
+        <a-entity gltf-model="#stage3" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
+        <!-- Here will be circle image-->
+      </a-entity>
+
+
+
     </a-scene>
     
-    </a-scene>
     <script>
       window.addEventListener("DOMContentLoaded", function () {
         console.log("loaded");
@@ -82,7 +207,7 @@
           console.log("Mobile");
         } else {
           console.log("PC");
-          showJoystick.outerHTML = ""; // remove the joystick a-entity
+          // showJoystick.outerHTML = ""; // remove the joystick a-entity
         }
       });
     </script>
