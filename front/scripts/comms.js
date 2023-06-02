@@ -1,7 +1,7 @@
 function addPlayer(id, position, model) {
   if (id === socket.id) return;
   console.log(`adding ${id} on ${JSON.stringify(position)}`);
-  var scene = document.querySelector("a-scene");
+
   var newPlayer = document.createElement("a-box");
   newPlayer.setAttribute("id", id);
   //newPlayer.setAttribute("player");
@@ -18,11 +18,11 @@ function addPlayer(id, position, model) {
   newPlayer.setAttribute("opacity", "0");
   newPlayer.setAttribute("player", "");
   newPlayer.appendChild(texture);
+  var scene = document.querySelector("a-scene");
   scene.appendChild(newPlayer);
 }
 function removePlayer(id) {
   var player = document.getElementById(`${id}`);
-  console.log(player);
   player.parentNode.removeChild(player);
 }
 function movePlayer(id, position) {
@@ -35,7 +35,27 @@ function rotatePlayer(id, rotation) {
   target.setAttribute("rotation", { ...rotation, x: 0 });
 }
 
+function connectToPeer(id, peerId) {
+  connections[id] = {};
+  connections[id] = peer.connect(peerId);
+}
+async function callPeer(id, peerId) {
+  var call = await peer.call(peerId, window.localStream);
+  calls[id] = call;
+  console.log(call);
+  call.on("stream", (stream) => {
+    var audio = document.createElement("audio");
+    audio.setAttribute("id", `${call.peer}_stream`);
+    audio.srcObject = stream;
+    audio.autoplay = true;
+    window.peerStream = stream;
+    window.audios.appendChild(audio);
+    audio.play();
+  });
+}
+
 const url = window.location.host;
+
 console.log(url);
 var socket = io(url);
 
@@ -46,11 +66,18 @@ socket.on("newPlayer", ({ id, position, model }) => {
 });
 socket.on("listOfPlayers", ({ players }) => {
   console.log("listOfPlayers");
+  console.log(players);
   players.map((i) => {
+    console.log(i);
     if (document.getElementById(i.id)) {
       movePlayer(i.id, i.position);
       rotatePlayer(i.id, i.rotation);
-    } else addPlayer(i.id, i.position, i.model);
+    } else {
+      addPlayer(i.id, i.position, i.model, i.peerId);
+    }
+    if (i.peerId) {
+      document.getElementById(i.id).setAttribute("peerid", i.peerId);
+    }
   });
   console.log(players);
 });
@@ -66,6 +93,15 @@ socket.on("movement", ({ id, position }) => {
 socket.on("rotation", ({ id, rotation }) => {
   if (id === socket.id) return;
   rotatePlayer(id, rotation);
+});
+socket.on("peerId", ({ id, peerId }) => {
+  console.log(peerId);
+  if (id === socket.id) return;
+
+  var target = document.getElementById(id);
+  target.setAttribute("peerid", peerId);
+  connectToPeer(id, peerId);
+  callPeer(id, peerId);
 });
 
 /*

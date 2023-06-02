@@ -61,11 +61,18 @@ io.on("connection", async (socket) => {
     rotation: socket.rotation,
     model: socket.model,
   });
+  socket.on("peerId", ({ id }) => {
+    socket.peerId = id;
+    console.log(socket.peerId);
+    io.sockets
+      .in(sockets[socket.id])
+      .emit("peerId", { id: socket.id, peerId: socket.peerId });
+  });
   socket.on("disconnect", (reason) => {
     console.log(`${socket.id} disconnected`);
-    delete sockets[socket.id];
-    socket.leave(sockets[socket.id]);
     io.sockets.in(sockets[socket.id]).emit("removePlayer", { id: socket.id });
+    socket.leave(sockets[socket.id]);
+    delete sockets[socket.id];
   });
   let players = await getAllPlayers(sockets[socket.id]);
   socket.emit("listOfPlayers", { players: players });
@@ -88,7 +95,13 @@ async function getAllPlayers(room) {
   let players = await io.fetchSockets();
   players = players
     .map((i) => {
-      return { id: i.id, position: i.position, model: i.model };
+      if (sockets[i.id] == room)
+        return {
+          id: i.id,
+          position: i.position,
+          model: i.model,
+          peerId: i.peerId,
+        };
     })
     .filter((i) => sockets[i.id] == room);
   return players;
