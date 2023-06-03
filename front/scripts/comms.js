@@ -44,13 +44,16 @@ async function callPeer(id, peerId) {
   calls[id] = call;
   console.log(call);
   call.on("stream", (stream) => {
+    /*
     var audio = document.createElement("audio");
     audio.setAttribute("id", `${call.peer}_stream`);
     audio.srcObject = stream;
-    audio.autoplay = true;
+    audio.autoplay = true;*/
+    var peerAudio = document.getElementById("peerAudio");
+    peerAudio.srcObject = stream;
     window.peerStream = stream;
-    window.audios.appendChild(audio);
-    audio.play();
+    //window.audios.appendChild(audio);
+    //audio.play();
   });
 }
 
