@@ -57,10 +57,6 @@
         ></a-asset-item>
         <img id="cityImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg">
         <a-asset-item
-          id = "cristalball"
-          src="/models/cristalball/scene.gltf"
-        ></a-asset-item>
-        <a-asset-item
           id = "earth"
           src="/models/earth/scene.gltf"
         ></a-asset-item>
@@ -113,9 +109,58 @@
         id = "stage5"
         src="/models/stage_5/scene.gltf"
       ></a-asset-item>
+      
       <a-asset-item
-        id = "stage_light1"
-        src="/models/stage_light1/scene.gltf"
+        id = "hypergate"
+        src="/models/hypergate/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "satellite_comms"
+        src="/models/satellite_comms/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "spaceship_1"
+        src="/models/spaceship_1/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "spaceship_2"
+        src="/models/spaceship_2/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "milkyway"
+        src="/models/milkyway/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "station_1"
+        src="/models/station_1/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "station_2"
+        src="/models/station_2/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "dome_2"
+        src="/models/dome_2/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "cafe"
+        src="/models/cafe/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "ramyeon"
+        src="/models/ramyeon/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "equalizer"
+        src="/models/equalizer/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "bench_1"
+        src="/models/bench_1/scene.gltf"
+      ></a-asset-item>
+      <a-asset-item
+        id = "bench_2"
+        src="/models/bench_2/scene.gltf"
       ></a-asset-item>
       </a-assets>
       
@@ -124,24 +169,12 @@
         <img id="homeThumbnail" src="https://www.thisiscolossal.com/wp-content/uploads/2019/02/moon_crop.jpg">
       </a-assets>
     
-      <!-- ground -->
-      <a-box
-        static-body
-        id="ground"
-        scale="100 1 100"
-        position="0 -0.5 0"
-        color="#444444"
-        visible="true"
-      ></a-box>
-
-      <!-- spawn point -->
-      <a-entity gltf-model="#playerModel" position="0.5 0 -2" scale = "0.17 0.17 0.17" animation-mixer="clip:Walk"></a-box></a-entity>
-      <a-entity gltf-model="#businessmanModel" position="-0.5 0 -2" scale = "0.4 0.4 0.4" animation-mixer="clip:Rig|walk"> </a-box></a-entity>
-      <a-sphere color="gray" opacity="1.0" scale="3 3 3" position="0 -3.2 0"></a-sphere>
+      <!-- walking models -->
+      <a-entity gltf-model="#playerModel" position="0.5 0 0" scale = "0.17 0.17 0.17" animation-mixer="clip:Walk"></a-box></a-entity>
+      <a-entity gltf-model="#businessmanModel" position="-0.5 0 0" scale = "0.4 0.4 0.4" animation-mixer="clip:Rig|walk"> </a-box></a-entity>
       
-
       <!-- solar system with animation -->
-      <a-entity position="5 20 -15" shadow="cast:true">
+      <a-entity position="5 50 -15" shadow="cast:true" scale="5 5 5">
         <a-entity gltf-model="#sun" position="0 0 0" scale="2 2 2"
                   animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing:linear"
         ></a-entity>
@@ -168,42 +201,125 @@
         </a-entity>   
         
         <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 35267; easing:linear">
-          <a-entity gltf-model="#jupiter" position="-25 -0 -1" scale="1 1 1" rotation="0 0 4.5"
+          <a-entity gltf-model="#jupiter" position="-25 15 -1" scale="2 2 2" rotation="0 0 4.5"
           ></a-entity>
         </a-entity>      
        
         <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 40833; easing:linear">
-          <a-entity gltf-model="#saturn" position="-32 0 0" rotation="0 0 26.73"
+          <a-entity gltf-model="#saturn" position="-32 0 0" rotation="0 0 26.73" scale="2 2 2"
                     animation="property: rotation; to: 0 360 26.73; loop: true; dur: 10263; easing:linear"
           ></a-entity>
         </a-entity>
         
         <a-entity animation="property: rotation; to: 0 360 0; loop: true; dur: 59260; easing:linear">
-          <a-entity gltf-model="#urano" position="-40 0 0" scale="0.004 0.004 0.004" rotation="0 0 82.23" 
+          <a-entity gltf-model="#urano" position="-40 20 0" scale="0.007 0.007 0.007" rotation="0 0 82.23" 
                     animation="property: rotation; to: 0 360 82.23; loop: true; dur: 37220; easing:linear"
           ></a-entity>
         </a-entity>  
       ></a-entity>
       
      
+      <!-- spawn point -->
+      <a-entity gltf-model="#hypergate" position="-0.1 -0.35 -5.5" scale="0.01 0.01 0.02"></a-entity>
+      <a-cylinder color="#283747" radius="1" height="5" position="0 0.4 -3.7" rotation="90 0 0" open-ended="true" side="double" shadow="cast:true"></a-cylinder>      
+      <a-light type="point" color="#3099EC" distance="1.5" intensity="3" position="0 0.55 -1.7" shadowCast="true"></a-light>
+      <a-light type="point" color="#3099EC" distance="1.5" intensity="3" position="0 0.55 -2.9" shadowCast="true"></a-light>
+      <a-light type="point" color="#3099EC" distance="1.5" intensity="3" position="0 0.55 -4.0" shadowCast="true"></a-light>
+      <a-light type="point" color="#3099EC" distance="1.5" intensity="3" position="0 0.55 -5.0" shadowCast="true"></a-light>
+      <a-light type="point" color="#3099EC" distance="1.5" intensity="3" position="0 0.55 -5.9" shadowCast="true"></a-light>
+     
+
       <!-- portals with stages -->
-      <a-entity position="-5 0 -8" rotation="0 30 0">
+      <a-entity position="-3 0 -8" rotation="0 30 0">
         <a-entity gltf-model="#stage1" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
         <a-entity position="0.01 0.52 -0.32" scale="0.55 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/1.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
       </a-entity>
 
-      <a-entity position="5 -0.15 -8" rotation="0 -30 0">
+      <a-entity position="3 -0.15 -8" rotation="0 -30 0">
         <a-entity gltf-model="#stage2" position="0 0 0" scale="0.13 0.13 0.13"></a-entity>
         <a-entity position="0 0.7 -1.35" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/shooting-game.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
       </a-entity>
 
-      <a-entity position="0 0 -8" rotation="0 0 0">
+      <a-entity position="0 0 -10" rotation="0 0 0">
         <a-entity gltf-model="#stage3" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
         <!-- Here will be circle image-->
       </a-entity>
 
+      <!-- decorations -->
+      <a-entity gltf-model="#stage4" position="15 0 15" scale="0.4 0.4 0.4" rotation="0 270 0"></a-entity>
+
+      <a-entity gltf-model="#stage5" position="15 -1.5 7" scale="0.1 0.1 0.1" rotation="0 180 0" shadow="cast:true">
+        <a-box color="black" scale="20 15 2" position="-9 15 -25" shadow="cast:true"></a-box>
+        <a-box color="black" scale="20 15 2" position="-9 15 25" shadow="cast:true"></a-box>
+        <a-entity gltf-model="#bench_1" scale="10 10 10" rotation="0 180 0" position="20 16.2 11"></a-entity>
+        <a-entity gltf-model="#bench_1" scale="10 10 10" rotation="0 180 0" position="20 16.2 -11"></a-entity>
+        <a-entity gltf-model="#bench_1" scale="10 10 10" rotation="0 180 0" position="30 16.2 11"></a-entity>
+        <a-entity gltf-model="#bench_1" scale="10 10 10" rotation="0 180 0" position="30 16.2 -11"></a-entity>
+      </a-entity>
+      <a-entity gltf-model="#equalizer" position="6.93 2 8" scale="0.5 1.7 0.5" animation-mixer></a-entity>
 
 
+      <a-entity position="7 0 4">
+        <a-entity gltf-model="#cafe" scale="0.15 0.15 0.15" rotation="0 180 0"></a-entity>
+        <a-entity gltf-model="#bench_1" scale="1 1 1" rotation="0 270 0" position="0 0.2 -2"></a-entity>
+        <a-entity gltf-model="#bench_2" scale="1 1 1" rotation="0 90 0" position="-2 0 0"></a-entity>
+        <a-entity gltf-model="#ramyeon" scale="0.0006 0.0006 0.0006" rotation="0 90 0" position="-1.5 0.2 0.2"></a-entity>
+      </a-entity>
+      <a-entity gltf-model="#ramyeon" scale="0.026 0.026 0.026" rotation="0 -40 0" position="11 0 1"></a-entity>
+
+      <a-entity position="3.5 0 10">
+        <a-entity position="0 0 0" scale="1.5 1.5 1.5">
+          <a-sphere radius="0.6" opacity="0.3" position="0 0.1 0"></a-sphere>
+          <a-cylinder height="0.5" radius="0.65" color="black"></a-cylinder>
+          <a-entity gltf-model="#milkyway" position="-0.1 0.2 0" scale="0.11 0.11 0.11" rotation="40 0 0"></a-entity>
+          <a-cylinder height="1.5" radius="0.65" open-ended="true" side="double" color="black" theta-start="0" theta-length="180"></a-cylinder>
+        </a-entity>
+        <a-entity position="0 0 -2" scale="1.5 1.5 1.5">
+          <a-sphere radius="0.6" opacity="0.3" position="0 0.1 0"></a-sphere>
+          <a-cylinder height="0.5" radius="0.65" color="black"></a-cylinder>
+          <a-entity gltf-model="#sun" position="0 0.45 0" scale="0.2 0.2 0.2" animation-mixer animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing:linear"></a-entity>
+          <a-cylinder height="1.5" radius="0.65" open-ended="true" side="double" color="black" theta-start="0" theta-length="180"></a-cylinder>
+        </a-entity>
+        <a-entity position="0 0 -4" scale="1 1 1">
+          <a-cylinder height="0.5" radius="0.65" color="white"></a-cylinder>
+          <a-entity gltf-model="#saturn" position="0 0.45 -0.1" rotation="0 0 26.73" scale="0.15 0.15 0.15"
+          animation="property: rotation; to: 0 360 26.73; loop: true; dur: 10263; easing:linear"></a-entity>
+          <a-cylinder height="1.5" radius="0.65" open-ended="true" side="double" color="white" theta-start="0" theta-length="180"></a-cylinder>
+        </a-entity>
+        <a-entity position="0 0 2" scale="1 1 1">
+          <a-cylinder height="0.5" radius="0.65" color="red"></a-cylinder>
+          <a-entity gltf-model="#urano" position="0 0.6 0" rotation="0 0 26.73" scale="0.0005 0.0005 0.0005"
+          animation="property: rotation; to: 0 360 26.73; loop: true; dur: 10263; easing:linear"></a-entity>
+          <a-cylinder height="1.5" radius="0.65" open-ended="true" side="double" color="red" theta-start="0" theta-length="180"></a-cylinder>
+        </a-entity>
+      </a-entity>
+      
+
+
+      <!-- overall environment -->
+      <a-entity gltf-model="#dome_2" position="7 -5 8" scale="0.5 0.5 0.5" rotation="0 0 0"></a-entity>
+      <a-entity gltf-model="#spaceship_1" position="-5 -0.3 6" scale="0.7 0.7 0.7" rotation="0 120 0"></a-entity>
+      <a-entity gltf-model="#spaceship_2" position="-40 70 -65" scale="5 5 5" rotation="40 40 0">
+        <a-light type="spot" color="white" light="distance: 40; intensity: 2" position="0.071 -0.229 1.998"></a-light>
+        <a-light type="spot" color="red" light="distance: 20; intensity: 10" position="-3.49 1.48 1.85"></a-light>
+        <a-light type="spot" color="red" light="distance: 20; intensity: 10" position="2.97 1.46 1.76"></a-light>
+        <a-light type="spot" color="red" light="distance: 20; intensity: 10" position="3 -1.2 2.15"></a-light>
+        <a-light type="spot" color="red" light="distance: 20; intensity: 10" position="-3.48 -1.26 1.908"></a-light>
+      </a-entity>
+      <a-entity gltf-model="#satellite_comms" position="3 -2 15" scale="1 1 1" rotation="0 -150 0"></a-entity>
+      <a-entity gltf-model="#milkyway" position="-30 -250 10" scale="200 200 200" rotation="40 0 0"></a-entity>
+      
+      <a-entity gltf-model="#station_1" position="-70 30 -18" scale="0.5 0.5 0.5" rotation="0 0 0"></a-entity>
+      <a-entity gltf-model="#station_2" position="-70 10 0" scale="0.3 0.3 0.3" rotation="0 0 0"></a-entity>
+      
+
+
+      <!-- sky -->
+      <a-sky color="black"></a-sky>
+
+      <!-- light -->
+      <a-light type="ambient" color="#BBB" intensity="0.8"></a-light>
+      <a-light type="directional" color="#FFF" intensity="0.6" position="3 5 -8" intensity="0.6" castShadow="true"></a-light>
     </a-scene>
     
     <script>

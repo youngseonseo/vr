@@ -1,0 +1,11 @@
+Model Information:
+* title:	Equalizer with 3d indicators
+* source:	https://sketchfab.com/3d-models/equalizer-with-3d-indicators-b92f902f6dec4ac8bca72a80c2283335
+* author:	s7ntech (https://sketchfab.com/s7ntech)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Equalizer with 3d indicators" (https://sketchfab.com/3d-models/equalizer-with-3d-indicators-b92f902f6dec4ac8bca72a80c2283335) by s7ntech (https://sketchfab.com/s7ntech) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
