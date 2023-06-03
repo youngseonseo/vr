@@ -8,7 +8,7 @@ function addPlayer(id, position, model) {
   newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
   var texture = document.createElement("a-entity");
 
-  texture.setAttribute("gltf-model", `/models/${model}/scene.gltf`);
+  texture.setAttribute("gltf-model", `/players/${model}/scene.gltf`);
   texture.setAttribute("rotation", "0 180 0");
   texture.setAttribute("position", "0 -0.5 0");
   texture.setAttribute("scale", "0.3 0.3 0.3");
@@ -35,23 +35,25 @@ function rotatePlayer(id, rotation) {
   target.setAttribute("rotation", { ...rotation, x: 0 });
 }
 
-function connectToPeer(id, peerId) {
+async function connectToPeer(id, peerId) {
   connections[id] = {};
-  connections[id] = peer.connect(peerId);
+  connections[id] = await peer.connect(peerId);
+  console.log(connections[id]);
+  callPeer(id, peerId);
 }
 async function callPeer(id, peerId) {
-  var call = await peer.call(peerId, window.localStream);
+  var call = peer.call(peerId, window.localStream);
   calls[id] = call;
   console.log(call);
   call.on("stream", (stream) => {
-    /*
     var audio = document.createElement("audio");
     audio.setAttribute("id", `${call.peer}_stream`);
     audio.srcObject = stream;
-    audio.autoplay = true;*/
-    var peerAudio = document.getElementById("peerAudio");
-    peerAudio.srcObject = stream;
+    audio.autoplay = true;
+    window.peerAudio.srcObject = stream;
+    window.peerAudio.autoplay = true;
     window.peerStream = stream;
+    window.peerAudio.play();
     //window.audios.appendChild(audio);
     //audio.play();
   });
@@ -104,7 +106,49 @@ socket.on("peerId", ({ id, peerId }) => {
   var target = document.getElementById(id);
   target.setAttribute("peerid", peerId);
   connectToPeer(id, peerId);
-  callPeer(id, peerId);
+  //callPeer(id, peerId);
+});
+var time = 200;
+navigator.mediaDevices
+  .getUserMedia({ video: false, audio: true })
+  .then((stream) => {
+    var mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.start();
+
+    var audioChunks = [];
+
+    mediaRecorder.addEventListener("dataavailable", function (event) {
+      audioChunks.push(event.data);
+    });
+
+    mediaRecorder.addEventListener("stop", function () {
+      var audioBlob = new Blob(audioChunks);
+
+      audioChunks = [];
+
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(audioBlob);
+      fileReader.onloadend = function () {
+        var base64String = fileReader.result;
+        socket.emit("voice", base64String);
+      };
+
+      mediaRecorder.start();
+
+      setTimeout(function () {
+        mediaRecorder.stop();
+      }, time);
+    });
+
+    setTimeout(function () {
+      mediaRecorder.stop();
+    }, time);
+  });
+
+socket.on("voice", function ({ id, data }) {
+  if (id == socket.id) return;
+  var audio = new Audio(data);
+  audio.play();
 });
 
 /*

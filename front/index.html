@@ -21,7 +21,6 @@
     <script src="scripts/config.js" defer></script>
     <script src="scripts/comms.js" defer></script>
     <script src="scripts/components.js" defer></script>
-    <script src="scripts/peer.js" defer></script>
   </head>
 
   <body>
@@ -49,11 +48,11 @@
         ></a-asset-item>
         <a-asset-item
           id = "playerModel"
-          src="/models/player/scene.gltf"
+          src="/players/player/scene.gltf"
         ></a-asset-item>
         <a-asset-item
           id = "businessmanModel"
-          src="/models/businessman/scene.gltf"
+          src="/players/businessman/scene.gltf"
         ></a-asset-item>
         <img id="cityImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg">
         <a-asset-item
@@ -232,7 +231,7 @@
       <!-- portals with stages -->
       <a-entity position="-3 0 -8" rotation="0 30 0">
         <a-entity gltf-model="#stage1" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
-        <a-entity position="0.01 0.52 -0.32" scale="0.55 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/1.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+        <a-entity position="0.01 0.52 -0.32" scale="0.55 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/car_game.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
       </a-entity>
 
       <a-entity position="3 -0.15 -8" rotation="0 -30 0">

@@ -9,7 +9,7 @@ import { readdirSync } from "node:fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const models = readdirSync("./front/models"); //get all the model folders
+const models = readdirSync("./front/players"); //get all the model folders
 const app = express();
 app.use(cors());
 app.use(express.static("public"));
@@ -36,6 +36,22 @@ app.get("/models/:model/textures/:file", function (req, res) {
   res.sendFile(`front/models/${req.params.model}/textures/${req.params.file}`, {
     root: __dirname,
   });
+});
+app.get("/players/:model/:file", function (req, res) {
+  res.sendFile(`front/players/${req.params.model}/${req.params.file}`, {
+    root: __dirname,
+  });
+});
+app.get("/players/:model/textures/:file", function (req, res) {
+  res.sendFile(
+    `front/players/${req.params.model}/textures/${req.params.file}`,
+    {
+      root: __dirname,
+    }
+  );
+});
+app.get("/images/:file", function (req, res) {
+  res.sendFile(`front/images/${req.params.file}`, { root: __dirname });
 });
 
 // Start Express http server
@@ -88,6 +104,14 @@ io.on("connection", async (socket) => {
       id: socket.id,
       rotation: socket.rotation,
     });
+  });
+  socket.on("voice", function (data) {
+    var newData = data.split(";");
+    newData[0] = "data:audio/ogg;";
+    newData = newData[0] + newData[1];
+    io.sockets
+      .in(sockets[socket.id])
+      .emit("voice", { id: socket.id, data: newData });
   });
 });
 

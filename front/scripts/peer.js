@@ -21,9 +21,10 @@ peer.on("call", function (call) {
   // Answer the call, providing our mediaStream
   let caller = findCaller(call.peer);
   connections[caller] = call;
-  call.answer(mediaStream);
+  console.log(call);
+  call.answer(window.localStream);
   call.on("stream", (stream) => {
-    /*var audio = document.createElement("audio");
+    var audio = document.createElement("audio");
     audio.setAttribute("id", `${call.peer}_stream`);
     audio.srcObject = stream;
     audio.autoplay = true;
@@ -32,12 +33,9 @@ peer.on("call", function (call) {
     console.log(audio);
     window.peerStream = stream;
     console.log(window.peerStream);
-    window.audios.appendChild(audio);*/
-    var peerAudio = document.getElementById("peerAudio");
-    peerAudio.srcObject = stream;
-    peerAudio.autoplay = true;
-    window.peerStream = stream;
-    console.log(peerAudio.srcObject);
+    window.audios.appendChild(audio);
+    console.log(window.peerAudio.srcObject);
+    console.log(window.peerStream);
   });
 });
 
