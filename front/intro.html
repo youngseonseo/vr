@@ -1,0 +1,770 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+
+    <title>Basic Example — Networked-Aframe</title>
+    <meta name="description" content="Basic Example — Networked-Aframe" />
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@3.0.3/dist/aframe-event-set-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@tagOrCommit/dist/aframe-extras.min.js"></script>
+    <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/comms"></script>
+    <script src="/components"></script>
+  </head>
+
+  <body>
+    <script>      
+      window.kbAbcLow = true;
+window.kbAbcHigh = false;
+var old_timestamp = null;
+    
+// Switch from Low keyboard to High
+function switchKbToAbcHigh() {
+    var keyboardAbcLow = document.getElementById("keyboardAbcLow");
+    var keyboardAbcHigh = document.getElementById("keyboardAbcHigh");
+
+    console.log(" - switchKbToAbcHigh");
+    window.setTimeout(() => {
+      keyboardAbcLow.setAttribute('position','0 -10 -1');
+      keyboardAbcHigh.setAttribute('position','0 0 0');
+    
+      keyboardAbcLow.setAttribute('visible',false);
+      keyboardAbcHigh.setAttribute('visible',true);
+    }, 200)
+}
+
+// Switch from High keyboard to Low
+function switchKbToAbcLow() {
+    var keyboardAbcLow = document.getElementById("keyboardAbcLow");
+    var keyboardAbcHigh = document.getElementById("keyboardAbcHigh");
+
+    console.log(" - switchKbToAbcLow");
+    window.setTimeout(() => {
+      keyboardAbcHigh.setAttribute('position','0 -10 -1');
+      keyboardAbcLow.setAttribute('position','0 0 0');
+    
+      keyboardAbcHigh.setAttribute('visible',false);
+      keyboardAbcLow.setAttribute('visible',true);
+    }, 200)
+}
+    </script><!-- ============================ Start Model Selection ==========================  -->
+    <a-scene id="scene">
+      
+      <a-gui-label
+      id = "enter_nickname_label_main"
+          width="4.5" height="0.6"
+          value="Enter your nickname:"
+          font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+          font-size="0.2"
+          line-height="0.8"
+          letter-spacing="0"
+          margin="0 0 0.05 0" position="0 4.1 -4" opacity="0.55" background-color="#212121" font-color="#212121"
+      >
+    </a-gui-label>
+
+    <a-gui-flex-container
+      id="flex"
+      flex-direction="column" justify-content="center" align-items="middle" component-padding="0.1"
+      opacity="0.7" width="4.5" height="1.4"
+      position="0 3.05 -4" rotation="0 0 0"
+  >		
+      
+      <a-gui-input id="test_input"
+         width="4" height="0.7"
+         onclick="testInputAction"
+         value="_"
+         valueWithoutDash = ""
+         font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+         font-color="#212121"
+         border-color="#212121"
+         border-hover-color="#424242"
+         background-color="#FAFAFA"
+         hover-color="#F5F5F5"
+         active-color="#FFEB3B"
+      >
+      </a-gui-input>
+  </a-gui-flex-container>
+
+  <a-entity id="keyboard" position="0 0.75 -4" rotation="-15 0 0">
+    <a-entity id="keyboardAbcLow" visible="true" position="0 0 0">
+        <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
+                    gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
+                    position="0 1 0"
+        >
+            <a-gui-button	width="0.5" height="0.5"
+                            onclick="keypress(this);" key="1"
+                            value="1" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                            onclick="keypress(this);" key="2"
+                            value="2" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                            onclick="keypress(this);" key="3"
+                            value="3" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                            onclick="keypress(this);" key="4"
+                            value="4" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                            onclick="keypress(this);" key="5"
+                            value="5" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                            onclick="keypress(this);" key="6"
+                            value="6" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                            onclick="keypress(this);" key="7"
+                            value="7" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                            onclick="keypress(this);" key="8"
+                            value="8" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                            onclick="keypress(this);" key="9"
+                            value="9" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="0"
+                                value="0" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+        </a-entity>
+        <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
+                    gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
+                    position="0 0.5 0"
+        >
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="q"
+                             value="q" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="w"
+                             value="w" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="e"
+                             value="e" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="r"
+                             value="r" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="t"
+                             value="t" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="y"
+                             value="y" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="u"
+                             value="u" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="i"
+                             value="i" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="o"
+                             value="o" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="p"
+                             value="p" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+        </a-entity>
+
+        <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
+                    gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
+                    position="0 0 0"
+        >
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="a"
+                             value="a" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="s"
+                             value="s" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="d"
+                             value="d" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="f"
+                             value="f" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="g"
+                             value="g" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="h"
+                             value="h" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="j"
+                             value="j" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="k"
+                             value="k" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="l"
+                             value="l" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+        </a-entity>
+
+        <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
+                    gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
+                    position="0 -0.5 0"
+        >
+            <a-gui-button	width="0.75" height="0.5"
+                             onclick="switchKbToAbcHigh" key="keyCode:16" id="shiftUp"
+                             value="^" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="z"
+                             value="z" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="x"
+                             value="x" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="c"
+                             value="c" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="v"
+                             value="v" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="b"
+                             value="b" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="n"
+                             value="n" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.5" height="0.5"
+                             onclick="keypress(this);" key="m"
+                             value="m" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+            <a-gui-button	width="0.75" height="0.5"
+                             onclick="deleteKey(this);" key="key:Backspace"
+                             value="<--" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            ></a-gui-button>
+        </a-entity>
+    </a-entity>
+    <a-entity id="keyboardAbcHigh" visible="false" position="0 -10 -1">
+            <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
+          gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
+          position="0 1 0"
+    >
+                <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="1"
+                                value="1" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="2"
+                                value="2" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="3"
+                                value="3" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="4"
+                                value="4" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="5"
+                                value="5" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="6"
+                                value="6" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="7"
+                                value="7" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="8"
+                                value="8" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="0.5" height="0.5"
+                                onclick="keypress(this);" key="9"
+                                value="9" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="0.5" height="0.5"
+                                    onclick="keypress(this);" key="0"
+                                    value="0" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+            </a-entity>
+    <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
+          gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
+          position="0 0.5 0"
+    >
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="Q"
+               value="Q" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="W"
+               value="W" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="E"
+               value="E" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="R"
+               value="R" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="T"
+               value="T" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="Y"
+               value="Y" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="U"
+               value="U" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="I"
+               value="I" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="O"
+               value="O" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="P"
+               value="P" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+    </a-entity>
+
+    <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
+          gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
+          position="0 0 0"
+    >
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="A"
+               value="A" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="S"
+               value="S" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="D"
+               value="D" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="F"
+               value="F" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="G"
+               value="G" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="H"
+               value="H" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="J"
+               value="J" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="K"
+               value="K" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="L"
+               value="L" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+    </a-entity>
+
+    <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
+          gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
+          position="0 -0.5 0"
+    >
+                <a-gui-button	width="0.75" height="0.5"
+               onclick="switchKbToAbcLow" key="keyCode:16" id="shiftDown"
+               value="^" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="Z"
+               value="Z" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="X"
+               value="X" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="C"
+               value="C" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="V"
+               value="V" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="B"
+               value="B" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="N"
+               value="N" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.5"
+               onclick="keypress(this);" key="M"
+               value="M" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+                <a-gui-button	width="0.75" height="0.5"
+               onclick="deleteKey(this);" key="keyCode:16"
+               value="<--" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+    </a-entity>
+  </a-entity>
+    <a-entity id="keyboardNav">
+    <a-entity 	gui-item="type: flex-container; width: 5.25; height: 0.5;"
+          gui-flex-container="flexDirection: row; justifyContent: center; alignItems: normal; componentPadding: 0.1; opacity: 0.7"
+          position="0 -1 0"
+    >
+                <a-gui-button	width="0.7" height="0.5" id="navkbSwitch"
+               onclick="keypress(this);" key="keyCode:9"
+               value="_" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+                <a-gui-button	width="0.75" height="0.5" id="clearAll"
+               onclick="clearAll" key="del"
+               value="del" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+                <a-gui-button	width="2.50" height="0.5" id="space"
+                                onclick="keypress(this);" key="keyCode:32"
+                                value=" " font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+                ></a-gui-button>
+                <a-gui-button	width="1.3" height="0.5" id="enter"
+               onclick="enter" key="keyCode:13"
+               value="Enter" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+    </a-entity>
+  </a-entity>
+</a-entity>	
+
+<script>
+  // Appends character to nickname
+function keypress(el) {
+  let key = el.getAttribute("value"); // Key of pressed button
+  let inputLabel = document.getElementById("test_input");
+
+  let currentText = inputLabel.getAttribute("valueWithoutDash");
+  let newText = currentText + key;
+
+  if (newText.length == 18) {
+    inputLabel.setAttribute("valueWithoutDash", newText);
+    inputLabel.setAttribute("value", newText);  
+
+    return
+  }
+  if (newText.length > 18) {
+      // Display pop up that max length is 18
+      let enter_nickname_label = document.getElementById("enter_nickname_label");
+
+      enter_nickname_label.setAttribute("value", "Max nickname length is 18!");
+      enter_nickname_label.setAttribute("font-color", "#eb4034")
+
+      window.setTimeout(() => {
+          enter_nickname_label.setAttribute("value", "");
+      }, 7000)
+
+      return
+  } else if (newText.trim() == "") {
+      // Display pop up that name cannot be empty string
+      let enter_nickname_label = document.getElementById("enter_nickname_label");
+
+      enter_nickname_label.setAttribute("value", "Nickname must contain letters!");
+      enter_nickname_label.setAttribute("font-color", "#eb4034")
+
+      window.setTimeout(() => {
+          enter_nickname_label.setAttribute("value", "");
+      }, 7000)
+
+      return
+  }
+
+  inputLabel.setAttribute("valueWithoutDash", newText);
+  inputLabel.setAttribute("value", newText + "_");
+
+  el.emit("mouseleave");
+  el.emit("mouseenter");
+}
+
+// Removes last entered character
+function deleteKey(el) {
+  let inputLabel = document.getElementById("test_input");
+
+  let currentText = inputLabel.getAttribute("valueWithoutDash");
+  let newText = currentText.slice(0, -1);
+
+  inputLabel.setAttribute("value", newText + "_");
+  inputLabel.setAttribute("valueWithoutDash", newText);
+
+  el.emit("mouseleave");
+  el.emit("mouseenter");
+}
+
+// Clears input
+function clearAll() {
+  let inputLabel = document.getElementById("test_input");
+
+  inputLabel.setAttribute("valueWithoutDash", "");
+  inputLabel.setAttribute("value", "_");
+}
+
+function enter() {
+  let nickname = document.getElementById("test_input").getAttribute("valueWithoutDash").trim();
+  let camera = document.getElementById("mainCamera");
+  
+  if (nickname == "") {
+      // Display pop up that name cannot be empty string
+      let enter_nickname_label = document.getElementById("enter_nickname_label");
+
+      enter_nickname_label.setAttribute("value", "Nickname must contain letters!");
+      enter_nickname_label.setAttribute("font-color", "#eb4034")
+
+      window.setTimeout(() => {
+          enter_nickname_label.setAttribute("value", "");
+      }, 7000)
+
+      return
+  }
+
+  let bodyElement = document.getElementById("scene");
+  let keyboard = document.getElementById("keyboard");
+  let flex = document.getElementById("flex");
+  let enter_nickname_label = document.getElementById("enter_nickname_label");
+  let enter_nickname_label_main = document.getElementById("enter_nickname_label_main");
+
+  window.setTimeout(() => {
+    bodyElement.removeChild(keyboard);
+    bodyElement.removeChild(flex);
+    bodyElement.removeChild(enter_nickname_label);
+    bodyElement.removeChild(enter_nickname_label_main);
+
+    camera.setAttribute("position", "0 2 -8")
+    camera.setAttribute("wasd-controls-enabled", "true");
+  }, 200)
+}
+</script>
+
+<a-gui-label
+        id = "enter_nickname_label"
+            width="5.75" height="0.5" position="0 -1 -4" rotation="-15 0 0"
+            value=""
+            font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+            font-size="0.2"
+            line-height="0.8"
+            letter-spacing="0"
+            margin="0 0 0.05 0"  opacity="0.6" background-color="#212121" font-color="#212121"
+        >
+        </a-gui-label>
+
+      <a-box
+        static-body
+        id="ground"
+        scale="100 1 100"
+        position="0 -2 0"
+        color="#444444"
+        visible="true"
+      ></a-box>
+      <a-cylinder position="0 1 -7" color="red"></a-cylinder>
+      <a-camera me id = "mainCamera" look-controls-enabled = "true" wasd-controls-enabled="true" position="0 2 0">
+        <a-gui-cursor id="cursor"
+						  raycaster="objects: [gui-interactable]"
+						  fuse="true" fuse-timeout="1000"
+						  color="#ECEFF1"
+						  hover-color="#CFD8DC"
+						  active-color="#607D8B"
+						  design="ring" > <!-- dot, ring, reticle, cross  -->
+				</a-gui-cursor> <!-- /cursor -->
+      </a-camera>
+      
+      
+    
+      
+       <a-gui-label
+	width="2" height="0.75"
+	value="Hair"
+	font-family="assets/fonts/DiplomataSC-Regular.ttf"
+	font-size="0.2"
+	line-height="0.8"
+	letter-spacing="0"
+	margin="0 0 0.05 0"
+  position="1.8 3.8 -10" rotation="0 -29 0"
+>
+</a-gui-label>
+
+      <script>
+        const hair_models = ["empty_hair", "test_hair1", "test_hair2", "test_hair3"];
+        const chest_models = ["empty_chest", "test_chest1", "test_chest2", "test_chest3"];
+        var current_chest_index = 0;
+        var current_model_index = 0;
+        
+        function next_hair() {
+          let current_hair = document.getElementById(hair_models[current_model_index]);
+          current_hair.setAttribute("visible", "false");
+          
+          current_model_index = (current_model_index + 1) % 4;
+          let next_hair = document.getElementById(hair_models[current_model_index]);
+          next_hair.setAttribute("visible", "true");
+        }
+        
+        function prev_hair() {
+          let current_hair = document.getElementById(hair_models[current_model_index]);
+          current_hair.setAttribute("visible", "false");
+          
+          current_model_index = (4 + current_model_index - 1) % 4;
+          let next_hair = document.getElementById(hair_models[current_model_index]);
+          next_hair.setAttribute("visible", "true");
+        }
+        
+        function next_chest() {
+          let current_chest = document.getElementById(chest_models[current_chest_index]);
+          current_chest.setAttribute("visible", "false");
+          
+          current_chest_index = (current_chest_index + 1) % 4;
+          let next_chest = document.getElementById(chest_models[current_chest_index]);
+          next_chest.setAttribute("visible", "true");
+        }
+        
+        function prev_chest() {
+          let current_chest = document.getElementById(chest_models[current_chest_index]);
+          current_chest.setAttribute("visible", "false");
+          
+          current_chest_index = (4 + current_chest_index - 1) % 4;
+          let next_chest = document.getElementById(chest_models[current_chest_index]);
+          next_chest.setAttribute("visible", "true");
+        }
+      </script>
+      
+      <a-gui-flex-container 
+      component-padding="0.1" opacity="0.7"
+      panel-color="#072B73" justify-content="center"
+      panel-rounded="0.1" width="1" height="0.5"
+      position="1.8 2.9 -10" rotation="0 -29 0"
+      >
+        <a-gui-button	width="0.5" height="0.25"
+               onclick="prev_hair" key="w"
+               value="<" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.25"
+               onclick="next_hair" key="s"
+               value=">" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+
+    </a-gui-flex-container>
+       <a-gui-label
+	width="2" height="0.5"
+	value="Chest"
+	font-family="assets/fonts/DiplomataSC-Regular.ttf"
+	font-size="0.2"
+	line-height="0.8"
+	letter-spacing="0"
+	margin="0 0 0.05 0"
+  position="1.8 2.1 -10" rotation="0 -29 0"
+>
+</a-gui-label>
+      <a-gui-flex-container 
+      component-padding="0.1" opacity="0.7"
+      panel-color="#072B73" justify-content="center"
+      panel-rounded="0.1" width="2" height="0.5"
+      position="1.8 1.5 -10" rotation="0 -29 0"
+      >
+        <a-gui-button	width="0.5" height="0.25"
+               onclick="prev_chest" key="w"
+               value="<" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.25"
+               onclick="next_chest" key="s"
+               value=">" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
+      ></a-gui-button>
+
+    </a-gui-flex-container>
+
+    <!-- portals with stages -->
+    <a-entity position="3 1.5 -8" rotation="0 -90 0">
+        <a-entity gltf-model="#stage1" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
+        <a-entity position="0.01 0.52 -0.32" scale="0.55 0.8 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/index.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+      </a-entity>
+      
+      
+      
+      
+      
+      <a-gui-flex-container 
+      flex-direction="column" justify-content="center" align-items="normal" component-padding="0.1" opacity="0.7"
+      panel-color="#072B73" 
+      panel-rounded="0.1" scale="2 3 1"
+      position="-1.8 2.4 -10" rotation="0 29 0"
+      >
+        
+
+    </a-gui-flex-container>
+      
+       
+      
+
+      <a-light type="point" color="white" position="-1.5 4.45 -7" intensity="2.9"></a-light>
+      <a-cylinder position="0 1 -11" height="0.2" color="#4287f5"></a-cylinder>
+      <a-entity animation-mixer="clip:Take 001; timeScale: 1.0;" scale="0.5 0.5 0.5" rotation="-90 0 0" id="base_character" position="0.15 1.13 -10.8" gltf-model="#base_character_gltf"
+                >
+        <a-entity scale="1 1 1" rotation="0 0 0" id="empty_hair" position="0 0 0" visible="false"></a-entity>
+        <a-entity scale="1 1 1" rotation="0 0 0" id="test_hair1" position="0 0 0" gltf-model="#test_hair1_gltf" visible="false"></a-entity>
+        <a-entity scale="1 1 1" rotation="0 0 0" id="test_hair2" position="0 0 0" gltf-model="#test_hair2_gltf" visible="false"></a-entity>
+        <a-entity scale="1 1 1" rotation="0 0 0" id="test_hair3" position="0 0 0" gltf-model="#test_hair3_gltf" visible="false"></a-entity>
+        <a-entity scale="1 1 1" rotation="0 0 0" id="empty_chest" position="0 0 0" visible="false"></a-entity>
+        <a-entity scale="1 1 1" rotation="0 0 0" id="test_chest1" position="0 0 0" gltf-model="#test_chest1_gltf" visible="false"></a-entity>
+        <a-entity scale="1 1 1" rotation="0 0 0" id="test_chest2" position="0 0 0" gltf-model="#test_chest2_gltf" visible="false"></a-entity>
+        <a-entity scale="1 1 1" rotation="0 0 0" id="test_chest3" position="0 0 0" gltf-model="#test_chest3_gltf" visible="false"></a-entity>
+      </a-entity>
+      
+      
+      
+      <a-assets>
+        <a-asset-item id="base_character_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/cryptodealer%20gltf.gltf?v=1681659364352"></a-asset-item>
+        <a-asset-item id="test_hair1_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_hair1.gltf?v=1681454590339"></a-asset-item>
+        <a-asset-item id="test_hair2_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_hair2.gltf?v=1681454593505"></a-asset-item>
+        <a-asset-item id="test_hair3_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_hair3.gltf?v=1681456507539"></a-asset-item>
+        <a-asset-item id="test_chest1_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_chest1.gltf?v=1681456517241"></a-asset-item>
+        <a-asset-item id="test_chest2_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_chest2.gltf?v=1681456517242"></a-asset-item>
+        <a-asset_item id="test_chest3_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_chest3.gltf?v=1681472285997"></a-asset_item>
+        <a-asset-item
+          id="cityModel"
+          src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/poop.gltf?v=1680618243006"
+        ></a-asset-item>
+        <video id="cityVideo" src="https://cdn.aframe.io/360-video-boilerplate/video/city.mp4"></video>
+      </a-assets>
+      <a-entity gltf-model = "/models/cowboy/scene.gltf" position="0 0 0"scale="0.3 0.3 0.3"></a-entity>
+       <a-videopshere src="#cityVideo"></a-videosphere>
+      <a-entity gltf-model="#cityModel" modify-materials></a-entity>
+    </a-scene>
+  </body>
+</html>
