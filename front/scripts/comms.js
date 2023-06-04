@@ -1,3 +1,5 @@
+var muted = false;
+
 function addPlayer(id, position, model) {
   if (id === socket.id) return;
   console.log(`adding ${id} on ${JSON.stringify(position)}`);
@@ -132,12 +134,13 @@ navigator.mediaDevices
         var base64String = fileReader.result;
         socket.emit("voice", base64String);
       };
+      if (!muted) {
+        mediaRecorder.start();
 
-      mediaRecorder.start();
-
-      setTimeout(function () {
-        mediaRecorder.stop();
-      }, time);
+        setTimeout(function () {
+          mediaRecorder.stop();
+        }, time);
+      }
     });
 
     setTimeout(function () {
