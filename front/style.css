@@ -1,0 +1,8 @@
+div.controls p.click {
+    background-color: aquamarine;
+    color: blueviolet;
+}
+
+div.controls {
+    background-color: red;
+}
