@@ -387,6 +387,10 @@
       background-color: rgba(255, 170, 0, 0.5);
     }
   </style>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="scripts/config.js" defer></script>
+  <script src="scripts/comms.js" defer></script>
+  <script src="scripts/components.js" defer></script>
 </head>
 
 <body>
@@ -399,6 +403,7 @@
       Exit AR
     </div>
   </div>
+
   <a-scene physics="debug: false" webxr="optionalFeatures: dom-overlay; overlayElement: #overlay">
     <a-assets>
       <img id="ground" src="images/block.png">
@@ -459,7 +464,7 @@
     <a-obj-model id="car" src="#car-obj" mtl="#car-mtl" position="0 0.01 3" rotation="0 170 0" scale="0.1 0.1 0.1"
       shadow="cast:true; receive:true" static-body="shape: none"
       shape__main="shape: box; halfExtents: 0.6 0.5 1; offset: 0 0 -0.6" car animation-mixer
-      aabb-collider="objects: .wall;"></a-obj-model>
+      aabb-collider="objects: .wall;" me></a-obj-model>
 
     <a-entity gltf-model="/models/vinh_stadium/scene.gltf" height="400" width="400" rotation="0 0 0" repeat="200 200"
       shadow="receive:true" ar-shadows="opacity: 0.3" static-body="shape: none"

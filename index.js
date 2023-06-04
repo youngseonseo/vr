@@ -119,15 +119,15 @@ async function getAllPlayers(room) {
   let players = await io.fetchSockets();
   players = players
     .map((i) => {
-      if (sockets[i.id] == room)
+      if (i && sockets[i?.id] == room)
         return {
-          id: i.id,
-          position: i.position,
-          model: i.model,
-          peerId: i.peerId,
+          id: i?.id,
+          position: i?.position,
+          model: i?.model,
+          peerId: i?.peerId,
         };
     })
-    .filter((i) => sockets[i.id] == room);
+    .filter((i) => i && sockets[i.id] == room);
   return players;
 }
 webServer.listen(process.env.PORT || 3000, () => {

@@ -12,8 +12,8 @@ function addPlayer(id, position, model) {
 
   texture.setAttribute("gltf-model", `/players/${model}/scene.gltf`);
   texture.setAttribute("rotation", "0 180 0");
-  texture.setAttribute("position", "0 -0.5 0");
-  texture.setAttribute("scale", "0.3 0.3 0.3");
+  texture.setAttribute("position", "0 -1.5 0");
+  texture.setAttribute("scale", "1 1 1");
   texture.setAttribute("animation-mixer", "clip:Rig|idle");
   texture.setAttribute("id", `${id}-texture`);
   texture.setAttribute("model", `${model}`);
@@ -96,7 +96,7 @@ socket.on("removePlayer", ({ id }) => {
 socket.on("movement", ({ id, position }) => {
   if (id === socket.id) return;
   console.log(position);
-  movePlayer(id, position);
+  movePlayer(id, { ...position, y: 1.5 });
 });
 socket.on("rotation", ({ id, rotation }) => {
   if (id === socket.id) return;
