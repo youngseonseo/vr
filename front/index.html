@@ -31,8 +31,16 @@
     <a-scene>
       <a-entity id="joystick" joystick vr-mode-ui="enabled: false"></a-entity>
       <!-- showing joystick to user -->
+<!-- Vive. -->
+<a-entity vive-controls="hand: left"></a-entity>
+<a-entity vive-controls="hand: right"></a-entity>
 
-      <a-camera id="camera" me position="0 0.5 0">
+<!-- Or Rift. -->
+<a-entity oculus-touch-controls="hand: left"></a-entity>
+<a-entity oculus-touch-controls="hand: right"></a-entity>
+      <a-camera id="camera" me position="0 0.5 0" look-controls="enabled: true; touchenabled: true; mouseenabled: true; magicWindowTrackingEnabled: true;">
+        <a-entity hand-tracking-controls="hand: left"></a-entity>
+        <a-entity hand-tracking-controls="hand: right"></a-entity>
         <a-entity id= "cursor" cursor="fuse: true; fuseTimeout: 500"
         position="0 0 -0.1"
         geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003"
