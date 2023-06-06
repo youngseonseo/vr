@@ -596,10 +596,10 @@ function enter() {
         visible="true"
       ></a-box>
       <a-cylinder position="0 1 -7" color="red"></a-cylinder>
-      <a-camera me id = "mainCamera" look-controls-enabled = "true" wasd-controls-enabled="true" position="0 2 0">
+      <a-camera me id = "mainCamera" look-controls-enabled = "true" wasd-controls-enabled="false" position="0 2 0">
         <a-gui-cursor id="cursor"
 						  raycaster="objects: [gui-interactable]"
-						  fuse="true" fuse-timeout="1000"
+						  fuse="false" fuse-timeout="1000"
 						  color="#ECEFF1"
 						  hover-color="#CFD8DC"
 						  active-color="#607D8B"
@@ -610,7 +610,7 @@ function enter() {
       
     
       
-       <a-gui-label
+  <a-gui-label
 	width="2" height="0.75"
 	value="Hair"
 	font-family="assets/fonts/DiplomataSC-Regular.ttf"
@@ -621,6 +621,70 @@ function enter() {
   position="1.8 3.8 -10" rotation="0 -29 0"
 >
 </a-gui-label>
+
+<a-gui-label
+	width="2" height="0.5"
+	value="Chest"
+	font-family="assets/fonts/DiplomataSC-Regular.ttf"
+	font-size="0.2"
+	line-height="0.8"
+	letter-spacing="0"
+	margin="0 0 0.05 0"
+  position="1.8 2.1 -10" rotation="0 -29 0"
+  >
+  </a-gui-label>
+
+   <!-- portal -->
+   <a-entity position="3 1.5 -8" rotation="0 -90 0">
+    <a-entity gltf-model="#stage1" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
+    <a-entity position="0.01 0.52 -0.32" scale="0.55 0.8 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/index.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+  </a-entity>
+  
+  
+  
+  
+  
+<a-gui-flex-container 
+  flex-direction="column" justify-content="center" align-items="normal" component-padding="0.1" opacity="0.7"
+  panel-color="#072B73" 
+  panel-rounded="0.1" scale="2 3 1"
+  position="-1.8 2.4 -10" rotation="0 29 0"
+  >
+</a-gui-flex-container>
+
+<a-gui-flex-container 
+      component-padding="0.1" opacity="0.7"
+      panel-color="#072B73" justify-content="center"
+      panel-rounded="0.1" width="1" height="0.5"
+      position="1.8 2.9 -10" rotation="0 -29 0"
+      >
+        <a-gui-button	width="0.5" height="0.25"
+               onclick="" key="w"
+               value="<" font-family="assets/fonts/DiplomataSC-Regular.ttf"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.25"
+               onclick="" key="s"
+               value=">" font-family="assets/fonts/DiplomataSC-Regular.ttf"
+      ></a-gui-button>
+
+    </a-gui-flex-container>
+
+      <a-gui-flex-container 
+      component-padding="0.1" opacity="0.7"
+      panel-color="#072B73" justify-content="center"
+      panel-rounded="0.1" width="2" height="0.5"
+      position="1.8 1.5 -10" rotation="0 -29 0"
+      >
+        <a-gui-button	width="0.5" height="0.25"
+               onclick="" key="w"
+               value="<" font-family="assets/fonts/DiplomataSC-Regular.ttf"
+      ></a-gui-button>
+      <a-gui-button	width="0.5" height="0.25"
+               onclick="" key="s"
+               value=">" font-family="assets/fonts/DiplomataSC-Regular.ttf"
+      ></a-gui-button>
+
+    </a-gui-flex-container>
 
       <script>
         const hair_models = ["empty_hair", "test_hair1", "test_hair2", "test_hair3"];
@@ -665,106 +729,25 @@ function enter() {
         }
       </script>
       
-      <a-gui-flex-container 
-      component-padding="0.1" opacity="0.7"
-      panel-color="#072B73" justify-content="center"
-      panel-rounded="0.1" width="1" height="0.5"
-      position="1.8 2.9 -10" rotation="0 -29 0"
-      >
-        <a-gui-button	width="0.5" height="0.25"
-               onclick="prev_hair" key="w"
-               value="<" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
-      ></a-gui-button>
-      <a-gui-button	width="0.5" height="0.25"
-               onclick="next_hair" key="s"
-               value=">" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
-      ></a-gui-button>
 
-    </a-gui-flex-container>
-       <a-gui-label
-	width="2" height="0.5"
-	value="Chest"
-	font-family="assets/fonts/DiplomataSC-Regular.ttf"
-	font-size="0.2"
-	line-height="0.8"
-	letter-spacing="0"
-	margin="0 0 0.05 0"
-  position="1.8 2.1 -10" rotation="0 -29 0"
->
-</a-gui-label>
-      <a-gui-flex-container 
-      component-padding="0.1" opacity="0.7"
-      panel-color="#072B73" justify-content="center"
-      panel-rounded="0.1" width="2" height="0.5"
-      position="1.8 1.5 -10" rotation="0 -29 0"
-      >
-        <a-gui-button	width="0.5" height="0.25"
-               onclick="prev_chest" key="w"
-               value="<" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
-      ></a-gui-button>
-      <a-gui-button	width="0.5" height="0.25"
-               onclick="next_chest" key="s"
-               value=">" font-family="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/PressStart2P-Regular.ttf?v=1680693028620"
-      ></a-gui-button>
-
-    </a-gui-flex-container>
-
-    <!-- portals with stages -->
-    <a-entity position="3 1.5 -8" rotation="0 -90 0">
-        <a-entity gltf-model="#stage1" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
-        <a-entity position="0.01 0.52 -0.32" scale="0.55 0.8 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/index.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
-      </a-entity>
-      
-      
-      
-      
-      
-      <a-gui-flex-container 
-      flex-direction="column" justify-content="center" align-items="normal" component-padding="0.1" opacity="0.7"
-      panel-color="#072B73" 
-      panel-rounded="0.1" scale="2 3 1"
-      position="-1.8 2.4 -10" rotation="0 29 0"
-      >
-        
-
-    </a-gui-flex-container>
+   
       
        
       
 
       <a-light type="point" color="white" position="-1.5 4.45 -7" intensity="2.9"></a-light>
       <a-cylinder position="0 1 -11" height="0.2" color="#4287f5"></a-cylinder>
-      <a-entity animation-mixer="clip:Take 001; timeScale: 1.0;" scale="0.5 0.5 0.5" rotation="-90 0 0" id="base_character" position="0.15 1.13 -10.8" gltf-model="#base_character_gltf"
-                >
-        <a-entity scale="1 1 1" rotation="0 0 0" id="empty_hair" position="0 0 0" visible="false"></a-entity>
-        <a-entity scale="1 1 1" rotation="0 0 0" id="test_hair1" position="0 0 0" gltf-model="#test_hair1_gltf" visible="false"></a-entity>
-        <a-entity scale="1 1 1" rotation="0 0 0" id="test_hair2" position="0 0 0" gltf-model="#test_hair2_gltf" visible="false"></a-entity>
-        <a-entity scale="1 1 1" rotation="0 0 0" id="test_hair3" position="0 0 0" gltf-model="#test_hair3_gltf" visible="false"></a-entity>
-        <a-entity scale="1 1 1" rotation="0 0 0" id="empty_chest" position="0 0 0" visible="false"></a-entity>
-        <a-entity scale="1 1 1" rotation="0 0 0" id="test_chest1" position="0 0 0" gltf-model="#test_chest1_gltf" visible="false"></a-entity>
-        <a-entity scale="1 1 1" rotation="0 0 0" id="test_chest2" position="0 0 0" gltf-model="#test_chest2_gltf" visible="false"></a-entity>
-        <a-entity scale="1 1 1" rotation="0 0 0" id="test_chest3" position="0 0 0" gltf-model="#test_chest3_gltf" visible="false"></a-entity>
+      <a-entity scale="1 1 1" rotation="-90 0 0" id="base_character" position="0.15 1.13 -10.8" gltf-model="#base_character_gltf">
       </a-entity>
       
       
-      
       <a-assets>
-        <a-asset-item id="base_character_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/cryptodealer%20gltf.gltf?v=1681659364352"></a-asset-item>
-        <a-asset-item id="test_hair1_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_hair1.gltf?v=1681454590339"></a-asset-item>
-        <a-asset-item id="test_hair2_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_hair2.gltf?v=1681454593505"></a-asset-item>
-        <a-asset-item id="test_hair3_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_hair3.gltf?v=1681456507539"></a-asset-item>
-        <a-asset-item id="test_chest1_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_chest1.gltf?v=1681456517241"></a-asset-item>
-        <a-asset-item id="test_chest2_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_chest2.gltf?v=1681456517242"></a-asset-item>
-        <a-asset_item id="test_chest3_gltf" src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/test_chest3.gltf?v=1681472285997"></a-asset_item>
-        <a-asset-item
-          id="cityModel"
-          src="https://cdn.glitch.global/f9b5c84b-ec2d-4010-bf20-be9422712401/poop.gltf?v=1680618243006"
-        ></a-asset-item>
-        <video id="cityVideo" src="https://cdn.aframe.io/360-video-boilerplate/video/city.mp4"></video>
+      <a-asset-item
+         id="base_character_gltf"
+         src="front\players\player\scene.gltf">
+      </a-asset-item>
       </a-assets>
-      <a-entity gltf-model = "/models/cowboy/scene.gltf" position="0 0 0"scale="0.3 0.3 0.3"></a-entity>
-       <a-videopshere src="#cityVideo"></a-videosphere>
-      <a-entity gltf-model="#cityModel" modify-materials></a-entity>
+
     </a-scene>
   </body>
 </html>
