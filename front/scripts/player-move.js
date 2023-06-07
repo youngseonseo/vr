@@ -186,8 +186,8 @@ AFRAME.registerComponent("player-move", {
     // move with left joystick (while not pressing left grip);
     //   move faster when pressing trigger
     this.leftJoystickLength = Math.sqrt(
-      this.controllerData.leftAxisX * this.controllerData.leftAxisX +
-        this.controllerData.leftAxisY * this.controllerData.leftAxisY
+      this.controllerData?.leftAxisX * this.controllerData?.leftAxisX +
+        this.controllerData?.leftAxisY * this.controllerData?.leftAxisY
     );
 
     if (
@@ -234,8 +234,8 @@ AFRAME.registerComponent("player-move", {
     // while pressing left grip, press left joystick left/right to turn left/right by N degrees;
     // -or- just press right joystick left/right to turn left/right by N degrees.
     //  joystick must return to rest/center position before turning again
-    this.leftX = this.controllerData.leftAxisX;
-    this.rightX = this.controllerData.rightAxisX;
+    this.leftX = this.controllerData?.leftAxisX;
+    this.rightX = this.controllerData?.rightAxisX;
 
     if (Math.abs(this.leftX) < 0.1 && Math.abs(this.rightX) < 0.1) {
       this.turnReady = true;
@@ -244,7 +244,8 @@ AFRAME.registerComponent("player-move", {
     if (
       this.data.motionEnabled &&
       this.turnReady &&
-      ((this.controllerData.leftGrip.pressing && Math.abs(this.leftX) > 0.9) ||
+      ((this.controllerData?.leftGrip?.pressing &&
+        Math.abs(this.leftX) > 0.9) ||
         Math.abs(this.rightX) > 0.9)
     ) {
       this.startAngle = this.el.getAttribute("rotation").y;
@@ -282,8 +283,8 @@ AFRAME.registerComponent("player-move", {
     //   to avoid unintended simultaneous turning and vertical movement
     if (
       this.data.motionEnabled &&
-      this.controllerData.leftGrip.pressing &&
-      Math.abs(this.controllerData.leftAxisY) > 0.25
+      this.controllerData?.leftGrip?.pressing &&
+      Math.abs(this.controllerData?.leftAxisY) > 0.25
     ) {
       this.y = this.controllerData.leftAxisY;
       this.y = Math.sign(this.y) * (Math.abs(this.y) - 1 / 4);
