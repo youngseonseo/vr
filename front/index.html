@@ -24,6 +24,7 @@
     <script src="scripts/raycaster-extra.js" defer></script>
     <script src="scripts/player-move.js" defer></script>
     <script src="scripts/controller-listener.js" defer></script>
+    <script src="scripts/aframe-enviroment.js" defer></script>
 
   </head>
 
@@ -32,28 +33,52 @@
       <audio id="myMic" muted></audio>
       <audio id="peerAudio" autoplay></audio>
     </div>
-    <a-scene>
+    <a-scene environment="preset: default;" renderer="antialias: true;">
+
       <a-entity id="joystick" joystick vr-mode-ui="enabled: false"></a-entity>
       <!-- showing joystick to user -->
 <!-- Vive. -->
 <a-entity vive-controls="hand: left"></a-entity>
 <a-entity vive-controls="hand: right"></a-entity>
-<a-plane width="100" height="100" rotation="-90 0 0" position="0 0.01 0" visible="false" class="groundPlane raycaster-target" raycaster-target="" material="" geometry="">
-</a-plane>
+<a-plane
+        width="10000" height="10000"
+        rotation="-90 0 0"
+        position="0 0.01 0"
+        visible="false"
+        class="groundPlane"
+        raycaster-target>
+    </a-plane>
 <!-- Or Rift. -->
-<a-entity oculus-touch-controls="hand: left"></a-entity>
-<a-entity oculus-touch-controls="hand: right"></a-entity>
-      <a-camera id="camera" me player-move="navigationMeshClass:  groundPlane" position="0 0.5 0" look-controls="enabled: true; touchenabled: true; mouseenabled: true; magicWindowTrackingEnabled: true;">
-        <a-entity hand-tracking-controls="hand: left"></a-entity>
-        <a-entity hand-tracking-controls="hand: right"></a-entity>
-        <a-entity id= "cursor" cursor="fuse: true; fuseTimeout: 500"
-        position="0 0 -0.1"
-        geometry="primitive: ring; radiusInner: 0.002; radiusOuter: 0.003"
-        material="color: black; shader: flat">
-        </a-entity>
-      </a-camera>
       <!-- id is added to be used in joystick.js -->
-      
+      <a-entity 
+        id="player" 
+        position="0 0 0" 
+        player-move="controllerListenerId: #controller-data;
+                     navigationMeshClass: groundPlane;">
+        
+                     <a-camera id="camera" me player-move="navigationMeshClass:  groundPlane" position="0 0.5 0" look-controls="enabled: true; touchenabled: true; mouseenabled: true; magicWindowTrackingEnabled: true;"></a-camera>
+    
+        <a-entity 
+            id="controller-data" 
+            controller-listener="leftControllerId:  #left-controller; 
+                                 rightControllerId: #right-controller;">
+        </a-entity>
+
+        <a-entity 
+            id="left-controller"
+            oculus-touch-controls="hand: left">
+        </a-entity>
+
+        <!-- experiment with raycasting interval; slight performance improvement but jittery appearance in world -->
+        <a-entity
+            id="right-controller"
+            oculus-touch-controls="hand: right"
+            raycaster="objects: .raycaster-target; interval: 0;"
+            raycaster-extras="controllerListenerId: #controller-data; 
+                              beamImageSrc: #gradient; beamLength: 0.5;">
+        </a-entity>
+
+    </a-entity>
       <a-assets>
         <a-asset-item
           id="cityModel"
