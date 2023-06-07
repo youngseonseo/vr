@@ -50,6 +50,10 @@ AFRAME.registerComponent("linkportal", {
       console.log("navigating");
       window.location.href = this.href;
     });
+    this.el.addEventListener("triggerdown", () => {
+      console.log("navigating");
+      window.location.href = this.href;
+    });
     this.el.addEventListener("mouseenter", () => {
       console.log("navigating");
       const cursor = document.getElementById("cursor");

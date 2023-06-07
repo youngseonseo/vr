@@ -14,6 +14,7 @@
     <script src="https://cdn.rawgit.com/mrturck/aframe-joystick/master/joystick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/peerjs@1.3.2/dist/peerjs.min.js"></script>
+    <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
 
     <!-- This is for joystick -->
     <script src ="/scripts/joystick.js"></script>
@@ -24,6 +25,7 @@
     <script src="scripts/raycaster-extra.js" defer></script>
     <script src="scripts/player-move.js" defer></script>
     <script src="scripts/controller-listener.js" defer></script>
+    
 
   </head>
 
@@ -32,30 +34,37 @@
       <audio id="myMic" muted></audio>
       <audio id="peerAudio" autoplay></audio>
     </div>
-    <a-scene environment="preset: default;" renderer="antialias: true;">
-
+    <a-scene>
       <a-entity id="joystick" joystick vr-mode-ui="enabled: false"></a-entity>
       <!-- showing joystick to user -->
 <!-- Vive. -->
-<a-entity vive-controls="hand: left"></a-entity>
-<a-entity vive-controls="hand: right"></a-entity>
-<a-plane
-        width="10000" height="10000"
-        rotation="-90 0 0"
-        position="0 0.01 0"
-        visible="false"
-        class="groundPlane"
-        raycaster-target>
-    </a-plane>
+<a-plane width="10000" height="10000" rotation="-90 0 0" position="0 0.01 0" visible="false" class="groundPlane raycaster-target" raycaster-target="" material="" geometry="">
+</a-plane>
 <!-- Or Rift. -->
-      <!-- id is added to be used in joystick.js -->
-      <a-entity 
+
+<a-entity 
         id="player" 
         position="0 0 0" 
         player-move="controllerListenerId: #controller-data;
                      navigationMeshClass: groundPlane;">
         
-                     <a-camera id="camera" me player-move="navigationMeshClass:  groundPlane" position="0 0.5 0" look-controls="enabled: true; touchenabled: true; mouseenabled: true; magicWindowTrackingEnabled: true;"></a-camera>
+                     <a-camera id="camera" me player-move="navigationMeshClass:  groundPlane" position="0 0.5 0" look-controls="enabled: true; touchenabled: true; mouseenabled: true; magicWindowTrackingEnabled: true;">
+                      <a-gui-cursor
+          id="cursor"
+          raycaster="objects: [gui-interactable]"
+          fuse="true"
+          fuse-timeout="500"
+          color="#ECEFF1"
+          hover-color="#CFD8DC"
+          active-color="#607D8B"
+          design="ring"
+        >
+          <!-- dot, ring, reticle, cross  -->
+        </a-gui-cursor>
+        <!-- /cursor --><a-entity hand-tracking-controls="hand: left"></a-entity>
+                      <a-entity hand-tracking-controls="hand: right"></a-entity>
+                      
+                    </a-camera>
     
         <a-entity 
             id="controller-data" 
@@ -78,6 +87,8 @@
         </a-entity>
 
     </a-entity>
+      <!-- id is added to be used in joystick.js -->
+      
       <a-assets>
         <a-asset-item
           id="cityModel"
@@ -268,22 +279,22 @@
       <!-- portals with stages -->
       <a-entity position="-3 0 -8" rotation="0 30 0">
         <a-entity gltf-model="#stage1" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
-        <a-entity position="0.01 0.52 -0.32" scale="0.55 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/car_game.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+        <a-entity gui-interactable position="0.01 0.52 -0.32" scale="0.55 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/car_game.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
       </a-entity>
 
       <a-entity position="3 -0.15 -8" rotation="0 -30 0">
         <a-entity gltf-model="#stage2" position="0 0 0" scale="0.13 0.13 0.13"></a-entity>
-        <a-entity position="0 0.7 -1.35" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/shooting-game.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+        <a-entity gui-interactable position="0 0.7 -1.35" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/shooting-game.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
       </a-entity>
 
       <a-entity position="-3 0 0.3" rotation="0 90 0">
         <a-entity gltf-model="#stage2" position="0 0 0" scale="0.13 0.13 0.13"></a-entity>
-        <a-entity position="0 0.7 -1.35" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/intro.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+        <a-entity gui-interactable position="0 0.7 -1.35" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/intro.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
       </a-entity>
 
       <a-entity position="0 0 -10" rotation="0 0 0">
         <a-entity gltf-model="#stage3" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
-        <a-entity position="0 0.7 0" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/maze.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+        <a-entity gui-interactable position="0 0.7 0" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/maze.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
         <!-- Here will be circle image-->
       </a-entity>
 
