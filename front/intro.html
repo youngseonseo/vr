@@ -59,12 +59,35 @@
           id="cityImage"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg"
         />
-
         <a-asset-item id="base_character_gltf" src="/players/player/scene.gltf">
         </a-asset-item>
         <a-asset-item
-          id="milkyway"
-          src="/models/milkyway/scene.gltf"
+          id="backpack_1"
+          src="/models/backpack_1/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="backpack_2"
+          src="/models/backpack_2/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="mask_1"
+          src="/models/mask_1/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="mask_2"
+          src="/models/mask_2/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="mask_3"
+          src="/models/mask_3/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="mask_4"
+          src="/models/mask_4/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="mask_5"
+          src="/models/mask_5/scene.gltf"
         ></a-asset-item>
         <img id="background" src="/images/potw1405a.jpg" />
       </a-assets>
@@ -82,7 +105,7 @@
         position="0 4.1 -4"
         opacity="0.55"
         background-color="#212121"
-        font-color="#212121"
+        font-color="#eb4034"
       >
       </a-gui-label>
 
@@ -944,6 +967,19 @@
           let enter_nickname_label_main = document.getElementById(
             "enter_nickname_label_main"
           );
+          let player = document.getElementById("player");
+          let base_character = document.getElementById("base_character");
+          let stand = document.getElementById("stand");
+          let cust1 = document.getElementById("cust1");
+          let cust2 = document.getElementById("cust2");
+          let cust3 = document.getElementById("cust3");
+          let cust4 = document.getElementById("cust4");
+          let cust5 = document.getElementById("cust5");
+          let cust6 = document.getElementById("cust6");
+          let cust7 = document.getElementById("cust7");
+          let cust8 = document.getElementById("cust8");
+          let cust9 = document.getElementById("cust9");
+          let cust10 = document.getElementById("cust10");
 
           window.setTimeout(() => {
             bodyElement.removeChild(keyboard);
@@ -951,8 +987,22 @@
             bodyElement.removeChild(enter_nickname_label);
             bodyElement.removeChild(enter_nickname_label_main);
 
-            camera.setAttribute("position", "0 2 -8");
-            camera.setAttribute("wasd-controls-enabled", "true");
+            player.setAttribute("visible", "true");
+            stand.setAttribute("visible", "true");
+            cust1.setAttribute("visible", "true");
+            cust2.setAttribute("visible", "true");
+            cust3.setAttribute("visible", "true");
+            cust4.setAttribute("visible", "true");
+            cust5.setAttribute("visible", "true");
+            cust6.setAttribute("visible", "true");
+            cust7.setAttribute("visible", "true");
+            cust8.setAttribute("visible", "true");
+            cust9.setAttribute("visible", "true");
+            cust10.setAttribute("visible", "true");
+
+            camera.setAttribute("position", "0 2.7 -8");
+            camera.setAttribute("wasd-controls-enabled", "false");
+            base_character.changeBaseCharacterColor("white");
           }, 200);
         }
       </script>
@@ -975,7 +1025,6 @@
       >
       </a-gui-label>
 
-      <a-cylinder position="0 1 -7" color="red"></a-cylinder>
       <a-camera
         me
         id="mainCamera"
@@ -998,33 +1047,7 @@
         <!-- /cursor -->
       </a-camera>
 
-      <a-gui-label
-        width="2"
-        height="0.75"
-        value="Hair"
-        font-size="0.2"
-        line-height="0.8"
-        letter-spacing="0"
-        margin="0 0 0.05 0"
-        position="1.8 3.8 -10"
-        rotation="0 -29 0"
-      >
-      </a-gui-label>
-
-      <a-gui-label
-        width="2"
-        height="0.5"
-        value="Chest"
-        font-size="0.2"
-        line-height="0.8"
-        letter-spacing="0"
-        margin="0 0 0.05 0"
-        position="1.8 2.1 -10"
-        rotation="0 -29 0"
-      >
-      </a-gui-label>
-
-      <!-- portal -->
+      <!-- Portal to PornHub -->
       <a-entity position="3 1.5 -8" rotation="0 -90 0" linkportal="href:/">
         <a-entity
           gltf-model="#stage1"
@@ -1038,6 +1061,7 @@
           rotation="0 180 0"
           linkportal="href:/index.html"
           material="color: black"
+          gui-interactable
           ><a-image
             width="0.95"
             height="0.95"
@@ -1046,49 +1070,305 @@
           ></a-image
         ></a-entity>
       </a-entity>
+      <a-gui-label
+        id="Finish"
+        width="1  "
+        height="0.5"
+        value="Finish"
+        font-size="0.2"
+        line-height="0.8"
+        letter-spacing="0"
+        margin="0 0 0.05 0"
+        position="3 2.7 -8"
+        rotation="0 -90 0"
+        font-color="white"
+        background-color="#072B73"
+        opacity="0.7"
+      ></a-gui-label>
+
+      <!-- Player color customization -->
+      <a-gui-label
+        id="cust6"
+        width="2"
+        height="0.5"
+        value="Player Color"
+        font-size="0.2"
+        line-height="0.8"
+        letter-spacing="0"
+        margin="0 0 0.05 0"
+        position="-1.8 3.602 -10"
+        rotation="0 29 0"
+        font-color="white"
+        background-color="#072B73"
+        opacity="0.7"
+        visible="false"
+      ></a-gui-label>
 
       <a-gui-flex-container
-        flex-direction="column"
+        id="cust7"
+        component-padding="0.1"
+        opacity="0.7"
+        flex-direction="row"
+        panel-color="#072B73"
         justify-content="center"
         align-items="normal"
-        component-padding="0.1"
-        opacity="0.7"
-        panel-color="#072B73"
         panel-rounded="0.1"
-        scale="2 3 1"
-        position="-1.8 2.4 -10"
-        rotation="0 29 0"
-      >
-      </a-gui-flex-container>
-
-      <a-gui-flex-container
-        component-padding="0.1"
-        opacity="0.7"
-        panel-color="#072B73"
-        justify-content="center"
-        panel-rounded="0.1"
-        width="1"
+        width="2"
         height="0.5"
-        position="1.8 2.9 -10"
-        rotation="0 -29 0"
+        position="-1.8 3.071 -10"
+        rotation="0 29 0"
+        visible="false"
       >
         <a-gui-button
           width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('red');"
+          value=""
+          background-color="#e00000"
+          active-color="#e00000"
+        ></a-gui-button>
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('green');"
+          value=""
+          background-color="#0fe000"
+          active-color="#0fe000"	
+        ></a-gui-button>
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('black');"
+          value=""
+          background-color="black"
+          active-color="black"
+        ></a-gui-button>
+      </a-gui-flex-container>
+
+      <a-gui-flex-container
+        id="cust8"
+        component-padding="0.1"
+        opacity="0.7"
+        flex-direction="row"
+        panel-color="#072B73"
+        justify-content="center"
+        align-items="normal"
+        panel-rounded="0.1"
+        width="2"
+        height="0.5"
+        position="-1.8 2.548 -10"
+        rotation="0 29 0"
+        visible="false"
+      >
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('blue');"
+          value=""
+          background-color="blue"
+          active-color="blue"
+        ></a-gui-button>
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('yellow');"
+          value=""
+          background-color="yellow"
+          active-color="yellow"
+        ></a-gui-button>
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('orange');"
+          value=""
+          background-color="orange"
+          active-color="orange"
+        ></a-gui-button>
+      </a-gui-flex-container>
+
+      <a-gui-flex-container
+        id="cust9"
+        component-padding="0.1"
+        opacity="0.7"
+        flex-direction="row"
+        panel-color="#072B73"
+        justify-content="center"
+        align-items="normal"
+        panel-rounded="0.1"
+        width="2"
+        height="0.5"
+        position="-1.8 2.027 -10"
+        rotation="0 29 0"
+        visible="false"
+      >
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('purple');"
+          value=""
+          background-color="purple"
+          active-color="purple"
+        ></a-gui-button>
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('white');"
+          value=""
+          background-color="white"
+          active-color="white"
+        ></a-gui-button>
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('brown');"
+          value=""
+          background-color="brown"
+          active-color="brown"
+        ></a-gui-button>
+      </a-gui-flex-container>
+
+      <a-gui-flex-container
+        id="cust10"
+        component-padding="0.1"
+        opacity="0.7"
+        flex-direction="row"
+        panel-color="#072B73"
+        justify-content="center"
+        align-items="normal"
+        panel-rounded="0.1"
+        width="2"
+        height="0.5"
+        position="-1.8 1.5 -10"
+        rotation="0 29 0"
+        visible="false"
+      >
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('pink');"
+          value=""
+          background-color="pink"
+          active-color="pink"
+        ></a-gui-button>
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('lime');"
+          value=""
+          background-color="lime"
+          active-color="lime"
+        ></a-gui-button>
+        <a-gui-button
+          width="0.5"
+          height="0.35"
+          onclick="changeBaseCharacterColor('grey');"
+          value=""
+          background-color="grey"
+          active-color="grey"
+        ></a-gui-button>
+      </a-gui-flex-container>
+
+      <!-- Masks -->
+      <a-gui-label
+        id="cust1"
+        width="2"
+        height="0.5"
+        value="Mask"
+        font-size="0.2"
+        line-height="0.8"
+        letter-spacing="0"
+        margin="0 0 0.05 0"
+        position="1.8 3.602 -10"
+        rotation="0 -29 0"
+        font-color="white"
+        background-color="#072B73"
+        opacity="0.7"
+        visible="false"
+      >
+      </a-gui-label>
+
+      <!-- Buttons for choosing mask -->
+      <a-gui-flex-container
+        id="cust2"
+        component-padding="0.1"
+        opacity="0.7"
+        panel-color="#072B73"
+        justify-content="center"
+        panel-rounded="0.1"
+        width="2"
+        height="0.5"
+        position="1.8 3.071 -10"
+        rotation="0 -29 0"
+        visible="false"
+      >
+        <a-gui-button
+          width="0.75"
           height="0.25"
-          onclick=""
+          onclick="prevMask();"
           key="w"
           value="<"
         ></a-gui-button>
         <a-gui-button
-          width="0.5"
+          width="0.75"
           height="0.25"
-          onclick=""
+          onclick="nextMask();"
           key="s"
           value=">"
         ></a-gui-button>
       </a-gui-flex-container>
 
+      <!-- Backpacks -->
+      <a-gui-label
+        id="cust3"
+        width="2"
+        height="0.5"
+        value="Backpack"
+        font-size="0.2"
+        line-height="0.8"
+        letter-spacing="0"
+        margin="0 0 0.05 0"
+        position="1.8 2.548 -10"
+        rotation="0 -29 0"
+        font-color="white"
+        background-color="#072B73"
+        opacity="0.7"
+        visible="false"
+      >
+      </a-gui-label>
+
+      <!-- Buttons for choosing backpack -->
       <a-gui-flex-container
+        id="cust4"
+        component-padding="0.1"
+        opacity="0.7"
+        panel-color="#072B73"
+        justify-content="center"
+        panel-rounded="0.1"
+        width="2"
+        height="0.5"
+        position="1.8 2.027 -10"
+        rotation="0 -29 0"
+        visible="false"
+      >
+        <a-gui-button
+          width="0.75"
+          height="0.25"
+          onclick="prevBackpack();"
+          key="w"
+          value="<"
+        ></a-gui-button>
+        <a-gui-button
+          width="0.75"
+          height="0.25"
+          onclick="nextBackpack()"
+          key="s"
+          value=">"
+        ></a-gui-button>
+      </a-gui-flex-container>
+
+      <!-- Buttons for rotating character and changing walk animation -->
+      <a-gui-flex-container
+        id="cust5"
         component-padding="0.1"
         opacity="0.7"
         panel-color="#072B73"
@@ -1098,115 +1378,353 @@
         height="0.5"
         position="1.8 1.5 -10"
         rotation="0 -29 0"
+        visible="false"
       >
         <a-gui-button
-          width="0.5"
+          width="0.75"
           height="0.25"
-          onclick=""
+          onclick="rotateBaseCharacter();"
           key="w"
-          value="<"
+          value="Rotate"
         ></a-gui-button>
         <a-gui-button
-          width="0.5"
+          width="0.75"
           height="0.25"
-          onclick=""
+          onclick="walkBaseCharacter();"
           key="s"
-          value=">"
+          value="Walk"
         ></a-gui-button>
       </a-gui-flex-container>
 
+      <!-- Character customization script -->
+      <script>
+        // Store animation-mixer state
+        var base_character_animation = "clip:Idle";
+        // Store rotation state
+        var rotation = 0;
+
+        function walkBaseCharacter() {
+          let base_character = document.getElementById("base_character");
+
+          if (base_character_animation == "clip:Idle") {
+            base_character.setAttribute("animation-mixer", "clip:Walk");  
+            base_character_animation = "clip:Walk";
+            console.log("Walking");
+          } else {
+            base_character.setAttribute("animation-mixer", "clip:Idle");
+            base_character_animation = "clip:Idle";
+            console.log("Idle");
+            console.log(base_character_animation)
+          }
+        }
+
+        function rotateBaseCharacter() {
+          let player = document.getElementById("player");
+
+          if (rotation == 1) {
+            player.emit("pauseanim");
+            rotation = 2;
+          } else if (rotation == 2) {
+            player.emit("resumeanim");
+            rotation = 1;
+          } else {
+            player.emit("startanim");
+            rotation = 1;
+          }
+        }
+
+        var colorr = "blue";
+
+        // Component for player to change its color
+        AFRAME.registerComponent('treeman', {
+          init: function(){
+              let el = this.el;
+              let self = this;
+
+              el.addEventListener("changecolor", e =>{
+                console.log(colorr);
+                var color;
+
+                switch (colorr) {
+                  case "red":
+                    color = "rgb(224, 0, 0)"
+                    break;
+                  case "green":
+                    color = "rgb(15, 224, 0)"
+                    break;
+                  case "black":
+                    color = "rgb(0, 0, 0)"
+                    break;
+                  case "blue":
+                    color = "rgb(0, 32, 148)"
+                    break;
+                  case "yellow":
+                    color = "rgb(182, 224, 27)"
+                    break;
+                  case "purple":
+                    color = "rgb(2205, 27, 224)"
+                    break;
+                  case "orange":
+                    color = "rgb(224, 145, 27)"
+                    break;
+                  case "brown":
+                    color = "rgb(61, 39, 6)"
+                    break;
+                  case "white":
+                    color = "rgb(255, 255, 255)"
+                    break;
+                  case "pink":
+                    color = "rgb(217, 22, 207)"
+                    break;
+                  case "lime":
+                    color =  "rgb(72, 232, 60)"
+                    break;
+                  case "grey":
+                    color = "rgb(59, 59, 59)"
+                    break;
+                }
+                console.log(color);
+
+                let tree3D = el.getObject3D('mesh'); // Get THREEjs object from GLTF model
+                if (!tree3D){return;}    
+                // Traverse through each THREEjs model node
+                tree3D.traverse(function(node){
+                  if (node.isMesh){ // If current node is mesh change its material's color to provided color
+                    node.material.color = new THREE.Color(color);
+                    }
+                })
+              })
+          }})
+
+        function changeBaseCharacterColor(color) {
+          let base_character = document.getElementById("base_character");
+
+          colorr = color;
+          localStorage.setItem("player_color", colorr)
+
+          base_character.emit("changecolor");
+        }
+      </script>
+
+      <!-- Light above base character model in customization area -->
       <a-light
         type="point"
         color="white"
         position="-1.5 4.45 -7"
         intensity="2.9"
       ></a-light>
-      <a-cylinder position="0 1 -11" height="0.2" color="#4287f5"></a-cylinder>
+
+      <!-- Stand for base character model -->
+      <a-cylinder id="stand" position="0 1 -11" height="0.2" color="#4287f5" visible="false"></a-cylinder>
+
+      <!-- Player model with preloaded backpacks and masks and base character -->
       <a-entity
-        position="0 1.1 -11"
+      id = "player"
+      position="0 1.1 -11"
+      rotation="0 0 0"
+      scale="0.7 0.7 0.7"
+      visible="false"
+      animation="startEvents: startanim; pauseEvents: pauseanim; resumeEvents: resumeanim; property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear"
+      ><a-entity
+        position="0 0 0"
         rotation="0 0 0"
         id="base_character"
-        scale="0.7 0.7 0.7"
+        scale="1 1 1"
         animation-mixer="clip:Idle"
         gltf-model="#base_character_gltf"
-      >
-      </a-entity>
-      <a-entity
-        gltf-model="#milkyway"
-        id="milkyway"
-        position="-0.1 0.2 0"
-        scale="0.11 0.11 0.11"
-        rotation="40 0 0"
+        treeman
       ></a-entity>
+      <a-entity
+        position="0 1.8 -0.5"
+        rotation="0 0 0"
+        id="no_mask"
+        scale="6 6 6"
+        visible="true"
+      ></a-entity>
+      <a-entity
+        position="0 3.027 0.182"
+        rotation="0 0 0"
+        id="mask_1_m"
+        scale="0.002 0.002 0.002"
+        gltf-model="#mask_1"
+        visible="false"
+      ></a-entity>
+      <a-entity
+        position="0 3.055  0.126"
+        rotation="0 0 0"
+        id="mask_2_m"
+        scale="0.0005 0.0005 0.0005"
+        gltf-model="#mask_2"
+        visible="false"
+      ></a-entity>
+      <a-entity
+        position="0 2.995 0.212"
+        rotation="0 0 0"
+        id="mask_3_m"
+        scale="2 2 2"
+        gltf-model="#mask_3"
+        visible="false"
+      ></a-entity>
+      <a-entity
+        position="0 3.056 0.208"
+        rotation="90 0 0"
+        id="mask_4_m"
+        scale="0.2 0.2 0.2"
+        gltf-model="#mask_4"
+        visible="false"
+      ></a-entity>
+      <a-entity
+        position="0 2.805 0.191"
+        rotation="0 0 0"
+        id="mask_5_m"
+        scale="0.3 0.3 0.3"
+        gltf-model="#mask_5"
+        visible="false"
+      ></a-entity>
+      <a-entity
+        position="0 1.8 -0.5"
+        rotation="0 0 0"
+        id="no_backpack"
+        scale="6 6 6"
+        visible="true"
+      ></a-entity>
+      <a-entity
+        position="0 1.8 -0.5"
+        rotation="0 0 0"
+        id="backpack_1_m"
+        scale="6 6 6"
+        gltf-model="#backpack_1"
+        visible="false"
+      ></a-entity>
+      <a-entity
+        position="0 2 -0.212"
+        rotation="0 180 0"
+        id="backpack_2_m"
+        scale="1 1 1"
+        gltf-model="#backpack_2"
+        visible="false"
+      ></a-entity>
+      </a-entity>
 
+      <!-- MilkyWay background -->
       <a-sky id="background" src="#background"></a-sky>
 
       <script>
-        const hair_models = [
-          "empty_hair",
-          "test_hair1",
-          "test_hair2",
-          "test_hair3",
+        const mask_models = [
+          "no_mask",
+          "mask_1_m",
+          "mask_2_m",
+          "mask_3_m",
+          "mask_4_m",
+          "mask_5_m",
         ];
-        const chest_models = [
-          "empty_chest",
-          "test_chest1",
-          "test_chest2",
-          "test_chest3",
+        const backpack_models = [
+          "no_backpack",
+          "backpack_1_m",
+          "backpack_2_m",
         ];
-        var current_chest_index = 0;
-        var current_model_index = 0;
+        var current_mask_index = 0;
+        var current_backpack_index = 0;
 
-        function next_hair() {
-          let current_hair = document.getElementById(
-            hair_models[current_model_index]
+        function nextMask() {
+          let current_mask = document.getElementById(
+            mask_models[current_mask_index]
           );
-          current_hair.setAttribute("visible", "false");
+          current_mask.setAttribute("visible", "false");
 
-          current_model_index = (current_model_index + 1) % 4;
-          let next_hair = document.getElementById(
-            hair_models[current_model_index]
+          current_mask_index = (current_mask_index + 1) % 6;
+          let next_mask = document.getElementById(
+            mask_models[current_mask_index]
           );
-          next_hair.setAttribute("visible", "true");
+          next_mask.setAttribute("visible", "true");
+
+          let new_scale = next_mask.getAttribute("scale");
+          new_scale.x = new_scale.x/3;
+          new_scale.y = new_scale.y/3;
+          new_scale.z = new_scale.z/3;
+          console.log(new_scale);
+
+          mask_obj = {model: next_mask.getAttribute("gltf-model"), 
+          position: next_mask.getAttribute("position"), 
+          rotation: next_mask.getAttribute("rotation"), 
+          scale: new_scale};
+          localStorage.setItem("mask", mask_obj);
+          console.log(mask_obj);
         }
 
-        function prev_hair() {
-          let current_hair = document.getElementById(
-            hair_models[current_model_index]
+        function prevMask() {
+          let current_mask = document.getElementById(
+            mask_models[current_mask_index]
           );
-          current_hair.setAttribute("visible", "false");
+          current_mask.setAttribute("visible", "false");
 
-          current_model_index = (4 + current_model_index - 1) % 4;
-          let next_hair = document.getElementById(
-            hair_models[current_model_index]
+          current_mask_index = (6 + current_mask_index - 1) % 6;
+          let prev_mask = document.getElementById(
+            mask_models[current_mask_index]
           );
-          next_hair.setAttribute("visible", "true");
+          prev_mask.setAttribute("visible", "true");
+
+          let new_scale = prev_mask.getAttribute("scale");
+          new_scale.x = new_scale.x/3;
+          new_scale.y = new_scale.y/3;
+          new_scale.z = new_scale.z/3;
+
+          mask_obj = {model: prev_mask.getAttribute("gltf-model"), 
+          position: prev_mask.getAttribute("position"), 
+          rotation: prev_mask.getAttribute("rotation"), 
+          scale: new_scale};
+          localStorage.setItem("mask", mask_obj);
+          console.log(mask_obj);
         }
 
-        function next_chest() {
-          let current_chest = document.getElementById(
-            chest_models[current_chest_index]
+        function nextBackpack() {
+          let current_backpack = document.getElementById(
+            backpack_models[current_backpack_index]
           );
-          current_chest.setAttribute("visible", "false");
+          current_backpack.setAttribute("visible", "false");
 
-          current_chest_index = (current_chest_index + 1) % 4;
-          let next_chest = document.getElementById(
-            chest_models[current_chest_index]
+          current_backpack_index = (current_backpack_index + 1) % 3;
+          let next_backpack = document.getElementById(
+            backpack_models[current_backpack_index]
           );
-          next_chest.setAttribute("visible", "true");
+          next_backpack.setAttribute("visible", "true");
+
+          let new_scale = next_backpack.getAttribute("scale");
+          new_scale.x = new_scale.x/3;
+          new_scale.y = new_scale.y/3;
+          new_scale.z = new_scale.z/3;
+
+          backpack_obj = {model: next_backpack.getAttribute("gltf-model"), 
+          position: next_backpack.getAttribute("position"), 
+          rotation: next_backpack.getAttribute("rotation"), 
+          scale: new_scale};
+          localStorage.setItem("backpack", backpack_obj);
+          console.log(backpack_obj);
         }
 
-        function prev_chest() {
-          let current_chest = document.getElementById(
-            chest_models[current_chest_index]
+        function prevBackpack() {
+          let current_backpack = document.getElementById(
+            backpack_models[current_backpack_index]
           );
-          current_chest.setAttribute("visible", "false");
+          current_backpack.setAttribute("visible", "false");
 
-          current_chest_index = (4 + current_chest_index - 1) % 4;
-          let next_chest = document.getElementById(
-            chest_models[current_chest_index]
+          current_backpack_index = (3 + current_backpack_index - 1) % 3;
+          let prev_backpack = document.getElementById(
+            backpack_models[current_backpack_index]
           );
-          next_chest.setAttribute("visible", "true");
+          prev_backpack.setAttribute("visible", "true");
+
+          let new_scale = prev_backpack.getAttribute("scale");
+          new_scale.x = new_scale.x/3;
+          new_scale.y = new_scale.y/3;
+          new_scale.z = new_scale.z/3;
+
+          backpack_obj = {model: prev_backpack.getAttribute("gltf-model"), 
+          position: prev_backpack.getAttribute("position"), 
+          rotation: prev_backpack.getAttribute("rotation"), 
+          scale: new_scale};
+          localStorage.setItem("backpack", backpack_obj);
+          console.log(backpack_obj);
         }
       </script>
     </a-scene>
