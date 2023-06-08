@@ -9,11 +9,10 @@ AFRAME.registerComponent('treeman', {
 
         let colorr = this.data.colorr;
 
-        el.addEventListener("changecolor", e =>{
-          console.log(colorr);
-          var color;
+        console.log(colorr);
+        var color;
 
-          switch (colorr) {
+        switch (colorr) {
             case "red":
               color = "rgb(224, 0, 0)"
               break;
@@ -61,5 +60,4 @@ AFRAME.registerComponent('treeman', {
               node.material.color = new THREE.Color(color);
               }
           })
-        })
     }})

@@ -70,6 +70,14 @@
           src="/models/backpack_2/scene.gltf"
         ></a-asset-item>
         <a-asset-item
+          id="backpack_3"
+          src="/models/backpack_3/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="backpack_4"
+          src="/models/backpack_4/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
           id="mask_1"
           src="/models/mask_1/scene.gltf"
         ></a-asset-item>
@@ -957,6 +965,7 @@
 
             return;
           }
+          localStorage.setItem("nickname", nickname);
 
           let bodyElement = document.getElementById("scene");
           let keyboard = document.getElementById("keyboard");
@@ -1542,7 +1551,7 @@
         visible="true"
       ></a-entity>
       <a-entity
-        position="0 3.027 0.182"
+        position="0 3.027 0.307"
         rotation="0 0 0"
         id="mask_1_m"
         scale="0.002 0.002 0.002"
@@ -1550,7 +1559,7 @@
         visible="false"
       ></a-entity>
       <a-entity
-        position="0 3.055  0.126"
+        position="0 3.055  0.25"
         rotation="0 0 0"
         id="mask_2_m"
         scale="0.0005 0.0005 0.0005"
@@ -1558,7 +1567,7 @@
         visible="false"
       ></a-entity>
       <a-entity
-        position="0 2.995 0.212"
+        position="0 2.995 0.337"
         rotation="0 0 0"
         id="mask_3_m"
         scale="2 2 2"
@@ -1566,7 +1575,7 @@
         visible="false"
       ></a-entity>
       <a-entity
-        position="0 3.056 0.208"
+        position="0 3.056 0.333"
         rotation="90 0 0"
         id="mask_4_m"
         scale="0.2 0.2 0.2"
@@ -1574,7 +1583,7 @@
         visible="false"
       ></a-entity>
       <a-entity
-        position="0 2.805 0.191"
+        position="0 2.805 0.346"
         rotation="0 0 0"
         id="mask_5_m"
         scale="0.3 0.3 0.3"
@@ -1604,6 +1613,22 @@
         gltf-model="#backpack_2"
         visible="false"
       ></a-entity>
+      <a-entity
+        position="0 2.145 -0.206"
+        rotation="0 0 0"
+        id="backpack_3_m"
+        scale="0.01 0.01 0.01"
+        gltf-model="#backpack_3"
+        visible="false"
+      ></a-entity>
+      <a-entity
+        position="0 2.215 -0.360"
+        rotation="0 180 0"
+        id="backpack_4_m"
+        scale="1 1 1"
+        gltf-model="#backpack_4"
+        visible="false"
+      ></a-entity>
       </a-entity>
 
       <!-- MilkyWay background -->
@@ -1622,6 +1647,8 @@
           "no_backpack",
           "backpack_1_m",
           "backpack_2_m",
+          "backpack_3_m",
+          "backpack_4_m",
         ];
         var current_mask_index = 0;
         var current_backpack_index = 0;
@@ -1638,10 +1665,8 @@
           );
           next_mask.setAttribute("visible", "true");
 
-          let new_scale = next_mask.getAttribute("scale");
-          new_scale.x = new_scale.x/3;
-          new_scale.y = new_scale.y/3;
-          new_scale.z = new_scale.z/3;
+          let scale = next_mask.getAttribute("scale");
+          let new_scale = {x: scale.x/3, y: scale.y/3, z: scale.z/3};
           console.log(new_scale);
 
           mask_obj = {model: next_mask.getAttribute("gltf-model"), 
@@ -1664,10 +1689,8 @@
           );
           prev_mask.setAttribute("visible", "true");
 
-          let new_scale = prev_mask.getAttribute("scale");
-          new_scale.x = new_scale.x/3;
-          new_scale.y = new_scale.y/3;
-          new_scale.z = new_scale.z/3;
+          let scale = prev_mask.getAttribute("scale");
+          let new_scale = {x: scale.x/3, y: scale.y/3, z: scale.z/3};
 
           mask_obj = {model: prev_mask.getAttribute("gltf-model"), 
           position: prev_mask.getAttribute("position"), 
@@ -1683,16 +1706,14 @@
           );
           current_backpack.setAttribute("visible", "false");
 
-          current_backpack_index = (current_backpack_index + 1) % 3;
+          current_backpack_index = (current_backpack_index + 1) % 5;
           let next_backpack = document.getElementById(
             backpack_models[current_backpack_index]
           );
           next_backpack.setAttribute("visible", "true");
 
-          let new_scale = next_backpack.getAttribute("scale");
-          new_scale.x = new_scale.x/3;
-          new_scale.y = new_scale.y/3;
-          new_scale.z = new_scale.z/3;
+          let scale = next_backpack.getAttribute("scale");
+          let new_scale = {x: scale.x/3, y: scale.y/3, z: scale.z/3};
 
           backpack_obj = {model: next_backpack.getAttribute("gltf-model"), 
           position: next_backpack.getAttribute("position"), 
@@ -1708,16 +1729,14 @@
           );
           current_backpack.setAttribute("visible", "false");
 
-          current_backpack_index = (3 + current_backpack_index - 1) % 3;
+          current_backpack_index = (5 + current_backpack_index - 1) % 5;
           let prev_backpack = document.getElementById(
             backpack_models[current_backpack_index]
           );
           prev_backpack.setAttribute("visible", "true");
 
-          let new_scale = prev_backpack.getAttribute("scale");
-          new_scale.x = new_scale.x/3;
-          new_scale.y = new_scale.y/3;
-          new_scale.z = new_scale.z/3;
+          let scale = prev_backpack.getAttribute("scale");
+          let new_scale = {x: scale.x/3, y: scale.y/3, z: scale.z/3};
 
           backpack_obj = {model: prev_backpack.getAttribute("gltf-model"), 
           position: prev_backpack.getAttribute("position"), 
