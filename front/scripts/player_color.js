@@ -61,3 +61,4 @@ AFRAME.registerComponent('treeman', {
               }
           })
     }})
+  

@@ -14,7 +14,6 @@ function addPlayer(id, position, model, customization) {
   newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
   var texture = document.createElement("a-entity");
 
-  texture.setAttribute("treeman", "");
   texture.setAttribute("gltf-model", `/players/${model}/scene.gltf`);
   texture.setAttribute("rotation", "0 0 0");
   texture.setAttribute("position", "0 -0.5 0");
@@ -26,19 +25,31 @@ function addPlayer(id, position, model, customization) {
   newPlayer.setAttribute("player", "");
   newPlayer.appendChild(texture);
 
-  var mask = document.createElement("a-entity");
-  mask.setAttribute("gltf-model", customization.mask.model);
-  mask.setAttribute("position", customization.mask.position);
-  mask.setAttribute("rotation", customization.mask.rotation);
-  mask.setAttribute("scale", customization.mask.scale);
-  newPlayer.appendChild(mask);
+  window.setTimeout(() => {
+    if (customization.player_color != null) {
+      playerColor(texture, customization.player_color);
+    } else {
+      playerColor(texture, "black");
+    }
+  }, 5000);
+  
+  if (customization.mask != null) {
+    var mask = document.createElement("a-entity");
+    mask.setAttribute("gltf-model", customization.mask.model);
+    mask.setAttribute("position", customization.mask.position);
+    mask.setAttribute("rotation", customization.mask.rotation);
+    mask.setAttribute("scale", customization.mask.scale);
+    newPlayer.appendChild(mask);
+    }
 
-  var backpack = document.createElement("a-entity");
-  backpack.setAttribute("gltf-model", customization.backpack.model);
-  backpack.setAttribute("position", customization.backpack.position);
-  backpack.setAttribute("rotation", customization.backpack.rotation);
-  backpack.setAttribute("scale", customization.backpack.scale);
-  newPlayer.appendChild(backpack);
+  if (customization.backpack != null) {
+    var backpack = document.createElement("a-entity");
+    backpack.setAttribute("gltf-model", customization.backpack.model);
+    backpack.setAttribute("position", customization.backpack.position);
+    backpack.setAttribute("rotation", customization.backpack.rotation);
+    backpack.setAttribute("scale", customization.backpack.scale);
+    newPlayer.appendChild(backpack);
+  }
 
   var nickname_table = document.createElement("a-text");
   nickname_table.setAttribute("value", customization.nickname);
@@ -217,3 +228,61 @@ function clamp(a, min, max) {
   3. map design
   4. mini games
 */
+
+function playerColor(texture, color) {
+  console.log(color);
+
+  switch (color) {
+      case "red":
+        colorr = "rgb(224, 0, 0)"
+        break;
+      case "green":
+        colorr = "rgb(15, 224, 0)"
+        break;
+      case "black":
+        colorr = "rgb(0, 0, 0)"
+        break;
+      case "blue":
+        colorr = "rgb(0, 32, 148)"
+        break;
+      case "yellow":
+        colorr = "rgb(182, 224, 27)"
+        break;
+      case "purple":
+        colorr = "rgb(225, 27, 224)"
+        break;
+      case "orange":
+        colorr = "rgb(224, 145, 27)"
+        break;
+      case "brown":
+        colorr = "rgb(61, 39, 6)"
+        break;
+      case "white":
+        colorr = "rgb(255, 255, 255)"
+        break;
+      case "pink":
+        colorr = "rgb(217, 22, 207)"
+        break;
+      case "lime":
+        colorr =  "rgb(72, 232, 60)"
+        break;
+      case "grey":
+        colorr = "rgb(59, 59, 59)"
+        break;
+    }
+    console.log(colorr);
+
+    let tree3D = texture.getObject3D('mesh'); // Get THREEjs object from GLTF model
+    console.log(tree3D);
+    console.log(texture);
+    if (!tree3D){return;} 
+    console.log("poop");
+    // Traverse through each THREEjs model node
+    tree3D.traverse(function(node){
+      if (node.isMesh){ // If current node is mesh change its material's color to provided color
+        console.log(node);
+        node.material.color = new THREE.Color(colorr);
+        console.log(node);
+        }
+    })
+}
