@@ -34,6 +34,10 @@ function addPlayer(id, position, model, customization) {
     mask.setAttribute("rotation", customization.mask.rotation);
     mask.setAttribute("scale", customization.mask.scale);
     newPlayer.appendChild(mask);
+
+    mask_new = mask.getAttribute("rotation");
+    mask_new.y *= -1;
+    mask.setAttribute("position", mask_new);
     }
 
   if (customization.backpack != null) {
