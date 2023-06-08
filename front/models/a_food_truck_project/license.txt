@@ -1,0 +1,11 @@
+Model Information:
+* title:	a Food Truck Project
+* source:	https://sketchfab.com/3d-models/a-food-truck-project-93274e689ecf4c628330c9ddbcfc7993
+* author:	xanimvm (https://sketchfab.com/xanimvm)
+
+Model License:
+* license type:	CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)
+* requirements:	Author must be credited. No commercial use. Modified versions can not be distributed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "a Food Truck Project" (https://sketchfab.com/3d-models/a-food-truck-project-93274e689ecf4c628330c9ddbcfc7993) by xanimvm (https://sketchfab.com/xanimvm) licensed under CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)

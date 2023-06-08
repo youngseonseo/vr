@@ -1,0 +1,841 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 28363,
+      "max": [
+        3.3576855659484863,
+        3.5441107749938965,
+        3.3576855659484863
+      ],
+      "min": [
+        -3.3576855659484863,
+        -0.1397828757762909,
+        -3.3576855659484863
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 340356,
+      "componentType": 5126,
+      "count": 28363,
+      "max": [
+        0.9999581575393677,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -0.9999787211418152,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 28363,
+      "max": [
+        0.9951765537261963,
+        0.9943428635597229
+      ],
+      "min": [
+        0.004815526306629181,
+        0.0048174201510846615
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 66180,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 680712,
+      "componentType": 5126,
+      "count": 10282,
+      "max": [
+        0.9663598537445068,
+        2.0287227630615234,
+        0.20461545884609222
+      ],
+      "min": [
+        -1.477647304534912,
+        -1.513270378112793,
+        -3.8505446910858154
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 804096,
+      "componentType": 5126,
+      "count": 10282,
+      "max": [
+        1.0,
+        0.9999999403953552,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -0.9998796582221985,
+        -0.9999845027923584
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 226904,
+      "componentType": 5126,
+      "count": 10282,
+      "max": [
+        0.9977207779884338,
+        0.9984561204910278
+      ],
+      "min": [
+        0.0015446925535798073,
+        0.0015414123190566897
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 264720,
+      "componentType": 5125,
+      "count": 33894,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 927480,
+      "componentType": 5126,
+      "count": 970,
+      "max": [
+        1.1422326564788818,
+        0.5551645159721375,
+        2.584634304046631
+      ],
+      "min": [
+        -0.8729922771453857,
+        -1.5274426937103271,
+        -1.6319057941436768
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 939120,
+      "componentType": 5126,
+      "count": 970,
+      "max": [
+        1.0,
+        0.984808087348938,
+        1.0
+      ],
+      "min": [
+        -0.9876705408096313,
+        -0.3922099769115448,
+        -0.9965968132019043
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 309160,
+      "componentType": 5126,
+      "count": 970,
+      "max": [
+        0.933989405632019,
+        0.9792834520339966
+      ],
+      "min": [
+        0.24197350442409515,
+        0.24476827681064606
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 400296,
+      "componentType": 5125,
+      "count": 4092,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 950760,
+      "componentType": 5126,
+      "count": 31809,
+      "max": [
+        3.080240488052368,
+        3.377331256866455,
+        0.6169750690460205
+      ],
+      "min": [
+        -1.6670119762420654,
+        -0.42009857296943665,
+        -4.1615190505981445
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1332468,
+      "componentType": 5126,
+      "count": 31809,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 316920,
+      "componentType": 5126,
+      "count": 31809,
+      "max": [
+        0.998992919921875,
+        0.9990701675415039
+      ],
+      "min": [
+        0.0009949809173122048,
+        0.0010028459364548326
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 416664,
+      "componentType": 5125,
+      "count": 115485,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1714176,
+      "componentType": 5126,
+      "count": 47170,
+      "max": [
+        0.8677521347999573,
+        3.434134006500244,
+        1.3871538639068604
+      ],
+      "min": [
+        -1.928475022315979,
+        -1.0264045000076294,
+        -3.474932909011841
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 2280216,
+      "componentType": 5126,
+      "count": 47170,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 47170,
+      "max": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 571392,
+      "componentType": 5126,
+      "count": 47170,
+      "max": [
+        0.9989957213401794,
+        0.9987344741821289
+      ],
+      "min": [
+        0.0,
+        0.0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 878604,
+      "componentType": 5125,
+      "count": 170196,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "xanimvm (https://sketchfab.com/xanimvm)",
+      "license": "CC-BY-NC-ND-4.0 (http://creativecommons.org/licenses/by-nc-nd/4.0/)",
+      "source": "https://sketchfab.com/3d-models/a-food-truck-project-93274e689ecf4c628330c9ddbcfc7993",
+      "title": "a Food Truck Project"
+    },
+    "generator": "Sketchfab-15.22.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 1559388,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 948752,
+      "byteOffset": 1559388,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 2846256,
+      "byteOffset": 2508140,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 754720,
+      "byteOffset": 5354396,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 6109116,
+      "uri": "scene.bin"
+    }
+  ],
+  "extensionsRequired": [
+    "KHR_materials_pbrSpecularGlossiness"
+  ],
+  "extensionsUsed": [
+    "KHR_materials_pbrSpecularGlossiness",
+    "KHR_materials_emissive_strength"
+  ],
+  "images": [
+    {
+      "uri": "textures/base_mat_diffuse.jpeg"
+    },
+    {
+      "uri": "textures/truck_emmisives_mat_diffuse.jpeg"
+    },
+    {
+      "uri": "textures/truck_emmisives_mat_emissive.jpeg"
+    },
+    {
+      "uri": "textures/props_mat_diffuse.jpeg"
+    },
+    {
+      "uri": "textures/props_mat_specularGlossiness.png"
+    },
+    {
+      "uri": "textures/truckBody_mat_diffuse.jpeg"
+    },
+    {
+      "uri": "textures/truckBody_mat_specularGlossiness.png"
+    },
+    {
+      "uri": "textures/truckBody_mat_normal.jpeg"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "diffuseTexture": {
+            "index": 0
+          },
+          "glossinessFactor": 0.5,
+          "specularFactor": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "name": "base_mat"
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissiveTexture": {
+        "index": 2
+      },
+      "extensions": {
+        "KHR_materials_emissive_strength": {
+          "emissiveStrength": 4.0
+        },
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "diffuseTexture": {
+            "index": 1
+          },
+          "glossinessFactor": 0.9039997074276798,
+          "specularFactor": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "name": "truck_emmisives_mat"
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            0.030428729400459924,
+            0.09243586251389452,
+            0.12038131925735392,
+            0.29104850605258986
+          ],
+          "glossinessFactor": 1.0,
+          "specularFactor": [
+            0.5043824895466348,
+            0.5043824895466348,
+            0.5043824895466348
+          ]
+        }
+      },
+      "name": "Basic_Glass"
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "diffuseTexture": {
+            "index": 3
+          },
+          "glossinessFactor": 1.0,
+          "specularFactor": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specularGlossinessTexture": {
+            "index": 4
+          }
+        }
+      },
+      "name": "props_mat"
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "diffuseTexture": {
+            "index": 5
+          },
+          "glossinessFactor": 1.0,
+          "specularFactor": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "specularGlossinessTexture": {
+            "index": 6
+          }
+        }
+      },
+      "name": "truckBody_mat",
+      "normalTexture": {
+        "index": 7
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Object_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_1",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_2",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 9,
+            "POSITION": 8,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_3",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 13,
+            "POSITION": 12,
+            "TEXCOORD_0": 14
+          },
+          "indices": 15,
+          "material": 3,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Object_4",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 17,
+            "POSITION": 16,
+            "TANGENT": 18,
+            "TEXCOORD_0": 19
+          },
+          "indices": 20,
+          "material": 4,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "name": "root"
+    },
+    {
+      "children": [
+        3,
+        5,
+        7,
+        9,
+        11,
+        12
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "GLTF_SceneRootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "base_0"
+    },
+    {
+      "mesh": 0,
+      "name": "Object_4"
+    },
+    {
+      "children": [
+        6
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.8740110580749274,
+        -0.4859060303831861,
+        0.0,
+        0.0,
+        0.4859060303831861,
+        0.8740110580749274,
+        0.0,
+        0.6329051852226257,
+        1.8035235404968262,
+        1.7729483842849731,
+        1.0
+      ],
+      "name": "truck_all_emmissive_1"
+    },
+    {
+      "mesh": 1,
+      "name": "Object_6"
+    },
+    {
+      "children": [
+        8
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        2.8399999141693115,
+        -0.6649999618530273,
+        1.0
+      ],
+      "name": "allGlasses_2"
+    },
+    {
+      "mesh": 2,
+      "name": "Object_8"
+    },
+    {
+      "children": [
+        10
+      ],
+      "matrix": [
+        0.6545602650719298,
+        0.0,
+        -0.756009827574328,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.756009827574328,
+        0.0,
+        0.6545602650719298,
+        0.0,
+        1.979552149772644,
+        0.420098215341568,
+        1.5681211948394775,
+        1.0
+      ],
+      "name": "props_all_3"
+    },
+    {
+      "mesh": 3,
+      "name": "Object_10"
+    },
+    {
+      "name": "cameraFocus_7",
+      "translation": [
+        0.0,
+        1.1000672578811646,
+        0.0
+      ]
+    },
+    {
+      "children": [
+        13
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.7947429418563843,
+        1.027053713798523,
+        0.9715625643730164,
+        1.0
+      ],
+      "name": "truck_all_1_16"
+    },
+    {
+      "mesh": 4,
+      "name": "Object_13"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    },
+    {
+      "magFilter": 9728,
+      "minFilter": 9728,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 1,
+      "source": 5
+    },
+    {
+      "sampler": 0,
+      "source": 6
+    },
+    {
+      "sampler": 0,
+      "source": 7
+    }
+  ]
+}
