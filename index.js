@@ -98,7 +98,6 @@ io.on("connection", async (socket) => {
     delete sockets[socket.id];
   });
   socket.on("customization", (data) => {
-    console.log(data);
     socket.customization = data;
     io.sockets.in(sockets[socket.id]).emit("newPlayer", {
       id: socket.id,
@@ -140,7 +139,7 @@ async function getAllPlayers(room) {
   let players = await io.fetchSockets();
   players = players
     .map((i) => {
-      if (i && sockets[i?.id] == room)
+      if (i && i.customization && sockets[i?.id] == room)
         return {
           id: i?.id,
           position: i?.position,
