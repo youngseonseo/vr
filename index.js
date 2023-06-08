@@ -63,6 +63,10 @@ const io = new Server(webServer, {
   },
 });
 const sockets = {};
+var mazeSeeds = [];
+for (let i = 0; i < 80; i++) {
+  mazeSeeds.push(Math.random());
+}
 io.on("connection", async (socket) => {
   socket.join(socket.handshake.headers.referer);
   sockets[socket.id] = socket.handshake.headers.referer;
@@ -71,6 +75,7 @@ io.on("connection", async (socket) => {
   var modelIndex = Math.floor(Math.random() * 10) % models.length;
   socket.model = models[modelIndex];
   console.log(`${socket.id} connected`);
+  io.to(socket.id).emit("mazeSeeds", { mazeSeeds: mazeSeeds });
   io.sockets.in(sockets[socket.id]).emit("newPlayer", {
     id: socket.id,
     position: socket.position,

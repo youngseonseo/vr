@@ -95,7 +95,6 @@ socket.on("removePlayer", ({ id }) => {
 });
 socket.on("movement", ({ id, position }) => {
   if (id === socket.id) return;
-  console.log(position);
   movePlayer(id, position);
 });
 socket.on("rotation", ({ id, rotation }) => {
@@ -152,9 +151,24 @@ navigator.mediaDevices
 socket.on("voice", function ({ id, data }) {
   if (id == socket.id) return;
   var audio = new Audio(data);
+  var volume = calcVolume(id);
+  console.log(volume);
+  audio.volume = volume;
   audio.play();
 });
 
+function calcVolume(id) {
+  var target = document.getElementById(id).getAttribute("position");
+  var me = document.querySelector("[me]").getAttribute("position");
+  var distance = Math.sqrt(
+    Math.pow(target.x - me.x, 2) + Math.pow(target.z - me.z, 2)
+  );
+  return clamp((10 - distance) / 10, 0, 1);
+}
+
+function clamp(a, min, max) {
+  return a < min ? 0 : a > max ? max : a;
+}
 /*
   1. menu(UI)
   2. models 
