@@ -76,7 +76,7 @@ socket.emit("customization", myCustomization);
 socket.on("newPlayer", ({ id, position, model, customization }) => {
   if (id === socket.id) return;
   console.log("newPlayer");
-  addPlayer(id, position, model);
+  addPlayer(id, position, model, customization);
 });
 socket.on("listOfPlayers", ({ players }) => {
   console.log("listOfPlayers");
