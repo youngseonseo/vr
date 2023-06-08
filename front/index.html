@@ -103,6 +103,11 @@
           src="/players/businessman/scene.gltf"
         ></a-asset-item>
         <img id="cityImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg">
+        <img id="mazeImage" src ="https://images.immediate.co.uk/production/volatile/sites/18/2022/08/1637458-Visitor-walking-in-the-cherry-laurel-hedge-maze-at-Glendurgan-Garden-Cornwall.-National-Trust-ImagesJohn-Miller-a4c6745.jpg">
+        <img id="cinemaImage" src="images/cinema.png">
+        <img id="shootingImage" src="https://cdn.akamai.steamstatic.com/steam/apps/257420/capsule_616x353.jpg?t=1680689471">
+        <img id="carImage" src="https://rocketleague.media.zestyio.com/rl_s10_rp_1-1_no-logo.BJdjMBSRj.jpg?optimize=high">
+        <img id="shopImage" src="https://retaildesignblog.net/wp-content/uploads/2018/11/7R9A5223-780x520.jpg">
         <a-asset-item
           id = "earth"
           src="/models/earth/scene.gltf"
@@ -277,24 +282,31 @@
      
 
       <!-- portals with stages -->
-      <a-entity position="-3 0 -8" rotation="0 30 0">
+      <a-entity id="portal1" position="-2 0 -11.26" rotation="0 30 0">
         <a-entity gltf-model="#stage1" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
-        <a-entity gui-interactable position="0.01 0.52 -0.32" scale="0.55 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/car_game.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+        <a-entity gui-interactable position="0.01 0.52 -0.32" scale="0.85 0.71 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/car_game.html" material="color: black"><a-image width="0.95" height="0.95" src="#carImage" position="0 0 -0.6"></a-image></a-entity>
       </a-entity>
 
-      <a-entity position="3 -0.15 -8" rotation="0 -30 0">
+      <a-entity id="portal2" position="3 -0.15 -8" rotation="0 -90 0">
         <a-entity gltf-model="#stage2" position="0 0 0" scale="0.13 0.13 0.13"></a-entity>
-        <a-entity gui-interactable position="0 0.7 -1.35" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/shooting-game.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+        <a-entity gui-interactable position="0 0.7 -1.340" scale="1.59 1.1 0.03" geometry="primitive: box" rotation="0 180 0" linkportal="href:/shooting-game.html" material="color: black"><a-image width="0.95" height="0.95" src="#shootingImage" position="0 0 -0.6"></a-image></a-entity>
       </a-entity>
 
-      <a-entity position="-3 0 0.3" rotation="0 90 0">
+      <a-entity  id="portal3" position="-3.5 0 0.235" rotation="0 90 0">
         <a-entity gltf-model="#stage2" position="0 0 0" scale="0.13 0.13 0.13"></a-entity>
-        <a-entity gui-interactable position="0 0.7 -1.35" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/intro.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+        <a-entity gui-interactable position="0 0.7 -1.340" scale="1.59 1.1 0.03" geometry="primitive: box" rotation="0 180 0" linkportal="href:/intro.html" material="color: black"><a-image width="0.95" height="0.95" src="#shopImage" position="0 0 -0.6"></a-image></a-entity>
       </a-entity>
 
-      <a-entity position="0 0 -10" rotation="0 0 0">
+      <a-entity  id="portal4" position="-3.9 0 -8.6" rotation="0 90 0">
         <a-entity gltf-model="#stage3" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
-        <a-entity gui-interactable position="0 0.7 0" scale="0.6 0.29 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/maze.html" material="color: black"><a-image width="0.95" height="0.95" src="#cityImage" position="0 0 -0.6"></a-image></a-entity>
+        <a-entity gui-interactable position="0 0.5 -0.444" scale="0.94 0.92 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/cinema.html" material="color: black"><a-image width="0.95" height="0.95" src="#cinemaImage" position="0 0 -0.6"></a-image></a-entity>
+        <!-- Here will be circle image-->
+      </a-entity>
+
+
+      <a-entity id="portal5" position="2.6 0 -11.5" rotation="0 -45 0">
+        <a-entity gltf-model="#stage3" position="0 0 0" scale="0.07 0.07 0.07"></a-entity>
+        <a-entity gui-interactable position="0 0.5 -0.444" scale="0.94 0.92 0.01" geometry="primitive: box" rotation="0 180 0" linkportal="href:/maze.html" material="color: black"><a-image width="0.95" height="0.95" src="#mazeImage" position="0 0 -0.6"></a-image></a-entity>
         <!-- Here will be circle image-->
       </a-entity>
 

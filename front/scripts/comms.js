@@ -152,9 +152,14 @@ socket.on("voice", function ({ id, data }) {
   if (id == socket.id) return;
   var audio = new Audio(data);
   var volume = calcVolume(id);
-  console.log(volume);
   audio.volume = volume;
   audio.play();
+});
+socket.on("timeStamp", function ({ time }) {
+  let video = document.querySelector("#video");
+  console.log(`${time} ${video.duration}`);
+  video.currentTime = `${time / video.duration}`;
+  console.log(`${time % video.duration}`);
 });
 
 function calcVolume(id) {

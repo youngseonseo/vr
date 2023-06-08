@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A-Frame - Video Texture</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+    <script src="/scripts/joystick.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="scripts/config.js" defer></script>
+    <script src="scripts/comms.js" defer></script>
+    <script src="scripts/components.js" defer></script>
+  </head>
+
+  <body>
+    <script>
+      AFRAME.registerComponent("video-controls", {
+        init: function () {
+          let video = document.querySelector("#video");
+
+          let videoDisplay = document.querySelector("#video-display");
+          let videoBorder = document.querySelector("#video-border");
+          let videoMesh = videoDisplay.getObject3D("mesh");
+          let borderMesh = videoBorder.getObject3D("mesh");
+
+          videoDisplay.addEventListener("fusing", function (event) {
+            console.log("playing");
+            video.play();
+          });
+          video.addEventListener("play", () => {
+            socket.emit("timeRequest");
+          });
+        },
+      });
+    </script>
+
+    <a-scene>
+      <a-assets>
+        <img id="grid" src="images/lawn.jpg" crossorigin="anonymous" />
+        <img id="sky" src="images/potw1405a.jpg" crossorigin="anonymous" />
+        <video
+          id="video"
+          loop="true"
+          src="video/FFS.mp4"
+          autoplay
+          preload="auto"
+        ></video>
+      </a-assets>
+
+      <a-entity
+        id="player"
+        movement-controls="speed: 0.1; fly: false;"
+        position="0 0 0"
+      >
+        <a-entity me camera wasd-controls position="0 1.5 1" look-controls
+          ><a-entity
+            cursor="fuse: true; fuseTimeout: 500"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            material="color: black; shader: flat"
+          >
+          </a-entity
+        ></a-entity>
+      </a-entity>
+
+      <a-sky rotation="0 0 0" color="#FFFFFF" material="src: #sky"> </a-sky>
+
+      <a-plane
+        width="100"
+        height="100"
+        position=" 0.00 0.00 0.00"
+        rotation="-90 0 0"
+        color="#888888"
+        material="src: #grid; repeat:100 100"
+        shadow="cast: false; receive: true"
+      >
+      </a-plane>
+
+      <a-plane
+        id="video-border"
+        width="51"
+        height="30"
+        position="0 15 -20"
+        color="#440000"
+        video-controls
+      >
+        <a-video
+          id="video-display"
+          width="48"
+          height="27"
+          position="0 0 0.1"
+          src="#video"
+        >
+        </a-video>
+      </a-plane>
+    </a-scene>
+  </body>
+</html>

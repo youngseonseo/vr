@@ -19,6 +19,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/:file", function (req, res) {
+  res.set("Accept-Ranges", "bytes");
   res.sendFile(`front/${req.params.file}`, { root: __dirname });
 });
 
@@ -53,6 +54,11 @@ app.get("/players/:model/textures/:file", function (req, res) {
 app.get("/images/:file", function (req, res) {
   res.sendFile(`front/images/${req.params.file}`, { root: __dirname });
 });
+app.get("/video/:file", function (req, res) {
+  res.set("Accept-Ranges", "bytes");
+  res.set("Content-Length", "217");
+  res.sendFile(`front/video/${req.params.file}`, { root: __dirname });
+});
 
 // Start Express http server
 const webServer = createServer(app);
@@ -64,6 +70,8 @@ const io = new Server(webServer, {
 });
 const sockets = {};
 var mazeSeeds = [];
+var time = 0;
+setInterval(() => time++, 1000);
 for (let i = 0; i < 80; i++) {
   mazeSeeds.push(Math.random());
 }
@@ -117,6 +125,9 @@ io.on("connection", async (socket) => {
     io.sockets
       .in(sockets[socket.id])
       .emit("voice", { id: socket.id, data: newData });
+  });
+  socket.on("timeRequest", () => {
+    io.sockets.in(sockets[socket.id]).emit("timeStamp", { time: time });
   });
 });
 
