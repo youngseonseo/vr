@@ -10,16 +10,38 @@ function addPlayer(id, position, model, customization) {
   newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
   var texture = document.createElement("a-entity");
 
+  texture.setAttribute("treeman", customization.player_color);
   texture.setAttribute("gltf-model", `/players/${model}/scene.gltf`);
-  texture.setAttribute("rotation", "0 180 0");
+  texture.setAttribute("rotation", "0 0 0");
   texture.setAttribute("position", "0 -0.5 0");
-  texture.setAttribute("scale", "0.3 0.3 0.3");
+  texture.setAttribute("scale", "0.234 0.234 0.234");
   texture.setAttribute("animation-mixer", "clip:Rig|idle");
   texture.setAttribute("id", `${id}-texture`);
   texture.setAttribute("model", `${model}`);
   newPlayer.setAttribute("opacity", "0");
   newPlayer.setAttribute("player", "");
   newPlayer.appendChild(texture);
+
+  var mask = document.createElement("a-entity");
+  mask.setAttribute("gltf-model", customization.mask.model);
+  mask.setAttribute("position", customization.mask.position);
+  mask.setAttribute("rotation", customization.mask.rotation);
+  mask.setAttribute("scale", customization.mask.scale);
+  newPlayer.appendChild(mask);
+
+  var backpack = document.createElement("a-entity");
+  backpack.setAttribute("gltf-model", customization.backpack.model);
+  backpack.setAttribute("position", customization.backpack.position);
+  backpack.setAttribute("rotation", customization.backpack.rotation);
+  backpack.setAttribute("scale", customization.backpack.scale);
+  newPlayer.appendChild(backpack);
+
+  var nickname_table = document.createElement("a-text");
+  nickname_table.setAttribute("value", customization.nickname);
+  nickname_table.setAttribute("position", "0 1 0")
+  nickname_table.setAttribute("scale", "10 10 10")
+  newPlayer.appendChild(nickname_table);
+  
   var scene = document.querySelector("a-scene");
   scene.appendChild(newPlayer);
 }
