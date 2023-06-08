@@ -1673,7 +1673,7 @@
           position: next_mask.getAttribute("position"), 
           rotation: next_mask.getAttribute("rotation"), 
           scale: new_scale};
-          localStorage.setItem("mask", mask_obj);
+          localStorage.setItem("mask", JSON.stringify(mask_obj));
           console.log(mask_obj);
         }
 
@@ -1696,7 +1696,7 @@
           position: prev_mask.getAttribute("position"), 
           rotation: prev_mask.getAttribute("rotation"), 
           scale: new_scale};
-          localStorage.setItem("mask", mask_obj);
+          localStorage.setItem("mask", JSON.stringify(mask_obj));
           console.log(mask_obj);
         }
 
@@ -1719,7 +1719,7 @@
           position: next_backpack.getAttribute("position"), 
           rotation: next_backpack.getAttribute("rotation"), 
           scale: new_scale};
-          localStorage.setItem("backpack", backpack_obj);
+          localStorage.setItem("backpack", JSON.stringify(backpack_obj));
           console.log(backpack_obj);
         }
 
@@ -1742,7 +1742,7 @@
           position: prev_backpack.getAttribute("position"), 
           rotation: prev_backpack.getAttribute("rotation"), 
           scale: new_scale};
-          localStorage.setItem("backpack", backpack_obj);
+          localStorage.setItem("backpack",  JSON.stringify(backpack_obj));
           console.log(backpack_obj);
         }
       </script>

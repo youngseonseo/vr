@@ -10,7 +10,7 @@ function addPlayer(id, position, model, customization) {
   newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
   var texture = document.createElement("a-entity");
 
-  texture.setAttribute("treeman", customization.player_color);
+  texture.setAttribute("treeman");
   texture.setAttribute("gltf-model", `/players/${model}/scene.gltf`);
   texture.setAttribute("rotation", "0 0 0");
   texture.setAttribute("position", "0 -0.5 0");
@@ -39,7 +39,7 @@ function addPlayer(id, position, model, customization) {
   var nickname_table = document.createElement("a-text");
   nickname_table.setAttribute("value", customization.nickname);
   nickname_table.setAttribute("position", "0 1 0")
-  nickname_table.setAttribute("scale", "10 10 10")
+  nickname_table.setAttribute("scale", "1 1 1")
   newPlayer.appendChild(nickname_table);
   
   var scene = document.querySelector("a-scene");
