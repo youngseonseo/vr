@@ -49,6 +49,8 @@
   <script src="scripts/aframe-master.js"></script>
   <script src="scripts/aframe-extras.min.js"></script>
   <script src="scripts/aframe-physics-system.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="scripts/car-comms.js"></script>
 
   <script>
     AFRAME.registerComponent('car', {
@@ -387,9 +389,8 @@
       background-color: rgba(255, 170, 0, 0.5);
     }
   </style>
-  <script src="/socket.io/socket.io.js"></script>
   <script src="scripts/config.js" defer></script>
-  <script src="scripts/comms.js" defer></script>
+
   <script src="scripts/components.js" defer></script>
 </head>
 
@@ -461,7 +462,7 @@
     <a-sphere position="1 1.25 -2.5" radius="0.25" color="aqua" shadow="cast:true; receive:true"
       dynamic-body="angularDamping: 0.4" grabbable></a-sphere>
 
-    <a-obj-model id="car" src="#car-obj" mtl="#car-mtl" position="0 0.01 3" rotation="0 170 0" scale="0.1 0.1 0.1"
+    <a-obj-model id="car" src="#car-obj"me mtl="#car-mtl" position="0 0.01 3" rotation="0 170 0" scale="0.1 0.1 0.1"
       shadow="cast:true; receive:true" static-body="shape: none"
       shape__main="shape: box; halfExtents: 0.6 0.5 1; offset: 0 0 -0.6" car animation-mixer
       aabb-collider="objects: .wall;" me></a-obj-model>

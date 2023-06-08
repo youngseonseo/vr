@@ -1,4 +1,5 @@
 var muted = false;
+var mazeSeeds = [];
 
 function addPlayer(id, position, model) {
   if (id === socket.id) return;
@@ -95,7 +96,6 @@ socket.on("removePlayer", ({ id }) => {
 });
 socket.on("movement", ({ id, position }) => {
   if (id === socket.id) return;
-  console.log(position);
   movePlayer(id, { ...position, y: 1.5 });
 });
 socket.on("rotation", ({ id, rotation }) => {
@@ -110,6 +110,11 @@ socket.on("peerId", ({ id, peerId }) => {
   target.setAttribute("peerid", peerId);
   connectToPeer(id, peerId);
   //callPeer(id, peerId);
+});
+socket.on("mazeSeeds", ({ mazeSeeds }) => {
+  mazeSeeds = mazeSeeds;
+  console.log(mazeSeeds);
+  makeMaze(mazeSeeds);
 });
 var time = 200;
 navigator.mediaDevices
@@ -152,9 +157,22 @@ navigator.mediaDevices
 socket.on("voice", function ({ id, data }) {
   if (id == socket.id) return;
   var audio = new Audio(data);
+  audio.volume = calcVolume(id);
   audio.play();
 });
 
+function calcVolume(id) {
+  var target = document.getElementById(id).getAttribute("position");
+  var me = document.querySelector("[me]").getAttribute("position");
+  var distance = Math.sqrt(
+    Math.pow(target.x - me.x, 2) + Math.pow(target.z - me.z, 2)
+  );
+  return clamp((15 - distance) / 15, 0, 1);
+}
+
+function clamp(a, min, max) {
+  return a < min ? 0 : a > max ? max : a;
+}
 /*
   1. menu(UI)
   2. models 
