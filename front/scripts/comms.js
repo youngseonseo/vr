@@ -1,6 +1,6 @@
 var muted = false;
 
-function addPlayer(id, position, model) {
+function addPlayer(id, position, model, customization) {
   if (id === socket.id) return;
   console.log(`adding ${id} on ${JSON.stringify(position)}`);
 
