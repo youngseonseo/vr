@@ -66,14 +66,14 @@ const url = window.location.host;
 console.log(url);
 var socket = io(url);
 if (!localStorage.getItem("nickname")) window.location.href = "/intro.html";
-var customization = {
+var myCustomization = {
   nickname: localStorage.getItem("nickname"),
   player_color: localStorage.getItem("player_color"),
   mask: localStorage.getItem("mask"),
   backpack: localStorage.getItem("backpack"),
 };
-socket.emit("customization", customization);
-socket.on("newPlayer", ({ id, position, model }) => {
+socket.emit("customization", myCustomization);
+socket.on("newPlayer", ({ id, position, model, customization }) => {
   if (id === socket.id) return;
   console.log("newPlayer");
   addPlayer(id, position, model);
