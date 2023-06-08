@@ -45,12 +45,12 @@
     }
   </style>
 
-
   <script src="scripts/aframe-master.js"></script>
   <script src="scripts/aframe-extras.min.js"></script>
   <script src="scripts/aframe-physics-system.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="scripts/car-comms.js"></script>
+  <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
 
   <script>
     AFRAME.registerComponent('car', {
@@ -409,6 +409,7 @@
     <a-assets>
       <img id="ground" src="images/block.png">
       <img id="bg" src="images/bg.jpg">
+      <img id="cityImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg">
       <a-asset-item id="car-obj" src="models/car/car.obj"></a-asset-item>
       <a-asset-item id="car-mtl" src="models/car/car.mtl"></a-asset-item>
       <a-mixin id="controller" tracked-controls="autoHide: false" <!-- super-hands="colliderEvent: collisions;
@@ -423,20 +424,45 @@
         >
     </a-assets>
     <a-plane static-body="" position="0 -0.04 0" rotation="-90 0 0 " scale= " 100 100 1"></a-plane>
-
+    <a-entity>
       <a-camera position="-0.5 1 5" wasd-controls-enabled="true">
-        <a-entity id="cursor" cursor="rayOrigin: mouse" position="0 0 -1" visible="false"
-          geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.018" material="color: #888; shader: flat">
-          <a-entity screen-touch></a-entity>
+          <a-gui-cursor
+          id="cursor"
+          raycaster="objects: [gui-interactable]"
+          fuse="true"
+          fuse-timeout="5000"
+          color="#ECEFF1"
+          hover-color="#CFD8DC"
+          active-color="#607D8B"
+          design="ring"
+        >
+          <!-- dot, ring, reticle, cross  -->
+          
+        </a-gui-cursor><a-entity screen-touch></a-entity>
+        </a-entity>
       </a-camera>
-
+    </a-entity>
 
       <a-entity screen-controller="deadZone: 0.1" car-controller-two-axis></a-entity>
       <a-entity screen-joystick car-controller-two-axis></a-entity>
       <a-entity xr-two-axis-controller="deadZone: 0.1" car-controller-two-axis></a-entity>
       <a-entity exit-ar-button></a-entity>
     </a-entity>
-
+    <a-entity
+    gui-interactable
+    position="0 3 -0.207"
+    scale="0.25 0.25 0"
+    geometry="primitive: box"
+    rotation="0 0 0"
+    linkportal="href:/"
+    material="color: black"
+    ><a-image
+      width="0.95"
+      height="0.95"
+      src="#cityImage"
+      position="0 0 -1"
+    ></a-image
+  ></a-entity>
     <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
     <a-light type="directional" light="castShadow: true;
                       shadowMapHeight: 1024;

@@ -18,6 +18,8 @@
     <script src="//unpkg.com/aframe-extras@4.1.2/dist/aframe-extras.min.js"></script>
     <!-- A-Frame Physics needed for collision-->
     <script src="//unpkg.com/aframe-physics-system@3.1.2/dist/aframe-physics-system.min.js"></script>
+    <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+
     <script src="https://codechangers.com/physics.js"></script>
     <script src="scripts/config.js" defer></script>
     <script src="scripts/maze-comms.js" defer></script>
@@ -91,6 +93,14 @@
         </a-entity>
 
         <!--------------------------- Player car wrapped in a camera ---------------------------->
+        <a-assets>
+          <a-asset>
+            <img
+              id="cityImage"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg"
+            />
+          </a-asset>
+        </a-assets>
         <a-entity id="rig" me movement-controls kinematic-body jump-ability>
           <a-entity
             me
@@ -98,6 +108,32 @@
             look-controls="pointerLockEnabled: true;"
             position="0 1.5 0"
             scale="0.3 0.3 0.3"
+            ><a-gui-cursor
+              id="cursor"
+              raycaster="objects: [gui-interactable]"
+              fuse="true"
+              fuse-timeout="500"
+              color="#ECEFF1"
+              hover-color="#CFD8DC"
+              active-color="#607D8B"
+              design="ring"
+            >
+              <!-- dot, ring, reticle, cross  -->
+            </a-gui-cursor></a-entity
+          ><a-entity
+            gui-interactable
+            position="0 0.445 0"
+            scale="1 1 0"
+            geometry="primitive: box"
+            rotation="90 0 0"
+            linkportal="href:/"
+            material="color: black"
+            ><a-image
+              width="0.95"
+              height="0.95"
+              src="#cityImage"
+              position="0 0 -0.6"
+            ></a-image
           ></a-entity>
 
           <!--------------------------------- Camera Car --------------------------------------->
@@ -125,16 +161,6 @@
       </a-entity> -->
       </a-entity>
     </a-scene>
-
-    <div class="controls">
-      <h1>Car Controls</h1>
-      <p id="up">I</p>
-      <div>
-        <p id="left">J</p>
-        <p id="down">K</p>
-        <p id="right">L</p>
-      </div>
-    </div>
 
     <script src="scripts/steer.js"></script>
   </body>

@@ -1,153 +1,467 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+  <head>
+    <title>Shooting Game</title>
+    <meta name="author" content="Youngseon-Seo" />
+    <!--meta tag에 정보 저장-->
+    <meta name="description" content="shooting game" />
+    <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+    <!--js파일 로드-->
+    <script src="scripts/aframe-super-shooter-kit.min.js"></script>
+    <script src="scripts/aframe-extras.min.js"></script>
+    <script src="scripts/aframe-environment-component.min.js"></script>
+    <script src="scripts/aframe-viewable-component.min.js"></script>
+    <script src="scripts/component.js"></script>
+    <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+    <script src="scripts/components.js"></script>
+  </head>
 
-    <head>
-        <title>Shooting Game</title>      
-        <meta name="author" content="Youngseon-Seo">             <!--meta tag에 정보 저장-->
-        <meta name="description" content="shooting game">
-        <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>       <!--js파일 로드-->
-        <script src="scripts/aframe-super-shooter-kit.min.js"></script>
-        <script src="scripts/aframe-extras.min.js"></script>
-        <script src="scripts/aframe-environment-component.min.js"></script>
-        <script src="scripts/aframe-viewable-component.min.js"></script>
-        <script src="scripts/component.js"></script>
-    </head>
+  <body>
+    <a-scene gun-change game-over add-enemy add-enemy-boss>
+      <!--component.js의 function 로드-->
 
-    <body>
-        <a-scene gun-change game-over add-enemy add-enemy-boss>               <!--component.js의 function 로드-->
+      <a-entity environment="preset: forest; fog: 0; playArea:1; "></a-entity>
+      <!--백그라운드 설정-->
 
+      <a-assets>
+        <!--다양한 이미지, 파일, 사운드 등에 사용-->
 
-            <a-entity environment="preset: forest; fog: 0; playArea:1; "></a-entity>       <!--백그라운드 설정-->
+        <!--적 속성-->
+        <!--a-mixin태그는 재사용 가능-->
+        <a-mixin
+          id="enemy"
+          gltf-model="#enemy01"
+          animation-mixer="clip:enemy_walk; crossFadeDuration: .3;"
+          target="static: false; healthPoints: 3"
+          sound="src:#enemy-die-sound; volume:8"
+          hit-handler
+        ></a-mixin>
+        <a-mixin
+          id="health-bg"
+          geometry="primitive:plane; height:0.2; width:1.05;"
+          material="color:#333"
+          position="0 2.8 0"
+          animation="property: position; to: 0 3 0; dur: 800; loop: true; dir: alternate; easing: linear;"
+        ></a-mixin>
+        <a-mixin
+          id="health-point"
+          geometry="primitive: plane; height:0.16; width:1"
+          material="emissive:yellow;"
+          position="0 2 0.01"
+        ></a-mixin>
 
-            <a-assets> <!--다양한 이미지, 파일, 사운드 등에 사용-->
-                
-                <!--적 속성-->
-                <!--a-mixin태그는 재사용 가능-->
-                <a-mixin id="enemy" gltf-model="#enemy01" animation-mixer="clip:enemy_walk; crossFadeDuration: .3;" target="static: false; healthPoints: 3" sound="src:#enemy-die-sound; volume:8" hit-handler></a-mixin>
-                <a-mixin id="health-bg" geometry="primitive:plane; height:0.2; width:1.05;" material="color:#333" position="0 2.8 0" animation="property: position; to: 0 3 0; dur: 800; loop: true; dir: alternate; easing: linear;"></a-mixin>
-                <a-mixin id="health-point" geometry="primitive: plane; height:0.16; width:1" material="emissive:yellow;" position="0 2 0.01"></a-mixin>
+        <!--날으는 적 속성-->
+        <a-mixin
+          id="fly-enemy"
+          gltf-model="#fly-enemy-model"
+          scale="0.005 0.005 0.005"
+          animation-mixer
+          target="static: false; healthPoints: 1"
+          hit-handler-fly
+          sound="src:#monster-sound; volume:10"
+        ></a-mixin>
+        <a-mixin
+          id="fly-health-bg"
+          geometry="primitive:plane; height:70; width:210;"
+          material="color:#333"
+          position="0 130 0"
+          animation="property: position; to: 0 120 0; dur: 800; loop: true; dir: alternate; easing: linear;"
+        ></a-mixin>
+        <a-mixin
+          id="fly-health-point"
+          geometry="primitive: plane; height:60; width:200"
+          material="emissive:yellow;"
+          position="0 0 2"
+        ></a-mixin>
 
-                <!--날으는 적 속성-->
-                <a-mixin id="fly-enemy" gltf-model="#fly-enemy-model" scale="0.005 0.005 0.005" animation-mixer target="static: false; healthPoints: 1" hit-handler-fly sound="src:#monster-sound; volume:10"></a-mixin>
-                <a-mixin id="fly-health-bg" geometry="primitive:plane; height:70; width:210;" material="color:#333" position="0 130 0" animation="property: position; to: 0 120 0; dur: 800; loop: true; dir: alternate; easing: linear;"></a-mixin>
-                <a-mixin id="fly-health-point" geometry="primitive: plane; height:60; width:200" material="emissive:yellow;" position="0 0 2"></a-mixin>
+        <!--가장 큰 적 속성-->
+        <a-mixin
+          id="enemy-boss"
+          gltf-model="#spider"
+          scale="0.08 0.08 0.08"
+          animation-mixer="timeScale:0.5"
+          target="static: false; healthPoints: 30"
+          hit-handler-boss
+          attack-handler
+        ></a-mixin>
+        <a-mixin
+          id="health-bg-boss"
+          geometry="primitive:plane; height:3; width:20;"
+          material="color:#333"
+          position="0 60 0"
+        ></a-mixin>
+        <a-mixin
+          id="health-point-boss"
+          geometry="primitive: plane; height:2.6; width:19"
+          material="emissive:red"
+          position="0 0 0.1"
+        ></a-mixin>
 
+        <!--3D 모델 속성-->
+        <img
+          id="cityImage"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg/800px-View_of_Empire_State_Building_from_Rockefeller_Center_New_York_City_dllu.jpg"
+        />
+        <a-asset-item
+          id="enemy01"
+          src="./models/enemy2/Zombie in Warrior Costume.gltf"
+        ></a-asset-item>
+        <a-asset-item id="gun" src="./models/gun/scene.gltf"></a-asset-item>
+        <a-asset-item id="gun02" src="./models/gun02/scene.gltf"></a-asset-item>
+        <a-asset-item
+          id="castle-obj"
+          src="./models/older_castle_ruins/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="spider"
+          src="./models/spider/scene.gltf"
+        ></a-asset-item>
+        <a-asset-item
+          id="fly-enemy-model"
+          src="./models/fly/scene.gltf"
+        ></a-asset-item>
 
-                <!--가장 큰 적 속성-->
-                <a-mixin id="enemy-boss" gltf-model="#spider" scale="0.08 0.08 0.08" animation-mixer="timeScale:0.5" target="static: false; healthPoints: 30" hit-handler-boss attack-handler></a-mixin>
-                <a-mixin id="health-bg-boss" geometry="primitive:plane; height:3; width:20;" material="color:#333" position="0 60 0"></a-mixin>
-                <a-mixin id="health-point-boss" geometry="primitive: plane; height:2.6; width:19" material="emissive:red" position="0 0 0.1"></a-mixin>
+        <!--소리 설정-->
+        <audio
+          id="gun01-sound"
+          src="./sound/slimeball.wav"
+          preload="auto"
+        ></audio>
+        <audio
+          id="gun02-sound"
+          src="./sound/Rifleprimary2.mp3"
+          preload="auto"
+        ></audio>
+        <audio
+          id="spider-sound"
+          src="./sound/MonsterSoundTutorial.wav"
+          preload="auto"
+        ></audio>
+        <audio
+          id="monster-sound"
+          src="./sound/monster.wav"
+          preload="auto"
+        ></audio>
+        <audio
+          id="boss-die-sound"
+          src="./sound/high_pitch_scream_gverb.mp3"
+          preload="auto"
+        ></audio>
+        <audio
+          id="enemy-die-sound"
+          src="./sound/enemyDie.mp3"
+          preload="auto"
+        ></audio>
+        <audio id="bgm" src="./sound/bgm.mp3" preload="auto"></audio>
+      </a-assets>
 
+      <!-- 1번 총알  -->
+      <a-entity
+        id="bulletTemplate01"
+        bullet="name:bullet01; speed:30 "
+        geometry="primitive: sphere; radius: 0.1"
+        scale="0.05 0.05 0.05"
+        material="emissive: yellow;"
+      ></a-entity>
+      <!-- 2번 총알 -->
+      <a-entity
+        id="bulletTemplate02"
+        bullet="name: bullet02; speed: 40; damagePoints: 5;"
+        geometry="primitive:  icosahedron;  radius: 0.07"
+        material="emissive: green;"
+      ></a-entity>
 
-                <!--3D 모델 속성-->
-                <a-asset-item id="enemy01" src="./models/enemy2/Zombie in Warrior Costume.gltf"></a-asset-item>
-                <a-asset-item id="gun" src="./models/gun/scene.gltf"></a-asset-item>
-                <a-asset-item id="gun02" src="./models/gun02/scene.gltf"></a-asset-item>
-                <a-asset-item id="castle-obj" src="./models/older_castle_ruins/scene.gltf"></a-asset-item>
-                <a-asset-item id="spider" src="./models/spider/scene.gltf"></a-asset-item>
-                <a-asset-item id="fly-enemy-model" src="./models/fly/scene.gltf"></a-asset-item>
+      <!--성-->
+      <a-entity
+        id="castle-obj"
+        gltf-model="#castle-obj"
+        scale="2.5 2.5 2.5"
+        position="-3 -1 22"
+      ></a-entity>
 
-                <!--소리 설정-->
-                <audio id="gun01-sound" src="./sound/slimeball.wav" preload="auto"></audio>
-                <audio id="gun02-sound" src="./sound/Rifleprimary2.mp3" preload="auto"></audio>
-                <audio id="spider-sound" src="./sound/MonsterSoundTutorial.wav" preload="auto"></audio>
-                <audio id="monster-sound" src="./sound/monster.wav" preload="auto"></audio>
-                <audio id='boss-die-sound' src="./sound/high_pitch_scream_gverb.mp3" preload="auto"></audio>
-                <audio id="enemy-die-sound" src="./sound/enemyDie.mp3" preload="auto"></audio>
-                <audio id="bgm" src="./sound/bgm.mp3" preload="auto"></audio>
+      <a-entity id="start-info">
+        <a-entity
+          geometry="primitive:box; width:8; height:4; depth: 1"
+          material="color: #964b00; shader: flat; opacity:0.9"
+          position="0 6 12"
+        ></a-entity>
+        <a-entity
+          text="value: You are a knight of the castle.\n Shoot all the enemies ; width: 6; align:center"
+          position="0 6.2 12.5"
+        ></a-entity>
+        <a-entity
+          text="value: Gun Shooting game; width: 10; align:center"
+          position=" 0 7 12.5"
+        ></a-entity>
 
-            </a-assets>
+        <a-entity
+          id="start-button"
+          target
+          starting
+          geometry="primitive:box; width:4; height:0.7; depth:1"
+          position="0 5 12.05"
+          material="color:white; shader:flat"
+        ></a-entity>
+        <a-entity
+          text="value:START; width: 6; color:black"
+          position="2.6 5.15 13"
+        ></a-entity>
+      </a-entity>
+      <a-entity
+        gui-interactable
+        position="-10 2 16"
+        scale="5 5 0"
+        geometry="primitive: box"
+        rotation="0 90 0"
+        linkportal="href:/"
+        material="color: black"
+        ><a-image
+          width="0.95"
+          height="0.95"
+          src="#cityImage"
+          position="0 0 -1"
+        ></a-image
+      ></a-entity>
 
+      <!-- 카메라 장치 -->
+      <a-entity
+        id="camera-rig"
+        rotation="0 0 0"
+        position="0 6.3 17 "
+        sound="src:#bgm; autoplay:true; volume:0.5"
+      >
+        <!--카메라/슈터 -->
+        <a-entity
+          camera
+          id="camera"
+          look-controls="pointerLockEnabled: true"
+          viewable="maxpitch:90"
+        >
+          <a-gui-cursor
+            id="cursor"
+            raycaster="objects: [gui-interactable]"
+            fuse="true"
+            fuse-timeout="500"
+            color="#ECEFF1"
+            hover-color="#CFD8DC"
+            active-color="#607D8B"
+            design="ring"
+          >
+            <!-- dot, ring, reticle, cross  -->
+          </a-gui-cursor>
+          <!-- 커서 -->
+          <a-entity
+            animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.002 0.002 0.002; to: 0.001 0.001 0.001"
+            animation__mouseup="property: scale; startEvents: mouseup; easing: easeInCubic; dur: 150; from: 0.001 0.001 0.001 to: 0.002 0.002 0.002"
+            material="color: black; shader: flat"
+            position="0 0 -0.1"
+            geometry="primitive: ring"
+            scale="0.001 0.001 0.001"
+          ></a-entity>
 
-            <!-- 1번 총알  -->
-            <a-entity id="bulletTemplate01" bullet="name:bullet01; speed:30 " geometry="primitive: sphere; radius: 0.1" scale="0.05 0.05 0.05" material="emissive: yellow;"></a-entity>
-            <!-- 2번 총알 -->
-            <a-entity id="bulletTemplate02" bullet="name: bullet02; speed: 40; damagePoints: 5;" geometry="primitive:  icosahedron;  radius: 0.07" material="emissive: green;"></a-entity>
+          <!-- 점수판 -->
+          <a-entity
+            id="score"
+            text="value:0; width: 1"
+            score-handler
+            position=" 0.15  -0.05 -0.6"
+            rotation="0 60 0"
+          ></a-entity>
+          <a-entity
+            id="score"
+            text="value:SCORE; width: 0.3"
+            position="-0.1  -0.02 -0.3"
+            rotation="0 75 0"
+          ></a-entity>
 
-
-            <!--성-->
-            <a-entity id="castle-obj" gltf-model="#castle-obj" scale="2.5 2.5 2.5" position="-3 -1 22"></a-entity>
-
-
-            <a-entity id="start-info">
-                <a-entity geometry="primitive:box; width:8; height:4; depth: 1" material="color: #964b00; shader: flat; opacity:0.9" position="0 6 12"></a-entity>
-                <a-entity text="value: You are a knight of the castle.\n Shoot all the enemies ; width: 6; align:center" position="0 6.2 12.5"></a-entity>
-                <a-entity text="value: Gun Shooting game; width: 10; align:center" position=" 0 7 12.5"></a-entity>
-
-                <a-entity id="start-button" target starting geometry="primitive:box; width:4; height:0.7; depth:1" position="0 5 12.05" material="color:white; shader:flat"></a-entity>
-                <a-entity text="value:START; width: 6; color:black" position="2.6 5.15 13"></a-entity>
+          <!-- 총 위치-->
+          <a-entity
+            id="gun-wrapper01"
+            gltf-model="#gun"
+            position="0.15 -0.2 -0.2"
+            scale="0.05 0.05 0.05"
+            rotation="0 -90 0"
+            animation__1="property: rotation; from: 0 -90 0; to: 0 -90 -90; enabled: false; dur:500"
+            animation__2="property: position; from: 0.15 -0.2 -0.2; to: 0.15 -0.2 0.1; enabled: false; dur: 500"
+            animation__3="property: position; from:0.15 -0.2 -0.2; to: 0.15 -0.195 -0.2; dur: 1000; dir:alternate; loop:true; easing: easeInOutQuad"
+          >
+            <!-- 적들의 초기 위치 설정 이후 저절로 변경 -->
+            <a-entity
+              position="0 -1.5 0"
+              animation="property: position; from:0 -1.5 -0.2; to: 0 -1.48 -0.2; dur: 1000; dir:alternate; loop:true; easing: easeInOutQuad"
+            >
+              <a-image
+                material="color: #212121; shader: flat; opacity:0.3; transparent: true "
+                scale="1 0.5 1"
+                rotation="0 0 0"
+                position="1 2 0"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                rotation="0 0 0"
+                position="1 2 -0.1"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                position="0.9 2 -0.1"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                rotation="0 0 0"
+                position="0.8 2 -0.1"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                position="0.7 2 -0.1"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                position="0.6 2 -0.1"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                position="0.5 2 -0.1"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                position="0.4 2 -0.1"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                position="0.3 2 -0.1"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                position="0.2 2 -0.1"
+              ></a-image>
+              <a-image
+                material="shader: flat; opacity:0.8; "
+                scale="0.05 0.4 1"
+                position="0.1 2 -0.1"
+              ></a-image>
+              <a-image
+                id="reload-magazine"
+                geometry="primitive: plane; height:0.1; width:0.001"
+                material="emissive:yellow; shader: flat; opacity:0.8; "
+                position="0.5 2.3 -0.1"
+              ></a-image>
             </a-entity>
-            
+          </a-entity>
 
-            <!-- 카메라 장치 -->
-            <a-entity id="camera-rig" rotation="0 0 0" position="0 6.3 17 " sound="src:#bgm; autoplay:true; volume:0.5">
-                <!--카메라/슈터 -->
-                <a-entity camera id="camera" look-controls="pointerLockEnabled: true" viewable="maxpitch:90">
-                    <!-- 커서 -->
-                    <a-entity animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.002 0.002 0.002; to: 0.001 0.001 0.001" animation__mouseup="property: scale; startEvents: mouseup; easing: easeInCubic; dur: 150; from: 0.001 0.001 0.001 to: 0.002 0.002 0.002" material="color: black; shader: flat" position="0 0 -0.1" geometry="primitive: ring" scale="0.001 0.001 0.001"></a-entity>
-                    
-                    <!-- 점수판 -->
-                    <a-entity id="score" text="value:0; width: 1" score-handler position=" 0.15  -0.05 -0.6" rotation="0 60 0"></a-entity>
-                    <a-entity id="score" text="value:SCORE; width: 0.3" position="-0.1  -0.02 -0.3" rotation="0 75 0"></a-entity>
-
-                    <!-- 총 위치-->
-                    <a-entity id="gun-wrapper01" gltf-model="#gun" position="0.15 -0.2 -0.2" scale="0.05 0.05 0.05" rotation="0 -90 0" animation__1="property: rotation; from: 0 -90 0; to: 0 -90 -90; enabled: false; dur:500" animation__2="property: position; from: 0.15 -0.2 -0.2; to: 0.15 -0.2 0.1; enabled: false; dur: 500" animation__3="property: position; from:0.15 -0.2 -0.2; to: 0.15 -0.195 -0.2; dur: 1000; dir:alternate; loop:true; easing: easeInOutQuad">
-
-
-                        <!-- 적들의 초기 위치 설정 이후 저절로 변경 -->
-                        <a-entity position="0 -1.5 0" animation="property: position; from:0 -1.5 -0.2; to: 0 -1.48 -0.2; dur: 1000; dir:alternate; loop:true; easing: easeInOutQuad">
-                            <a-image material="color: #212121; shader: flat; opacity:0.3; transparent: true " scale="1 0.5 1" rotation="0 0 0" position="1 2 0"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" rotation="0 0 0" position="1 2 -0.1"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" position="0.9 2 -0.1"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" rotation="0 0 0" position="0.8 2 -0.1"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" position="0.7 2 -0.1"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" position="0.6 2 -0.1"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" position="0.5 2 -0.1"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" position="0.4 2 -0.1"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" position="0.3 2 -0.1"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" position="0.2 2 -0.1"></a-image>
-                            <a-image material="shader: flat; opacity:0.8; " scale="0.05 0.4 1" position="0.1 2 -0.1"></a-image>
-                            <a-image id="reload-magazine" geometry="primitive: plane; height:0.1; width:0.001" material="emissive:yellow; shader: flat; opacity:0.8; " position="0.5 2.3 -0.1"></a-image>
-                        </a-entity>
-                    </a-entity>
-
-
-                    <!-- 총 바꾸기-->
-                    <a-entity id="gun-wrapper02" gltf-model="#gun02" position="0.2 -0.1 0.1" rotation="0 -90 90" scale="0.1 0.1 0.1" animation__1="property: rotation; from: 0 -90 90; to: 0 -90 0; enabled: false; dur:500" animation__2="property: position; from: 0.2 -0.1 0.1; to: 0.2 -0.1 -0.1; enabled: false; dur:500">
-
-                        <!-- 두번쨰 총 설정 -->
-                        <a-entity position="-1.15 -2 1.1" animation="property: position; from: -1.15 -2 1.1; to: -1.15 -2.05 1.1; dur: 1000; loop: true; dir: alternate; easing: easeInOutQuad ">
-                            <a-image material="color: #212121; shader: flat; opacity:0.3; transparent: true " scale="1 0.5 1" rotation="0 0 0" position="0.4 2 -0.16"></a-image>
-                            <a-image material="emissive:yellow; shader: flat; opacity:0.8; " scale="0.1 0.4 1" position="0.8 2 -0.1"></a-image>
-                            <a-image material="emissive:yellow; shader: flat; opacity:0.8; " scale="0.1 0.4 1" position="0.6 2 -0.1"></a-image>
-                            <a-image material="emissive:yellow; shader: flat; opacity:0.8; " scale="0.1 0.4 1" position="0.4 2 -0.1"></a-image>
-                            <a-image material="emissive:yellow; shader: flat; opacity:0.8; " scale="0.1 0.4 1" position="0.2 2 -0.1"></a-image>
-                            <a-image material="emissive:yellow; shader: flat; opacity:0.8; " scale="0.1 0.4 1" position="0 2 -0.1"></a-image>
-                            <a-image id="reload-magazine" geometry="primitive: plane; height:0.1; width:0.001" material="emissive:yellow; shader: flat; opacity:0.8; " position="0.5 2.3 -0.1"></a-image>
-                        </a-entity>
-                    </a-entity>
-
-
-
-                    <!--총 쏠때 소리 설정-->
-                    <a-plane id="gun-shooter" scale="0.1 0.1 0.1" position="0.15225 -0.06 -0.1" shooter="activeBulletType: bullet01; bulletTypes: [bullet01, bullet02]" shooting visible="true" gun-animation-handler sound-handler>
-                        <a-entity id="gun-sound01" sound="src:#gun01-sound; poolSize:10; volume: 0.3"></a-entity>
-                    </a-plane>
-                    
-                    <!--하트 설정 -->
-                    <a-entity id="health">
-                        <a-image src="models/heart.png" material="shader: flat; opacity:0.8; " scale="0.03 0.03 1" rotation="0 60 0" position="-0.1 -0.125 -0.3"></a-image>
-                        <a-image src="models/heart.png" material="shader: flat; opacity:0.8; " scale="0.03 0.03 1" rotation="0 60 0" position="-0.11 -0.13 -0.25"></a-image>
-                        <a-image src="models/heart.png" material="shader: flat; opacity:0.8; " scale="0.03 0.03 1" rotation="0 60 0" position="-0.11 -0.12 -0.18">
-                            <a-entity text="width: 8; wrapCount: 50; lineHeight: 60;
-                            value:Hearts" position="3 1 0" rotation="0 0 0"></a-entity>
-                        </a-image>
-                    </a-entity>
-                </a-entity>
+          <!-- 총 바꾸기-->
+          <a-entity
+            id="gun-wrapper02"
+            gltf-model="#gun02"
+            position="0.2 -0.1 0.1"
+            rotation="0 -90 90"
+            scale="0.1 0.1 0.1"
+            animation__1="property: rotation; from: 0 -90 90; to: 0 -90 0; enabled: false; dur:500"
+            animation__2="property: position; from: 0.2 -0.1 0.1; to: 0.2 -0.1 -0.1; enabled: false; dur:500"
+          >
+            <!-- 두번쨰 총 설정 -->
+            <a-entity
+              position="-1.15 -2 1.1"
+              animation="property: position; from: -1.15 -2 1.1; to: -1.15 -2.05 1.1; dur: 1000; loop: true; dir: alternate; easing: easeInOutQuad "
+            >
+              <a-image
+                material="color: #212121; shader: flat; opacity:0.3; transparent: true "
+                scale="1 0.5 1"
+                rotation="0 0 0"
+                position="0.4 2 -0.16"
+              ></a-image>
+              <a-image
+                material="emissive:yellow; shader: flat; opacity:0.8; "
+                scale="0.1 0.4 1"
+                position="0.8 2 -0.1"
+              ></a-image>
+              <a-image
+                material="emissive:yellow; shader: flat; opacity:0.8; "
+                scale="0.1 0.4 1"
+                position="0.6 2 -0.1"
+              ></a-image>
+              <a-image
+                material="emissive:yellow; shader: flat; opacity:0.8; "
+                scale="0.1 0.4 1"
+                position="0.4 2 -0.1"
+              ></a-image>
+              <a-image
+                material="emissive:yellow; shader: flat; opacity:0.8; "
+                scale="0.1 0.4 1"
+                position="0.2 2 -0.1"
+              ></a-image>
+              <a-image
+                material="emissive:yellow; shader: flat; opacity:0.8; "
+                scale="0.1 0.4 1"
+                position="0 2 -0.1"
+              ></a-image>
+              <a-image
+                id="reload-magazine"
+                geometry="primitive: plane; height:0.1; width:0.001"
+                material="emissive:yellow; shader: flat; opacity:0.8; "
+                position="0.5 2.3 -0.1"
+              ></a-image>
             </a-entity>
+          </a-entity>
 
+          <!--총 쏠때 소리 설정-->
+          <a-plane
+            id="gun-shooter"
+            scale="0.1 0.1 0.1"
+            position="0.15225 -0.06 -0.1"
+            shooter="activeBulletType: bullet01; bulletTypes: [bullet01, bullet02]"
+            shooting
+            visible="true"
+            gun-animation-handler
+            sound-handler
+          >
+            <a-entity
+              id="gun-sound01"
+              sound="src:#gun01-sound; poolSize:10; volume: 0.3"
+            ></a-entity>
+          </a-plane>
 
-        </a-scene>
-    </body>
-
+          <!--하트 설정 -->
+          <a-entity id="health">
+            <a-image
+              src="models/heart.png"
+              material="shader: flat; opacity:0.8; "
+              scale="0.03 0.03 1"
+              rotation="0 60 0"
+              position="-0.1 -0.125 -0.3"
+            ></a-image>
+            <a-image
+              src="models/heart.png"
+              material="shader: flat; opacity:0.8; "
+              scale="0.03 0.03 1"
+              rotation="0 60 0"
+              position="-0.11 -0.13 -0.25"
+            ></a-image>
+            <a-image
+              src="models/heart.png"
+              material="shader: flat; opacity:0.8; "
+              scale="0.03 0.03 1"
+              rotation="0 60 0"
+              position="-0.11 -0.12 -0.18"
+            >
+              <a-entity
+                text="width: 8; wrapCount: 50; lineHeight: 60;
+                            value:Hearts"
+                position="3 1 0"
+                rotation="0 0 0"
+              ></a-entity>
+            </a-image>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+    </a-scene>
+  </body>
 </html>

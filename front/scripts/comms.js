@@ -32,7 +32,7 @@ function addPlayer(id, position, model, customization) {
       playerColor(texture, "black");
     }
   }, 5000);
-  
+
   if (customization.mask != null) {
     var mask = document.createElement("a-entity");
     mask.setAttribute("gltf-model", customization.mask.model);
@@ -40,7 +40,7 @@ function addPlayer(id, position, model, customization) {
     mask.setAttribute("rotation", customization.mask.rotation);
     mask.setAttribute("scale", customization.mask.scale);
     newPlayer.appendChild(mask);
-    }
+  }
 
   if (customization.backpack != null) {
     var backpack = document.createElement("a-entity");
@@ -211,8 +211,9 @@ socket.on("timeStamp", function ({ time }) {
 });
 
 function calcVolume(id) {
-  var target = document.getElementById(id).getAttribute("position");
+  var target = document?.getElementById(id)?.getAttribute("position");
   var me = document.querySelector("[me]").getAttribute("position");
+  if (!target) return 0;
   var distance = Math.sqrt(
     Math.pow(target.x - me.x, 2) + Math.pow(target.z - me.z, 2)
   );
@@ -233,56 +234,59 @@ function playerColor(texture, color) {
   console.log(color);
 
   switch (color) {
-      case "red":
-        colorr = "rgb(224, 0, 0)"
-        break;
-      case "green":
-        colorr = "rgb(15, 224, 0)"
-        break;
-      case "black":
-        colorr = "rgb(0, 0, 0)"
-        break;
-      case "blue":
-        colorr = "rgb(0, 32, 148)"
-        break;
-      case "yellow":
-        colorr = "rgb(182, 224, 27)"
-        break;
-      case "purple":
-        colorr = "rgb(225, 27, 224)"
-        break;
-      case "orange":
-        colorr = "rgb(224, 145, 27)"
-        break;
-      case "brown":
-        colorr = "rgb(61, 39, 6)"
-        break;
-      case "white":
-        colorr = "rgb(255, 255, 255)"
-        break;
-      case "pink":
-        colorr = "rgb(217, 22, 207)"
-        break;
-      case "lime":
-        colorr =  "rgb(72, 232, 60)"
-        break;
-      case "grey":
-        colorr = "rgb(59, 59, 59)"
-        break;
-    }
-    console.log(colorr);
+    case "red":
+      colorr = "rgb(224, 0, 0)";
+      break;
+    case "green":
+      colorr = "rgb(15, 224, 0)";
+      break;
+    case "black":
+      colorr = "rgb(0, 0, 0)";
+      break;
+    case "blue":
+      colorr = "rgb(0, 32, 148)";
+      break;
+    case "yellow":
+      colorr = "rgb(182, 224, 27)";
+      break;
+    case "purple":
+      colorr = "rgb(225, 27, 224)";
+      break;
+    case "orange":
+      colorr = "rgb(224, 145, 27)";
+      break;
+    case "brown":
+      colorr = "rgb(61, 39, 6)";
+      break;
+    case "white":
+      colorr = "rgb(255, 255, 255)";
+      break;
+    case "pink":
+      colorr = "rgb(217, 22, 207)";
+      break;
+    case "lime":
+      colorr = "rgb(72, 232, 60)";
+      break;
+    case "grey":
+      colorr = "rgb(59, 59, 59)";
+      break;
+  }
+  console.log(colorr);
 
-    let tree3D = texture.getObject3D('mesh'); // Get THREEjs object from GLTF model
-    console.log(tree3D);
-    console.log(texture);
-    if (!tree3D){return;} 
-    console.log("poop");
-    // Traverse through each THREEjs model node
-    tree3D.traverse(function(node){
-      if (node.isMesh){ // If current node is mesh change its material's color to provided color
-        console.log(node);
-        node.material.color = new THREE.Color(colorr);
-        console.log(node);
-        }
-    })
+  let tree3D = texture.getObject3D("mesh"); // Get THREEjs object from GLTF model
+  console.log(tree3D);
+  console.log(texture);
+  if (!tree3D) {
+    return;
+  }
+  console.log("poop");
+  // Traverse through each THREEjs model node
+  tree3D.traverse(function (node) {
+    if (node.isMesh) {
+      // If current node is mesh change its material's color to provided color
+      console.log(node);
+      node.material.color = new THREE.Color(colorr);
+      console.log(node);
+    }
+  });
 }
