@@ -84,12 +84,6 @@ io.on("connection", async (socket) => {
   socket.model = models[modelIndex];
   console.log(`${socket.id} connected`);
   io.to(socket.id).emit("mazeSeeds", { mazeSeeds: mazeSeeds });
-  io.sockets.in(sockets[socket.id]).emit("newPlayer", {
-    id: socket.id,
-    position: socket.position,
-    rotation: socket.rotation,
-    model: socket.model,
-  });
   socket.on("peerId", ({ id }) => {
     socket.peerId = id;
     console.log(socket.peerId);
@@ -102,6 +96,16 @@ io.on("connection", async (socket) => {
     io.sockets.in(sockets[socket.id]).emit("removePlayer", { id: socket.id });
     socket.leave(sockets[socket.id]);
     delete sockets[socket.id];
+  });
+  socket.on("customization", (data) => {
+    socket.customization = data;
+    io.sockets.in(sockets[socket.id]).emit("newPlayer", {
+      id: socket.id,
+      position: socket.position,
+      rotation: socket.rotation,
+      model: socket.model,
+      customization: socket.customization,
+    });
   });
   let players = await getAllPlayers(sockets[socket.id]);
   socket.emit("listOfPlayers", { players: players });
