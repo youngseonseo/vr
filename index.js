@@ -81,7 +81,7 @@ io.on("connection", async (socket) => {
   socket.position = { x: 0, y: 0, z: 0 };
   socket.rotation = { x: 0, y: 0, z: 0 };
   var modelIndex = Math.floor(Math.random() * 10) % models.length;
-  socket.model = models[modelIndex];
+  socket.model = "player";
   console.log(`${socket.id} connected`);
   io.to(socket.id).emit("mazeSeeds", { mazeSeeds: mazeSeeds });
   socket.on("peerId", ({ id }) => {
