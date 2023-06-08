@@ -95,6 +95,7 @@ AFRAME.registerComponent("player", {
     );
   },
   moveAnimation: function (id) {
+    console.log(`animating`);
     window.clearTimeout(this.timer);
     this.animate(id, "walk");
     this.timer = window.setTimeout(this.animate, 100, id, "idle");

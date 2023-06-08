@@ -65,7 +65,14 @@ const url = window.location.host;
 
 console.log(url);
 var socket = io(url);
-
+if (!localStorage.getItem("nickname")) window.location.href = "/intro.html";
+var customization = {
+  nickname: localStorage.getItem("nickname"),
+  player_color: localStorage.getItem("player_color"),
+  mask: localStorage.getItem("mask"),
+  backpack: localStorage.getItem("backpack"),
+};
+socket.emit("customization", customization);
 socket.on("newPlayer", ({ id, position, model }) => {
   if (id === socket.id) return;
   console.log("newPlayer");
@@ -152,9 +159,14 @@ socket.on("voice", function ({ id, data }) {
   if (id == socket.id) return;
   var audio = new Audio(data);
   var volume = calcVolume(id);
-  console.log(volume);
   audio.volume = volume;
   audio.play();
+});
+socket.on("timeStamp", function ({ time }) {
+  let video = document.querySelector("#video");
+  console.log(`${time} ${video.duration}`);
+  video.currentTime = `${time / video.duration}`;
+  console.log(`${time % video.duration}`);
 });
 
 function calcVolume(id) {
