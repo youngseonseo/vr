@@ -8,30 +8,24 @@ function addPlayer(id, position, model, customization) {
   if (id === socket.id) return;
   console.log(`adding ${id} on ${JSON.stringify(position)}`);
 
-  var newPlayer = document.createElement("a-box");
+  var newPlayer = document.createElement("a-entity");
   newPlayer.setAttribute("id", id);
   //newPlayer.setAttribute("player");
   newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
   var texture = document.createElement("a-entity");
 
   texture.setAttribute("gltf-model", `/players/${model}/scene.gltf`);
-  texture.setAttribute("rotation", "0 0 0");
-  texture.setAttribute("position", "0 -0.5 0");
-  texture.setAttribute("scale", "0.234 0.234 0.234");
+  texture.setAttribute("rotation", "0 180 0");
+  texture.setAttribute("position", "0 0 0");
+  texture.setAttribute("scale", "1 1 1");
   texture.setAttribute("animation-mixer", "clip:Rig|idle");
   texture.setAttribute("id", `${id}-texture`);
   texture.setAttribute("model", `${model}`);
   newPlayer.setAttribute("opacity", "0");
   newPlayer.setAttribute("player", "");
+  newPlayer.setAttribute("scale", "0.3 0.3 0.3");
+  newPlayer.setAttribute("rotation", "0 0 0");
   newPlayer.appendChild(texture);
-
-  window.setTimeout(() => {
-    if (customization.player_color != null) {
-      playerColor(texture, customization.player_color);
-    } else {
-      playerColor(texture, "black");
-    }
-  }, 5000);
 
   if (customization.mask != null) {
     var mask = document.createElement("a-entity");
@@ -40,7 +34,7 @@ function addPlayer(id, position, model, customization) {
     mask.setAttribute("rotation", customization.mask.rotation);
     mask.setAttribute("scale", customization.mask.scale);
     newPlayer.appendChild(mask);
-  }
+    }
 
   if (customization.backpack != null) {
     var backpack = document.createElement("a-entity");
@@ -49,15 +43,32 @@ function addPlayer(id, position, model, customization) {
     backpack.setAttribute("rotation", customization.backpack.rotation);
     backpack.setAttribute("scale", customization.backpack.scale);
     newPlayer.appendChild(backpack);
+
+    backpack_new = backpack.getAttribute("rotation");
+    backpack_new.y *= -1;
+    backpack.setAttribute("position", backpack_new);
   }
 
-  var nickname_table = document.createElement("a-text");
+  var nickname_table = document.createElement("a-gui-label");
   nickname_table.setAttribute("value", customization.nickname);
-  nickname_table.setAttribute("position", "0 1 0");
-  nickname_table.setAttribute("scale", "10 10 10");
-  nickname_table.setAttribute("position", "0 1 0");
-  nickname_table.setAttribute("scale", "1 1 1");
+  nickname_table.setAttribute("position", "0 3.5 0");
+  nickname_table.setAttribute("align", "center");
+  nickname_table.setAttribute("width", "3");
+  nickname_table.setAttribute("height", "0.75");
+  nickname_table.setAttribute("font-size", "0.25");
+  nickname_table.setAttribute("font-color", "white");
+  nickname_table.setAttribute("background-color", "#072B73");
+  nickname_table.setAttribute("look-at", "[me]");
   newPlayer.appendChild(nickname_table);
+
+  window.setTimeout(() => {
+    if (customization.player_color != null) {
+      playerColor(texture, customization.player_color);
+    } else {
+      playerColor(texture, "blue");
+    }
+  }, 6000);
+  newPlayer.setAttribute("position", "0 -0.5 0");
 
   var scene = document.querySelector("a-scene");
   scene.appendChild(newPlayer);
@@ -273,20 +284,17 @@ function playerColor(texture, color) {
   }
   console.log(colorr);
 
-  let tree3D = texture.getObject3D("mesh"); // Get THREEjs object from GLTF model
-  console.log(tree3D);
-  console.log(texture);
-  if (!tree3D) {
-    return;
-  }
-  console.log("poop");
-  // Traverse through each THREEjs model node
-  tree3D.traverse(function (node) {
-    if (node.isMesh) {
-      // If current node is mesh change its material's color to provided color
-      console.log(node);
-      node.material.color = new THREE.Color(colorr);
-      console.log(node);
-    }
-  });
+    let tree3D = texture.getObject3D('mesh'); // Get THREEjs object from GLTF model
+    console.log(tree3D);
+    console.log(texture);
+    if (!tree3D){return;} 
+    console.log("poop");
+    // Traverse through each THREEjs model node
+    tree3D.traverse(function(node){
+      if (node.isMesh){ // If current node is mesh change its material's color to provided color
+        console.log(node);
+        node.material.color = new THREE.Color(colorr);
+        console.log(node);
+        }
+    })
 }
