@@ -80,7 +80,7 @@ io.on("connection", async (socket) => {
   sockets[socket.id] = socket.handshake.headers.referer;
   socket.position = { x: 0, y: 0, z: 0 };
   socket.rotation = { x: 0, y: 0, z: 0 };
-  var modelIndex = Math.floor(Math.random() * 10) % models.length;
+  //var modelIndex = Math.floor(Math.random() * 10) % models.length;
   socket.model = "player";
   console.log(`${socket.id} connected`);
   io.to(socket.id).emit("mazeSeeds", { mazeSeeds: mazeSeeds });
@@ -98,6 +98,7 @@ io.on("connection", async (socket) => {
     delete sockets[socket.id];
   });
   socket.on("customization", (data) => {
+    console.log(data);
     socket.customization = data;
     io.sockets.in(sockets[socket.id]).emit("newPlayer", {
       id: socket.id,
@@ -144,6 +145,7 @@ async function getAllPlayers(room) {
           id: i?.id,
           position: i?.position,
           model: i?.model,
+          customization: i?.customization,
           peerId: i?.peerId,
         };
     })

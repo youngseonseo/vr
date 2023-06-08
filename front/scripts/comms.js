@@ -1,6 +1,10 @@
 var muted = false;
 
 function addPlayer(id, position, model, customization) {
+  console.log(id);
+  console.log(position);
+  console.log(model);
+  console.log(customization);
   if (id === socket.id) return;
   console.log(`adding ${id} on ${JSON.stringify(position)}`);
 
@@ -38,10 +42,10 @@ function addPlayer(id, position, model, customization) {
 
   var nickname_table = document.createElement("a-text");
   nickname_table.setAttribute("value", customization.nickname);
-  nickname_table.setAttribute("position", "0 1 0")
-  nickname_table.setAttribute("scale", "10 10 10")
+  nickname_table.setAttribute("position", "0 1 0");
+  nickname_table.setAttribute("scale", "10 10 10");
   newPlayer.appendChild(nickname_table);
-  
+
   var scene = document.querySelector("a-scene");
   scene.appendChild(newPlayer);
 }
@@ -91,13 +95,15 @@ if (!localStorage.getItem("nickname")) window.location.href = "/intro.html";
 var myCustomization = {
   nickname: localStorage.getItem("nickname"),
   player_color: localStorage.getItem("player_color"),
-  mask: localStorage.getItem("mask"),
-  backpack: localStorage.getItem("backpack"),
+  mask: JSON.parse(localStorage.getItem("mask")),
+  backpack: JSON.parse(localStorage.getItem("backpack")),
 };
+console.log(myCustomization.mask);
 socket.emit("customization", myCustomization);
 socket.on("newPlayer", ({ id, position, model, customization }) => {
   if (id === socket.id) return;
   console.log("newPlayer");
+  console.log(customization);
   addPlayer(id, position, model, customization);
 });
 socket.on("listOfPlayers", ({ players }) => {
@@ -109,7 +115,7 @@ socket.on("listOfPlayers", ({ players }) => {
       movePlayer(i.id, i.position);
       rotatePlayer(i.id, i.rotation);
     } else {
-      addPlayer(i.id, i.position, i.model, i.peerId);
+      addPlayer(i.id, i.position, i.model, i.peerId, i.customization);
     }
     if (i.peerId) {
       document.getElementById(i.id).setAttribute("peerid", i.peerId);
