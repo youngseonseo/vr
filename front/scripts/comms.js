@@ -8,7 +8,7 @@ function addPlayer(id, position, model, customization) {
   if (id === socket.id) return;
   console.log(`adding ${id} on ${JSON.stringify(position)}`);
 
-  var newPlayer = document.createElement("a-entity");gi
+  var newPlayer = document.createElement("a-entity");
   newPlayer.setAttribute("id", id);
   //newPlayer.setAttribute("player");
   newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
