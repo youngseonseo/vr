@@ -34,7 +34,7 @@ function addPlayer(id, position, model, customization) {
     mask.setAttribute("rotation", customization.mask.rotation);
     mask.setAttribute("scale", customization.mask.scale);
     newPlayer.appendChild(mask);
-    }
+  }
 
   if (customization.backpack != null) {
     var backpack = document.createElement("a-entity");
@@ -79,7 +79,7 @@ function removePlayer(id) {
 }
 function movePlayer(id, position) {
   var target = document.getElementById(id);
-  target.setAttribute("position", position);
+  target.setAttribute("position", { ...position, y: 0 });
   target.components["player"].moveAnimation(id);
 }
 function rotatePlayer(id, rotation) {
@@ -284,17 +284,20 @@ function playerColor(texture, color) {
   }
   console.log(colorr);
 
-    let tree3D = texture.getObject3D('mesh'); // Get THREEjs object from GLTF model
-    console.log(tree3D);
-    console.log(texture);
-    if (!tree3D){return;} 
-    console.log("poop");
-    // Traverse through each THREEjs model node
-    tree3D.traverse(function(node){
-      if (node.isMesh){ // If current node is mesh change its material's color to provided color
-        console.log(node);
-        node.material.color = new THREE.Color(colorr);
-        console.log(node);
-        }
-    })
+  let tree3D = texture.getObject3D("mesh"); // Get THREEjs object from GLTF model
+  console.log(tree3D);
+  console.log(texture);
+  if (!tree3D) {
+    return;
+  }
+  console.log("poop");
+  // Traverse through each THREEjs model node
+  tree3D.traverse(function (node) {
+    if (node.isMesh) {
+      // If current node is mesh change its material's color to provided color
+      console.log(node);
+      node.material.color = new THREE.Color(colorr);
+      console.log(node);
+    }
+  });
 }
