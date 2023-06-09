@@ -8,7 +8,7 @@ function addPlayer(id, position, model, customization) {
   if (id === socket.id) return;
   console.log(`adding ${id} on ${JSON.stringify(position)}`);
 
-  var newPlayer = document.createElement("a-entity");
+  var newPlayer = document.createElement("a-entity");gi
   newPlayer.setAttribute("id", id);
   //newPlayer.setAttribute("player");
   newPlayer.setAttribute("position", JSON.parse(JSON.stringify(position)));
@@ -37,7 +37,11 @@ function addPlayer(id, position, model, customization) {
 
     mask_new = mask.getAttribute("rotation");
     mask_new.y *= -1;
-    mask.setAttribute("position", mask_new);
+    mask.setAttribute("rotation", mask_new);
+
+    mask_pos = mask.getAttribute("position");
+    mask_pos.z *= -1;
+    mask.setAttribute("position", mask_pos);
     }
 
   if (customization.backpack != null) {
@@ -50,7 +54,8 @@ function addPlayer(id, position, model, customization) {
 
     backpack_new = backpack.getAttribute("rotation");
     backpack_new.y *= -1;
-    backpack.setAttribute("position", backpack_new);
+    backpack.setAttribute("rotation", backpack_new);
+    //backpack_pos = backpack.getAttribute("position");
   }
 
   var nickname_table = document.createElement("a-gui-label");
