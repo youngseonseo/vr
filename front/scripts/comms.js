@@ -41,6 +41,7 @@ function addPlayer(id, position, model, customization) {
     mask_pos = mask.getAttribute("position");
     mask_pos.z *= -1;
     mask.setAttribute("position", mask_pos);
+    //fix
     }
 
 
