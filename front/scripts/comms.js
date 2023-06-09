@@ -34,14 +34,13 @@ function addPlayer(id, position, model, customization) {
     mask.setAttribute("rotation", customization.mask.rotation);
     mask.setAttribute("scale", customization.mask.scale);
     newPlayer.appendChild(mask);
-    mask_new = mask.getAttribute("rotation");
-    mask_new.y *= -1;
-    mask.setAttribute("rotation", mask_new);
+    console.log(mask);
 
-    mask_pos = mask.getAttribute("position");
-    mask_pos.z *= -1;
-    mask.setAttribute("position", mask_pos);
-    //fix
+    new_maskr = {x: customization.mask.rotation.x, y: customization.mask.rotation.y + 180, z: customization.mask.rotation.z};
+    mask.setAttribute("rotation", new_maskr);
+
+    new_maskp = {x: customization.mask.position.x, y: customization.mask.position.y, z: customization.mask.position.z * -1};
+    mask.setAttribute("position", new_maskp);
     }
 
 
@@ -53,10 +52,11 @@ function addPlayer(id, position, model, customization) {
     backpack.setAttribute("scale", customization.backpack.scale);
     newPlayer.appendChild(backpack);
 
-    backpack_new = backpack.getAttribute("rotation");
-    backpack_new.y *= -1;
-    backpack.setAttribute("rotation", backpack_new);
-    //backpack_pos = backpack.getAttribute("position");
+    new_backpackr = {x: customization.backpack.rotation.x, y: customization.backpack.rotation.y + 180, z: customization.backpack.rotation.z};
+    backpack.setAttribute("rotation", new_backpackr);
+
+    new_backpackp = {x: customization.backpack.position.x, y: customization.backpack.position.y, z: customization.backpack.position.z * -1};
+    backpack.setAttribute("position", new_backpackp);
   }
 
   var nickname_table = document.createElement("a-gui-label");
