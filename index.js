@@ -18,6 +18,10 @@ app.get("/", function (req, res) {
   res.sendFile("front/index.html", { root: __dirname });
 });
 
+app.get("/slide", function (req, res) {
+  res.redirect("https://docs.google.com/presentation/d/1jhaQN5tbETgorgzUAVtb2aE-USixuBdm7fT7DJgEUy4/edit#slide=id.p");
+})
+
 app.get("/:file", function (req, res) {
   res.set("Accept-Ranges", "bytes");
   res.sendFile(`front/${req.params.file}`, { root: __dirname });
